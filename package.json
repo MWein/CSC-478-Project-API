@@ -1,0 +1,49 @@
+{
+  "name": "csc-478-project-api",
+  "version": "0.0.1",
+  "description": "API for CSC478 project",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "babel src -d dist --presets es2015,stage-2",
+    "test": "jest",
+    "lint": "eslint --ext .js ./ --fix",
+    "dev": "babel-node src/server.js --presets es2015,stage-2",
+    "serve": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MinuteMan92/CSC-478-Project-API.git"
+  },
+  "author": "Hex",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "4.14.0",
+    "jest": "22.0.4",
+    "sinon": "4.1.3",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "lodash": "4.17.4",
+    "express": "4.16.2"
+  },
+  "jest": {
+    "roots": [
+      "./test"
+    ],
+    "testRegex": "(/test/.*|(\\.|/)(test|spec))\\.jsx?$",
+    "transformIgnorePatterns": [
+      "node_modules/.*"
+    ],
+    "testPathIgnorePatterns": [
+      ".*_jestsetup.js",
+      "./test/test-utils",
+      ".*json",
+      ".eslintrc"
+    ]
+  }
+}
