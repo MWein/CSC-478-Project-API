@@ -1,6 +1,6 @@
 import app from './app'
 
-const port = 8081
+const port = 8080
 
 app.listen(port, () => {
   console.log(' --------------------------------------- ') // eslint-disable-line no-console
