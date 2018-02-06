@@ -1,16 +1,15 @@
-// const { Pool } = require('pg')
-// const { logger } = require('../middleware')
-// const { findUserProvidedService } = require('../helpers/cfServices')
+import { Pool } from 'pg'
 
-// const db = /* Connect to database */
 
-// const pool = new Pool({
-//   user: db.user,
-//   host: db.host,
-//   database: db.database,
-//   password: db.password,
-//   port: db.port,
-// })
+require('dotenv').config()
+const dbHost = process.env.ENV === 'prod' ? process.env.DB_HOST_P : process.env.DB_HOST_NP
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  host: dbHost,
+  port: process.env.DB_HOST,
+})
 
 // // Fired when a new Client is connected.
 // pool.on('connect', client => {
@@ -25,34 +24,34 @@
 // // Fired when a Client is closed and removed from the pool.
 // pool.on('remove', () => logger.info(`postgres client released, total: ${pool.totalCount}`))
 
-// // Export the query function --- will execute a straight query
-// // or a parameterized query. DOES NOT currently support transactions.
-// const sqlQuery = async ({ text, values }) => {
-//   try {
-//     const client = await pool.connect()
-//     const result = await client.query(text, values)
+// Export the query function --- will execute a straight query
+// or a parameterized query. DOES NOT currently support transactions.
+const sqlQuery = async({ text, values }) => {
+  try {
+    const client = await pool.connect()
+    const result = await client.query(text, values)
 
-//     client.release()
+    client.release()
 
-//     return {
-//       numRows: result.rowCount,
-//       rows: result.rows,
-//       error: false,
-//       errorMsg: null,
-//     }
-//   } catch (e) {
-//     logger.error(`sql error: ${e.message}`)
+    return {
+      numRows: result.rowCount,
+      rows: result.rows,
+      error: false,
+      errorMsg: null,
+    }
+  } catch (e) {
+    //logger.error(`sql error: ${e.message}`)
 
-//     return {
-//       numRows: 0,
-//       rows: [],
-//       error: true,
-//       errorMsg: e.message,
-//     }
-//   }
-// }
+    return {
+      numRows: 0,
+      rows: [],
+      error: true,
+      errorMsg: e.message,
+    }
+  }
+}
 
-// module.exports = {
-//   sqlQuery,
-//   pool,
-// }
+module.exports = {
+  sqlQuery,
+  pool,
+}
