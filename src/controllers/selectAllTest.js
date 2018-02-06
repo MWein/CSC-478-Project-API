@@ -2,9 +2,14 @@ import { selectAllRows } from '../db/queries'
 import { sqlQuery } from '../db'
 
 const testTableSelectAllController = async(req, res, next) => {
-  const { rows } = await sqlQuery(selectAllRows())
+  const result = await sqlQuery(selectAllRows())
 
-  res.status(200).json(rows)
+  if (result.error) {
+    res.status(500).send(result.errorMsg)
+  } else {
+    res.status(200).json(result.rows)
+  }
+
   next()
 }
 
