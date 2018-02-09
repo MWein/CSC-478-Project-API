@@ -4,11 +4,12 @@ import { Pool } from 'pg'
 require('dotenv').config()
 const dbHost = process.env.ENV === 'prod' ? process.env.DB_HOST_P : process.env.DB_HOST_NP
 
+
 const pool = new Pool({
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
   host: dbHost,
-  port: process.env.DB_HOST,
+  port: process.env.DB_PORT,
 })
 
 // // Fired when a new Client is connected.

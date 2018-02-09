@@ -3,12 +3,10 @@ import { sqlQuery } from '../db'
 
 const testTableSelectAllController = async(req, res, next) => {
   const result = await sqlQuery(selectAllRows())
+  const status = result.error ? 500 : 200
 
-  if (result.error) {
-    res.status(500).send(result.errorMsg)
-  } else {
-    res.status(200).json(result.rows)
-  }
+  res.status(status)
+  res.json(result)
 
   next()
 }
