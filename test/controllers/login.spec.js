@@ -1,7 +1,7 @@
-import app from '../../src/app'
-import request from 'supertest'
-import loginActions, { generateUniqueKey } from '../../src/controllers/login'
-import sinon from 'sinon'
+//import app from '../../src/app'
+//import request from 'supertest'
+import { generateUniqueKey } from '../../src/controllers/login'
+//import sinon from 'sinon'
 
 
 describe('Login controller tests', () => {
