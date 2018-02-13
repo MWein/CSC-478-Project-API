@@ -1,5 +1,4 @@
 import permit from '../../src/middleware/permit'
-import request from 'supertest'
 import sinon from 'sinon'
 
 
