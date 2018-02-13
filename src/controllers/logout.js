@@ -10,9 +10,7 @@ const logoutController = async(req, res, next) => {
   const id = req.body.id
 
   if (id === undefined) {
-    sendUserNotFound(res)
-
-    return false
+    return sendUserNotFound(res)
   }
 
   const queryData = await sqlQuery(allUsersQuery())
@@ -21,9 +19,7 @@ const logoutController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    sendUserNotFound(res)
-
-    return false
+    return sendUserNotFound(res)
   }
 
   await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))
