@@ -24,7 +24,7 @@ const logoutController = async(req, res, next) => {
 
   await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))
 
-  res.status(200).send('Logout successful')
+  res.status(200).send('success')
   next()
 }
 
