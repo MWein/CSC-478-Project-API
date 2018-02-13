@@ -1,12 +1,27 @@
+import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/queries'
 import { sqlQuery } from '../db'
-import { updateTokenAndTimestampForUser } from '../db/queries'
 
+
+const sendUserNotFound = res => {
+  res.status(500).json({ error: true, errorMsg: 'User not found' })
+}
 
 const logoutController = async(req, res, next) => {
   const id = req.body.id
 
   if (id === undefined) {
-    res.status(500).json({ error: true, errorMsg: 'User not found' })
+    sendUserNotFound(res)
+
+    return false
+  }
+
+  const queryData = await sqlQuery(allUsersQuery())
+  const allUsers = queryData.rows
+
+  const matchingUsers = allUsers.filter(x => x.id === id)
+
+  if (matchingUsers.length === 0) {
+    sendUserNotFound(res)
 
     return false
   }
