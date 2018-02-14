@@ -74,25 +74,36 @@ describe('Login controller tests', () => {
     expect(next.called).to.equal(false)
   })
 
+  
+  const dbReturn = {
+    rowNum: 2,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+        },
+        {
+          id: 'batman',
+          pin: 'fuzzylotus6893',
+          f_name: 'Jerry',
+          l_name: 'Who cares',
+          role: 'employee',
+          token: '',
+          timestamp: '',
+        },
+      ],
+      error: false,
+      errorMsg: null,
+  }
+
+
+
   it('Returns invalid if id does not exist in database', async() => {
-    const dbReturn = {
-      rowNum: 2,
-        rows: [
-          {
-            id: 'A',
-          },
-          {
-            id: 'B',
-          },
-        ],
-        error: false,
-        errorMsg: null,
-    }
     const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
-        id: 'superman',
+        id: 'aquaman',
         pin: 'paSSWoRd',
       },
     }
@@ -111,21 +122,6 @@ describe('Login controller tests', () => {
   })
 
   it('Returns invalid if pin does not match database', async() => {
-    const dbReturn = {
-      rowNum: 2,
-        rows: [
-          {
-            id: 'superman',
-            pin: 'password',
-          },
-          {
-            id: 'batman',
-            pin: 'fuzzylotus6893'
-          },
-        ],
-        error: false,
-        errorMsg: null,
-    }
     const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
@@ -149,38 +145,16 @@ describe('Login controller tests', () => {
   })
 
   it('Returns JSON of user (without password) including key', async() => {
-    const thisUser = {
-      id: 'batman',
-      pin: 'fuzzylotus6893',
-      f_name: 'Jerry',
-      l_name: 'Who cares',
-      role: 'employee',
-      token: '',
-      timestamp: '',
-    }
-    
-    const dbReturn = {
-      rowNum: 2,
-        rows: [
-          {
-            id: 'superman',
-            pin: 'password',
-          },
-          {
-            ...thisUser,
-          },
-        ],
-        error: false,
-        errorMsg: null,
-    }
     const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
+    const thisUser = dbReturn.rows[1]
+
     const request = {
       body: {
-        id: 'batman',
-        pin: 'fuzzylotus6893',
+        id: thisUser.id,
+        pin: thisUser.pin,
       },
     }
 
@@ -189,7 +163,7 @@ describe('Login controller tests', () => {
     const next = sinon.spy()
   
     await loginController(req, res, next)
-  
+
     const expected = {
       id: thisUser.id,
       f_name: thisUser.f_name,
