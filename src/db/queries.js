@@ -8,6 +8,11 @@ export const getUserRow = id => ({
   values: [ id ],
 })
 
+export const deleteUser = id => ({
+  text: 'DELETE FROM "users" WHERE id = ($1)',
+  values: [ id ],
+})
+
 export const updateTimestampForUser = (id, timestamp) => ({
   text: 'UPDATE users SET timestamp = ($1) WHERE id = ($2)',
   values: [ timestamp, id ],
