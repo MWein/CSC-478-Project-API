@@ -6,19 +6,19 @@ import { sqlQuery } from '../db'
 
 
 const deleteUserController = async(req, res, next) => {
-  const id = req.body.id
+  const doomedId = req.body.doomedId
 
-  if (id === undefined) {
+  if (doomedId === undefined) {
     return res.status(500).json({ error: true, errorMsg: 'No ID provided' })
   }
 
-  const getUserResult = await sqlQuery(getUserRow(id))
+  const getUserResult = await sqlQuery(getUserRow(doomedId))
 
   if (getUserResult.rows.length === 0) {
     return res.status(500).json({ error: true, errorMsg: 'User not found' })
   }
 
-  const deleteResult = await sqlQuery(deleteUser(id))
+  const deleteResult = await sqlQuery(deleteUser(doomedId))
 
   if (deleteResult.error) {
     return res.status(500).json({ error: true, errorMsg: 'Database error' })

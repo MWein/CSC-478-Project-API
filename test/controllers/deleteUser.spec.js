@@ -38,7 +38,7 @@ describe('delete user controller tests', () => {
 
     const request = {
       body: {
-        id: 'mrNobody',
+        doomedId: 'mrNobody',
       },
     }
 
@@ -75,7 +75,7 @@ describe('delete user controller tests', () => {
 
     const request = {
       body: {
-        id: 'mrSomebody',
+        doomedId: 'mrSomebody',
       },
     }
 
