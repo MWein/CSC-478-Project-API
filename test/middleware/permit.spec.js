@@ -13,7 +13,11 @@ describe('Permit.js test', () => {
   it('Returns a function that responds with a 401 when given a request with no user, does not call next()', () => {
     const permitFunction = permit('admin')
     
-    const req = {}
+    const req = {
+      locals: {
+
+      }
+    }
 
     const statusSpy = sinon.spy(res, 'status')
     const next = sinon.spy()
@@ -31,9 +35,11 @@ describe('Permit.js test', () => {
     const permitFunction = permit('admin')
     
     const req = {
-      user: {
-        role: 'some other role'
-      }
+      locals: {
+        user: {
+          role: 'some other role',
+        },
+      },
     }
 
     const statusSpy = sinon.spy(res, 'status')
@@ -52,8 +58,10 @@ describe('Permit.js test', () => {
     const permitFunction = permit('manager', 'employee')
     
     const req = {
-      user: {
-        role: 'that guy, Fred, who steals from the cash register and thinks I dont know'
+      locals: {
+        user: {
+          role: 'that guy, Fred, who steals from the cash register and thinks I dont know'
+        }
       }
     }
 
@@ -73,8 +81,10 @@ describe('Permit.js test', () => {
     const permitFunction = permit('admin')
     
     const req = {
-      user: {
-        role: 'admin'
+      locals: {
+        user: {
+          role: 'admin'
+        }
       }
     }
 
@@ -94,10 +104,14 @@ describe('Permit.js test', () => {
     const permitFunction = permit(['admin', 'some guy'])
     
     const req = {
-      user: {
-        role: 'some guy'
+      locals: {
+        user: {
+          role: 'some guy'
+        }
       }
     }
+
+    console.log(req.locals.user.role)
 
     const statusSpy = sinon.spy(res, 'status')
     const next = sinon.spy()
