@@ -53,7 +53,7 @@ describe('Login controller tests', () => {
   
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
   })
 
   it('Returns invalid if pin is missing from request', async() => {
@@ -71,7 +71,7 @@ describe('Login controller tests', () => {
   
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No pin provided' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
   })
 
   
@@ -116,7 +116,7 @@ describe('Login controller tests', () => {
   
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
 
     dbStub.restore()
   })
@@ -139,7 +139,7 @@ describe('Login controller tests', () => {
   
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
 
     dbStub.restore()
   })
@@ -176,7 +176,7 @@ describe('Login controller tests', () => {
 
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
-    expect(next.called).to.equal(true)
+    expect(next).to.be.called
 
     // One for allUsers call
     // One for setting key and timestamp
