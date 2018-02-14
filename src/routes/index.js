@@ -6,7 +6,7 @@ import logoutController from '../controllers/logout'
 import permit from '../middleware/permit'
 import smokeTest from '../controllers/smokeTest'
 
-const router = express.Router()
+const router = express.Router() // eslint-disable-line new-cap
 
 router.get('/status', smokeTest)
 
