@@ -111,8 +111,6 @@ describe('Permit.js test', () => {
       }
     }
 
-    console.log(req.locals.user.role)
-
     const statusSpy = sinon.spy(res, 'status')
     const next = sinon.spy()
     
