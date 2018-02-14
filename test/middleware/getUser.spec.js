@@ -50,7 +50,7 @@ describe('getUser middleware tests', () => {
 
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No token provided' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
   })
 
 
@@ -71,7 +71,7 @@ describe('getUser middleware tests', () => {
 
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
 
     dbStub.restore()
   })
@@ -93,7 +93,7 @@ describe('getUser middleware tests', () => {
 
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
-    expect(next.called).to.equal(false)
+    expect(next).to.not.be.called
 
     dbStub.restore()
   })
@@ -115,7 +115,8 @@ describe('getUser middleware tests', () => {
 
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
-    expect(next.called).to.equal(false)
+    expect(dbStub.callCount).to.equal(2)
+    expect(next).to.not.be.called
 
     dbStub.restore()
   })
@@ -139,7 +140,7 @@ describe('getUser middleware tests', () => {
     const user = res.locals.user
 
     expect(user).to.equal(dbReturn.rows[0])
-    expect(next.called).to.equal(true)
+    expect(next).to.be.called
 
     // One for allUsers call
     // One for setting key and timestamp

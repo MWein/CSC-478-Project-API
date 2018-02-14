@@ -33,6 +33,8 @@ const getUser = async(req, res, next) => {
   const timeSinceLastAction = rightNow - new Date(timestamp)
 
   if (timeSinceLastAction > 900000) {
+    await sqlQuery(updateTimestampForUser(user.id, ''))
+
     return res.status(400).json({ error: true, errorMsg: 'Session timeout' })
   }
 
