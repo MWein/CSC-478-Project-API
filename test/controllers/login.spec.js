@@ -1,11 +1,14 @@
-import loginController, { generateUniqueKey } from '../../src/controllers/login'
+import loginController from '../../src/controllers/login'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
 import sinon from 'sinon'
+import genUniqKey from '../../src/helpers/generateUniqueKey'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
+
+const generateUniqueKey = genUniqKey.generateUniqueKey
 
 
 describe('Login controller tests', () => {
@@ -146,7 +149,67 @@ describe('Login controller tests', () => {
   })
 
   it('Returns JSON of user (without password) including key', async() => {
-    console.log('finish me')
+    const thisUser = {
+      id: 'batman',
+      pin: 'fuzzylotus6893',
+      f_name: 'Jerry',
+      l_name: 'Who cares',
+      role: 'employee',
+      token: '',
+      timestamp: '',
+    }
+    
+    const dbReturn = {
+      rowNum: 2,
+        rows: [
+          {
+            id: 'superman',
+            pin: 'password',
+          },
+          {
+            ...thisUser,
+          },
+        ],
+        error: false,
+        errorMsg: null,
+    }
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const request = {
+      body: {
+        id: 'batman',
+        pin: 'fuzzylotus6893',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+  
+    await loginController(req, res, next)
+  
+    const expected = {
+      id: thisUser.id,
+      f_name: thisUser.f_name,
+      l_name: thisUser.l_name,
+      role: thisUser.role,
+      token: genUniqTokenStub.returnValues[0],
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next.called).to.equal(true)
+
+    // One for allUsers call
+    // One for setting key and timestamp
+    expect(dbStub.callCount).to.equal(2)
+
+    dbStub.restore()
+    genUniqTokenStub.restore()
   })
 
 })

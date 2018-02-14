@@ -2,28 +2,8 @@ import {
   allUsers as allUsersQuery,
   updateTokenAndTimestampForUser,
 } from '../db/queries'
+import { generateUniqueKey } from '../helpers/generateUniqueKey'
 import { sqlQuery } from '../db'
-
-
-export const generateUniqueKey = keys => {
-  const chars = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' ]
-
-  const generateKeyHelper = key => {
-    const letter = Math.floor(Number(Math.random()) * 25)
-    const newKey = `${key}${chars[letter]}`
-
-    if (newKey.length >= 10 && !keys.includes(newKey)) {
-      return newKey
-    } else if (keys.includes(newKey)) {
-      return generateKeyHelper('')
-    }
-
-    return generateKeyHelper(newKey)
-  }
-
-  return generateKeyHelper('')
-}
 
 
 const sendInvalidCredentials = res => {
@@ -33,9 +13,6 @@ const sendInvalidCredentials = res => {
   })
 }
 
-export const logUserIn = async(id, newToken, timestamp) => {
-  await sqlQuery(updateTokenAndTimestampForUser(id, newToken, timestamp))
-}
 
 const loginController = async(req, res, next) => {
   const id = req.body.id
@@ -65,13 +42,16 @@ const loginController = async(req, res, next) => {
   const newToken = generateUniqueKey(allTokens)
   const timestamp = new Date()
 
-  logUserIn(id, newToken, timestamp)
+  await sqlQuery(updateTokenAndTimestampForUser(id, newToken, timestamp))
 
   const resultJson = {
     id: user.id,
     f_name: user.f_name,
     l_name: user.l_name,
+    role: user.role,
     token: newToken,
+    error: false,
+    errorMsg: '',
   }
 
   res.status(200).json(resultJson)
