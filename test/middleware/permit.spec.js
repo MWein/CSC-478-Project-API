@@ -2,6 +2,8 @@ import permit from '../../src/middleware/permit'
 import sinon from 'sinon'
 
 
+console.log('REWRITE PERMIT TESTS')
+
 describe('Permit.js test', () => {
   const res = {
     status: () => { return { json: () => {} }},
