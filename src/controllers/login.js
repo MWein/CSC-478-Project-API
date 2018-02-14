@@ -6,7 +6,7 @@ import { generateUniqueKey } from '../helpers/generateUniqueKey'
 import { sqlQuery } from '../db'
 
 
-const sendInvalidCredentials = (res, errorMsg) => {
+const sendErrorMessage = (res, errorMsg) => {
   res.status(400).json({
     error: true,
     errorMsg,
@@ -19,25 +19,30 @@ const loginController = async(req, res, next) => {
   const pin = req.body.pin
 
   if (id === undefined) {
-    return sendInvalidCredentials(res, 'No ID provided')
+    return sendErrorMessage(res, 'No ID provided')
   }
   if (pin === undefined) {
-    return sendInvalidCredentials(res, 'No pin provided')
+    return sendErrorMessage(res, 'No pin provided')
   }
 
   const queryData = await sqlQuery(allUsersQuery())
+
+  if (queryData.error) {
+    return sendErrorMessage(res, 'Internal server error')
+  }
+
   const allUsers = queryData.rows
 
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    return sendInvalidCredentials(res, 'User not found')
+    return sendErrorMessage(res, 'User not found')
   }
 
   const user = matchingUsers[0]
 
   if (user.pin !== pin) {
-    return sendInvalidCredentials(res, 'Invalid credentials')
+    return sendErrorMessage(res, 'Invalid credentials')
   }
 
   const allTokens = allUsers.map(user => user.token)
