@@ -1,8 +1,3 @@
-export const selectAllRows = () => ({
-  text: 'SELECT * FROM "test_table"',
-})
-
-
 // users table queries
 export const allUsers = () => ({
   text: 'SELECT * FROM "users"',
