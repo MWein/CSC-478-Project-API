@@ -90,6 +90,7 @@ describe('Login controller tests', () => {
     const request = {
       body: {
         id: 'superman',
+        pin: 'paSSWoRd',
       },
     }
 
