@@ -42,9 +42,7 @@ const loginController = async(req, res, next) => {
   const pin = req.body.pin
 
   if (id === undefined || pin === undefined) {
-    sendInvalidCredentials(res)
-
-    return false
+    return sendInvalidCredentials(res)
   }
 
   const queryData = await sqlQuery(allUsersQuery())
@@ -53,17 +51,13 @@ const loginController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    sendInvalidCredentials(res)
-
-    return false
+    return sendInvalidCredentials(res)
   }
 
   const user = matchingUsers[0]
 
   if (user.pin !== pin) {
-    sendInvalidCredentials(res)
-
-    return false
+    return sendInvalidCredentials(res)
   }
 
   const allTokens = allUsers.map(user => user.token)
