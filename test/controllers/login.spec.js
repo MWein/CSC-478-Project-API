@@ -108,7 +108,41 @@ describe('Login controller tests', () => {
   })
 
   it('Returns invalid if pin does not match database', async() => {
-    console.log('finish me')
+    const dbReturn = {
+      rowNum: 2,
+        rows: [
+          {
+            id: 'superman',
+            pin: 'password',
+          },
+          {
+            id: 'batman',
+            pin: 'fuzzylotus6893'
+          },
+        ],
+        error: false,
+        errorMsg: null,
+    }
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'superman',
+        pin: 'paSSWoRd',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+  
+    await loginController(req, res, next)
+  
+    expect(res.status).to.be.calledWith(400)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
+    expect(next.called).to.equal(false)
+
+    dbStub.restore()
   })
 
   it('Returns JSON of user (without password) including key', async() => {
