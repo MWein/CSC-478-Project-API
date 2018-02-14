@@ -6,10 +6,10 @@ import { generateUniqueKey } from '../helpers/generateUniqueKey'
 import { sqlQuery } from '../db'
 
 
-const sendInvalidCredentials = res => {
+const sendInvalidCredentials = (res, errorMsg) => {
   res.status(400).json({
     error: true,
-    errorMsg: 'Invalid credentials',
+    errorMsg,
   })
 }
 
@@ -18,8 +18,11 @@ const loginController = async(req, res, next) => {
   const id = req.body.id
   const pin = req.body.pin
 
-  if (id === undefined || pin === undefined) {
-    return sendInvalidCredentials(res)
+  if (id === undefined) {
+    return sendInvalidCredentials(res, 'No ID provided')
+  }
+  if (pin === undefined) {
+    return sendInvalidCredentials(res, 'No pin provided')
   }
 
   const queryData = await sqlQuery(allUsersQuery())
@@ -28,13 +31,13 @@ const loginController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    return sendInvalidCredentials(res)
+    return sendInvalidCredentials(res, 'User not found')
   }
 
   const user = matchingUsers[0]
 
   if (user.pin !== pin) {
-    return sendInvalidCredentials(res)
+    return sendInvalidCredentials(res, 'Invalid credentials')
   }
 
   const allTokens = allUsers.map(user => user.token)

@@ -52,7 +52,7 @@ describe('Login controller tests', () => {
     await loginController(req, res, next)
   
     expect(res.status).to.be.calledWith(400)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
     expect(next.called).to.equal(false)
   })
 
@@ -70,7 +70,7 @@ describe('Login controller tests', () => {
     await loginController(req, res, next)
   
     expect(res.status).to.be.calledWith(400)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No pin provided' })
     expect(next.called).to.equal(false)
   })
 
@@ -115,7 +115,7 @@ describe('Login controller tests', () => {
     await loginController(req, res, next)
   
     expect(res.status).to.be.calledWith(400)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
 
     dbStub.restore()
