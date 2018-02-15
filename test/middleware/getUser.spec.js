@@ -103,7 +103,7 @@ describe('getUser middleware tests', () => {
     await getUser(req, res, next)
 
     expect(res.status).to.be.calledWith(400)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid token' })
     expect(next).to.not.be.called
 
     dbStub.restore()

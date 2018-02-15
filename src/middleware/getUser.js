@@ -23,7 +23,7 @@ const getUser = async(req, res, next) => {
   const matchingUsers = allUsers.filter(user => user.token === token)
 
   if (matchingUsers.length === 0) {
-    return res.status(400).json({ error: true, errorMsg: 'User not found' })
+    return res.status(400).json({ error: true, errorMsg: 'Invalid token' })
   }
 
   const user = matchingUsers[0]
