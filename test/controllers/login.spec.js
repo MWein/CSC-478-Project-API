@@ -38,6 +38,42 @@ describe('Login controller tests', () => {
     expect(second).not.to.equal(third)
   })
 
+
+
+  it('Responds properly to database error', async() => {
+    const dbReturn = {
+      rowNum: 0,
+      rows: [],
+      error: true,
+      errorMsg: 'Some database error',
+    }
+
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'hello',
+        pin: 'myp@ssw0rd',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    expect(res.status).to.be.calledWith(500)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(next).to.not.be.called
+
+    expect(dbStub.callCount).to.equal(1)
+
+    dbStub.restore()
+  })
+
+
+
   it('Returns invalid if id is missing from request', async() => {
     const request = {
       body: {

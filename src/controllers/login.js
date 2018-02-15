@@ -28,7 +28,7 @@ const loginController = async(req, res, next) => {
   const queryData = await sqlQuery(allUsersQuery())
 
   if (queryData.error) {
-    return sendErrorMessage(res, 'Internal server error')
+    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
   }
 
   const allUsers = queryData.rows

@@ -37,6 +37,39 @@ const dbReturn = {
 
 describe('getUser middleware tests', () => {
 
+
+  it('Responds properly to database error', async() => {
+    const dbReturnError = {
+      rowNum: 0,
+      rows: [],
+      error: true,
+      errorMsg: 'Some database error',
+    }
+
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturnError)
+
+    const request = {
+      body: {
+        token: 'asdfasdf',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await getUser(req, res, next)
+
+    expect(res.status).to.be.calledWith(500)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(next).to.not.be.called
+
+    expect(dbStub.callCount).to.equal(1)
+
+    dbStub.restore()
+  })
+
+
   it('returns error if token is not provided', async() => {
     const request = {
       body: {},

@@ -10,6 +10,39 @@ const expect = chai.expect
 
 describe('delete user controller tests', () => {
 
+
+  it('Responds properly to database error', async() => {
+    const dbReturn = {
+      rowNum: 0,
+      rows: [],
+      error: true,
+      errorMsg: 'Some database error',
+    }
+
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        doomedId: 'mrNobody',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await deleteUserController(req, res, next)
+
+    expect(res.status).to.be.calledWith(500)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(next).to.not.be.called
+
+    expect(dbStub.callCount).to.equal(1)
+
+    dbStub.restore()
+  })
+
+
   it('returns an error if id is not passed to controller', async() => {
     const request = {
       body: {},

@@ -14,6 +14,10 @@ const deleteUserController = async(req, res, next) => {
 
   const getUserResult = await sqlQuery(getUserRow(doomedId))
 
+  if (getUserResult.error) {
+    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
+  }
+
   if (getUserResult.rows.length === 0) {
     return res.status(500).json({ error: true, errorMsg: 'User not found' })
   }

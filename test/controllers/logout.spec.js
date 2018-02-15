@@ -9,6 +9,40 @@ const expect = chai.expect
 
 
 describe('logout controller tests', () => {
+
+
+  it('Responds properly to database error', async() => {
+    const dbReturn = {
+      rowNum: 0,
+      rows: [],
+      error: true,
+      errorMsg: 'Some database error',
+    }
+
+    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'hello',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await logoutController(req, res, next)
+
+    expect(res.status).to.be.calledWith(500)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(next).to.not.be.called
+
+    expect(dbStub.callCount).to.equal(1)
+
+    dbStub.restore()
+  })
+
+
   it('Returns user not found error when no id is sent in body', async() => {
     const request = {
       body: {},

@@ -13,6 +13,11 @@ const getUser = async(req, res, next) => {
   }
 
   const allUsersQData = await sqlQuery(allUsersQuery())
+
+  if (allUsersQData.error) {
+    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
+  }
+
   const allUsers = allUsersQData.rows
 
   const matchingUsers = allUsers.filter(user => user.token === token)
