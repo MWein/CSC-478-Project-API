@@ -13,6 +13,11 @@ export const createUser = (id, f_name, l_name, password, role) => ({
   values: [ id, f_name, l_name, password, role ],
 })
 
+export const setUserActive = (id, active) => ({
+  text: 'UPDATE users SET active = ($1) WHERE id = ($2)',
+  values: [ active, id ],
+})
+
 // export const deleteUser = id => ({
 //   text: 'DELETE FROM "users" WHERE id = ($1)',
 //   values: [ id ],
