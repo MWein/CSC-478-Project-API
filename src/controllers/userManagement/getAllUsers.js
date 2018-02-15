@@ -13,7 +13,7 @@ const getAllUsersController = async(req, res, next) => {
   }
 
   const applyExclusion = () => {
-    if (excludeInactive) {
+    if (excludeInactive === 'true' || excludeInactive === true) {
       return usersQuery.rows.filter(user => user.active)
     }
 
