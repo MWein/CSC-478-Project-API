@@ -27,7 +27,7 @@ describe('get all users controller tests', () => {
     await getAllUsersController(req, res, next)
 
     expect(res.status).to.be.calledWith(500)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)

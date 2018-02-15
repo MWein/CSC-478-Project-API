@@ -1,3 +1,5 @@
+import { forbiddenErrorMessage } from '../errorMessages'
+
 const permit = permittedRoles => {
   const isAllowed = role => permittedRoles.includes(role)
 
@@ -5,7 +7,7 @@ const permit = permittedRoles => {
     if (res.locals.user && isAllowed(res.locals.user.role)) {
       next()
     } else {
-      res.status(401).json({ error: true, errorMsg: 'Forbidden' })
+      forbiddenErrorMessage(res)
     }
   }
 }

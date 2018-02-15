@@ -2,6 +2,12 @@ import {
   allUsers as allUsersQuery,
   updateTimestampForUser,
 } from '../db/queries'
+import {
+  databaseErrorMessage,
+  invalidCredentialsErrorMessage,
+  noTokenProvidedErrorMessage,
+  timeoutErrorMessage,
+} from '../errorMessages'
 import { sqlQuery } from '../db'
 
 
@@ -9,13 +15,13 @@ const getUser = async(req, res, next) => {
   const token = req.body.token
 
   if (token === undefined) {
-    return res.status(400).json({ error: true, errorMsg: 'No token provided' })
+    return noTokenProvidedErrorMessage(res)
   }
 
   const allUsersQData = await sqlQuery(allUsersQuery())
 
   if (allUsersQData.error) {
-    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
+    return databaseErrorMessage(res)
   }
 
   const allUsers = allUsersQData.rows
@@ -23,14 +29,14 @@ const getUser = async(req, res, next) => {
   const matchingUsers = allUsers.filter(user => user.token === token)
 
   if (matchingUsers.length === 0) {
-    return res.status(400).json({ error: true, errorMsg: 'Invalid token' })
+    return invalidCredentialsErrorMessage(res)
   }
 
   const user = matchingUsers[0]
   const timestamp = user.timestamp
 
   if (timestamp === '') {
-    return res.status(400).json({ error: true, errorMsg: 'Session timeout' })
+    return timeoutErrorMessage(res)
   }
 
   const rightNow = new Date()
@@ -40,7 +46,7 @@ const getUser = async(req, res, next) => {
   if (timeSinceLastAction > 900000) {
     await sqlQuery(updateTimestampForUser(user.id, ''))
 
-    return res.status(400).json({ error: true, errorMsg: 'Session timeout' })
+    return timeoutErrorMessage(res)
   }
 
   await sqlQuery(updateTimestampForUser(user.id, rightNow))

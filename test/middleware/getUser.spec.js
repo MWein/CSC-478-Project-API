@@ -15,7 +15,7 @@ const dbReturn = {
         id: 'the_real_batman',
         role: 'admin',
         token: 'fffffffff',
-        timestamp: 'January 1, 4000'
+        timestamp: 'January 1, 5000'
       },
       {
         id: 'batman2',
@@ -61,7 +61,7 @@ describe('getUser middleware tests', () => {
     await getUser(req, res, next)
 
     expect(res.status).to.be.calledWith(500)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Internal server error' })
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
@@ -81,7 +81,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(400)
+    expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No token provided' })
     expect(next).to.not.be.called
   })
@@ -102,8 +102,8 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(400)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid token' })
+    expect(res.status).to.be.calledWith(500)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
 
     dbStub.restore()
@@ -124,7 +124,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(400)
+    expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(next).to.not.be.called
 
@@ -146,7 +146,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(400)
+    expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(dbStub.callCount).to.equal(2)
     expect(next).to.not.be.called

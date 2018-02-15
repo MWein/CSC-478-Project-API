@@ -1,22 +1,22 @@
 import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/queries'
+import {
+  databaseErrorMessage,
+  userNotFoundMessage,
+} from '../errorMessages'
 import { sqlQuery } from '../db'
 
-
-const sendUserNotFound = res => {
-  res.status(500).json({ error: true, errorMsg: 'User not found' })
-}
 
 const logoutController = async(req, res, next) => {
   const id = req.body.id
 
   if (id === undefined) {
-    return sendUserNotFound(res)
+    return userNotFoundMessage(res)
   }
 
   const queryData = await sqlQuery(allUsersQuery())
 
   if (queryData.error) {
-    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
+    return databaseErrorMessage(res)
   }
 
   const allUsers = queryData.rows
@@ -24,7 +24,7 @@ const logoutController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    return sendUserNotFound(res)
+    return userNotFoundMessage(res)
   }
 
   await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))

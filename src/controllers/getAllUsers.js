@@ -1,6 +1,5 @@
-import {
-  allUsers,
-} from '../db/queries'
+import { allUsers } from '../db/queries'
+import { databaseErrorMessage } from '../errorMessages'
 import { sqlQuery } from '../db'
 
 
@@ -8,7 +7,7 @@ const getAllUsersController = async(req, res, next) => {
   const usersQuery = await sqlQuery(allUsers())
 
   if (usersQuery.error) {
-    return res.status(500).json({ error: true, errorMsg: 'Internal server error' })
+    return databaseErrorMessage(res)
   }
 
   const rowsWithoutSensitiveInfo = usersQuery.rows.map(user => ({
