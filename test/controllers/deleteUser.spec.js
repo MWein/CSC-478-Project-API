@@ -56,7 +56,7 @@ describe('delete user controller tests', () => {
   })
 
 
-  it('returns an error if id is not found in database', async() => {
+  it('Successfully deletes user from database', async() => {
     const dbReturn = {
       rowNum: 0,
       rows: [
