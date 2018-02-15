@@ -13,10 +13,10 @@ export const createUser = (id, f_name, l_name, password, role) => ({
   values: [ id, f_name, l_name, password, role ],
 })
 
-export const deleteUser = id => ({
-  text: 'DELETE FROM "users" WHERE id = ($1)',
-  values: [ id ],
-})
+// export const deleteUser = id => ({
+//   text: 'DELETE FROM "users" WHERE id = ($1)',
+//   values: [ id ],
+// })
 
 export const updateTimestampForUser = (id, timestamp) => ({
   text: 'UPDATE users SET timestamp = ($1) WHERE id = ($2)',
