@@ -39,7 +39,7 @@ describe('get all users controller tests', () => {
   })
 
 
-  it('Returns all users in database without token, password, or timestamp', async() => {
+  it('Returns all active users in database without token, password, or timestamp', async() => {
     const dbReturn = {
       rowNum: 2,
       rows: [
@@ -51,6 +51,17 @@ describe('get all users controller tests', () => {
           token: 'asdlkfjasdf',
           timestamp: 'January 21, 2018',
           role: 'admin',
+          active: true,
+        },
+        {
+          id: 'jackspar',
+          f_name: 'Jack',
+          l_name: 'Sparrow',
+          pin: 'mypassword',
+          token: 'fklklfglkjfgdjlk',
+          timestamp: 'January 21, 2018',
+          role: 'admin',
+          active: true,
         },
         {
           id: 'Santa',
@@ -60,6 +71,7 @@ describe('get all users controller tests', () => {
           token: 'asdfasdfdfhfhjhjk',
           timestamp: 'January 21, 2018',
           role: 'employee',
+          active: false,
         },
       ],
       error: false,
@@ -76,10 +88,10 @@ describe('get all users controller tests', () => {
           role: 'admin',
         },
         {
-          id: 'Santa',
-          f_name: 'Chris',
-          l_name: 'Kringle',
-          role: 'employee',
+          id: 'jackspar',
+          f_name: 'Jack',
+          l_name: 'Sparrow',
+          role: 'admin',
         },
       ],
       error: dbReturn.error,
@@ -88,14 +100,20 @@ describe('get all users controller tests', () => {
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const req = mockReq()
+    const request = {
+      body: {
+        excludeInactive: true,
+      },
+    }
+
+    const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
 
     await getAllUsersController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.send).to.be.calledWith(expected)
+    expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
 
     expect(dbStub.callCount).to.equal(1)
