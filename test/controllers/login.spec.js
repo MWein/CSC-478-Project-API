@@ -11,7 +11,7 @@ const expect = chai.expect
 const generateUniqueKey = genUniqKey.generateUniqueKey
 
 
-describe('Login controller tests', () => {
+describe('generateUniqueKey tests', () => {
   it('generateUniqueKey generates a unique key', () => {
     const mockKeys = [
       'ghKjfdUkfj',
@@ -37,8 +37,15 @@ describe('Login controller tests', () => {
     expect(first).not.to.equal(third)
     expect(second).not.to.equal(third)
   })
+})
 
 
+describe('Login controller tests', () => {
+
+  let dbStub
+  afterEach(() => {
+    dbStub.restore()
+  })
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
@@ -48,7 +55,7 @@ describe('Login controller tests', () => {
       errorMsg: 'Some database error',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -68,8 +75,6 @@ describe('Login controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
 
 
@@ -135,7 +140,7 @@ describe('Login controller tests', () => {
 
 
   it('Returns invalid if id does not exist in database', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -154,11 +159,11 @@ describe('Login controller tests', () => {
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
 
-    dbStub.restore()
+    
   })
 
   it('Returns invalid if pin does not match database', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -176,12 +181,10 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
-
-    dbStub.restore()
   })
 
   it('Returns JSON of user (without password) including key', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -218,7 +221,6 @@ describe('Login controller tests', () => {
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
 
-    dbStub.restore()
     genUniqTokenStub.restore()
   })
 

@@ -9,7 +9,10 @@ const expect = chai.expect
 
 
 describe('delete user controller tests', () => {
-
+  let dbStub
+  afterEach(() => {
+    dbStub.restore()
+  })
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
@@ -19,7 +22,7 @@ describe('delete user controller tests', () => {
       errorMsg: 'Some database error',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -38,8 +41,6 @@ describe('delete user controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
 
 
@@ -67,7 +68,7 @@ describe('delete user controller tests', () => {
       errorMsg: '',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -84,9 +85,44 @@ describe('delete user controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
-
-    dbStub.restore()
   })
+
+
+  it('Refuses to delete superuser from database', async() => {
+    const dbReturn = {
+      rowNum: 0,
+      rows: [
+        {
+          id: 'superuser',
+        },
+        {
+          id: 'Santa',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        doomedId: 'superuser',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await deleteUserController(req, res, next)
+
+    expect(res.status).to.be.calledWith(403)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Forbidden' })
+    expect(next).to.not.be.called
+    expect(dbStub).to.not.be.called
+  })
+
 
 
   it('Successfully deletes user from database', async() => {
@@ -104,7 +140,7 @@ describe('delete user controller tests', () => {
       errorMsg: '',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -123,9 +159,6 @@ describe('delete user controller tests', () => {
     expect(next).to.be.called
 
     expect(dbStub.callCount).to.equal(2)
-
-    dbStub.restore()
   })
-
 
 })

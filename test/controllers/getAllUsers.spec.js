@@ -10,6 +10,11 @@ const expect = chai.expect
 
 describe('get all users controller tests', () => {
 
+  let dbStub
+  afterEach(() => {
+    dbStub.restore()
+  })
+
   it('Responds properly to database error', async() => {
     const dbReturn = {
       rowNum: 0,
@@ -18,7 +23,7 @@ describe('get all users controller tests', () => {
       errorMsg: 'Some database error',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const req = mockReq()
     const res = mockRes()
@@ -31,8 +36,6 @@ describe('get all users controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
 
 
@@ -83,7 +86,7 @@ describe('get all users controller tests', () => {
       errorMsg: dbReturn.errorMsg,
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const req = mockReq()
     const res = mockRes()
@@ -96,9 +99,6 @@ describe('get all users controller tests', () => {
     expect(next).to.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
-
 
 })

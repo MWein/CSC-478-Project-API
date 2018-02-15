@@ -37,6 +37,10 @@ const dbReturn = {
 
 describe('getUser middleware tests', () => {
 
+  let dbStub
+  afterEach(() => {
+    dbStub.restore()
+  })
 
   it('Responds properly to database error', async() => {
     const dbReturnError = {
@@ -46,7 +50,7 @@ describe('getUser middleware tests', () => {
       errorMsg: 'Some database error',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturnError)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturnError)
 
     const request = {
       body: {
@@ -65,8 +69,6 @@ describe('getUser middleware tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
 
 
@@ -88,7 +90,7 @@ describe('getUser middleware tests', () => {
 
 
   it('returns error if token does not exist in the table', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
     
     const request = {
       body: {
@@ -105,12 +107,10 @@ describe('getUser middleware tests', () => {
     expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
-
-    dbStub.restore()
   })
 
   it('returns error if token exists but the timestamp is empty string', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
     
     const request = {
       body: {
@@ -127,12 +127,10 @@ describe('getUser middleware tests', () => {
     expect(res.status).to.be.calledWith(408)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(next).to.not.be.called
-
-    dbStub.restore()
   })
   
   it('returns error if token exists but the timestamp is expired', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
     
     const request = {
       body: {
@@ -150,13 +148,11 @@ describe('getUser middleware tests', () => {
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(dbStub.callCount).to.equal(2)
     expect(next).to.not.be.called
-
-    dbStub.restore()
   })
 
 
   it('returns role if token exists and the timestamp is not expired', async() => {
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
     
     const request = {
       body: {
@@ -178,10 +174,5 @@ describe('getUser middleware tests', () => {
     // One for allUsers call
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
-
-    dbStub.restore()
   })
-
-
-
 })

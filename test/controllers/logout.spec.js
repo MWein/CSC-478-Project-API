@@ -10,6 +10,10 @@ const expect = chai.expect
 
 describe('logout controller tests', () => {
 
+  let dbStub
+  afterEach(() => {
+    dbStub.restore()
+  })
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
@@ -19,7 +23,7 @@ describe('logout controller tests', () => {
       errorMsg: 'Some database error',
     }
 
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -38,8 +42,6 @@ describe('logout controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
-
-    dbStub.restore()
   })
 
 
@@ -74,7 +76,7 @@ describe('logout controller tests', () => {
         error: false,
         errorMsg: null,
     }
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -91,8 +93,6 @@ describe('logout controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
-
-    dbStub.restore()
   })
 
 
@@ -110,7 +110,7 @@ describe('logout controller tests', () => {
         error: false,
         errorMsg: null,
     }
-    const dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
@@ -127,7 +127,5 @@ describe('logout controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.send).to.be.calledWith('success')
     expect(next.called).to.equal(true)
-
-    dbStub.restore()
   })
 })
