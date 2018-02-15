@@ -1,15 +1,15 @@
 import {
   allUsers as allUsersQuery,
   createUser,
-} from '../db/queries'
+} from '../../db/queries'
 import {
   databaseErrorMessage,
   idAlreadyExistsErrorMessage,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
   noRoleProvidedErrorMessage,
-} from '../errorMessages'
-import { sqlQuery } from '../db'
+} from '../../errorMessages'
+import { sqlQuery } from '../../db'
 
 
 const createUserController = async(req, res, next) => {

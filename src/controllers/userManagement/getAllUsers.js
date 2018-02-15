@@ -1,6 +1,6 @@
-import { allUsers } from '../db/queries'
-import { databaseErrorMessage } from '../errorMessages'
-import { sqlQuery } from '../db'
+import { allUsers } from '../../db/queries'
+import { databaseErrorMessage } from '../../errorMessages'
+import { sqlQuery } from '../../db'
 
 
 const getAllUsersController = async(req, res, next) => {

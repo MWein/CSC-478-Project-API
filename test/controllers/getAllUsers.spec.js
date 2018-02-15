@@ -1,4 +1,4 @@
-import getAllUsersController from '../../src/controllers/getAllUsers'
+import getAllUsersController from '../../src/controllers/userManagement/getAllUsers'
 import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
