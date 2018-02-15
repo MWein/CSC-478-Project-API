@@ -26,6 +26,10 @@ export const noPinProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No pin provided' })
 }
 
+export const noRoleProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No role provided' })
+}
+
 export const noTokenProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No token provided' })
 }
