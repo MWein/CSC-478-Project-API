@@ -1,5 +1,4 @@
 # API Documentation
----
 
 ## **/status**
 
