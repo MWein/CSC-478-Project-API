@@ -26,6 +26,7 @@ const getAllUsersController = async(req, res, next) => {
     f_name: user.f_name,
     l_name: user.l_name,
     role: user.role,
+    active: user.active,
   }))
 
   const returnVal = {
