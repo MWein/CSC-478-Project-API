@@ -1,5 +1,6 @@
 import {
   databaseErrorMessage,
+  forbiddenErrorMessage,
   noIdProvidedErrorMessage,
   userNotFoundErrorMessage,
 } from '../errorMessages'
@@ -16,6 +17,8 @@ const deleteUserController = async(req, res, next) => {
 
   if (doomedId === undefined) {
     return noIdProvidedErrorMessage(res)
+  } else if (doomedId === 'superuser') {
+    return forbiddenErrorMessage(res)
   }
 
   const getUserResult = await sqlQuery(getUserRow(doomedId))
