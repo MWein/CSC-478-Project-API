@@ -9,7 +9,7 @@ const expect = chai.expect
 
 describe('Permit.js test', () => {
 
-  it('Returns a function that responds with a 401 when given a request with no user, does not call next()', () => {
+  it('Returns a function that responds with a 403 when given a request with no user, does not call next()', () => {
     const permitFunction = permit('admin')
     
     const req = mockReq()
@@ -18,13 +18,13 @@ describe('Permit.js test', () => {
     
     permitFunction(req, res, next)
 
-    expect(res.status).to.be.calledWith(401)
+    expect(res.status).to.be.calledWith(403)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Forbidden' })
     expect(next).to.not.be.called
   })
 
 
-  it('Returns a function that responds with a 401 when given a request with a denied user, does not call next()', () => {
+  it('Returns a function that responds with a 403 when given a request with a denied user, does not call next()', () => {
     const permitFunction = permit('admin')
 
     const req = mockReq()
@@ -37,13 +37,13 @@ describe('Permit.js test', () => {
 
     permitFunction(req, res, next)
 
-    expect(res.status).to.be.calledWith(401)
+    expect(res.status).to.be.calledWith(403)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Forbidden' })
     expect(next).to.not.be.called
   })
 
 
-  it('Returns a function that responds with a 401 when given a request with a denied user and multiple possibilities, does not call next()', () => {
+  it('Returns a function that responds with a 403 when given a request with a denied user and multiple possibilities, does not call next()', () => {
     const permitFunction = permit('manager', 'employee')
 
     const req = mockReq()
@@ -56,7 +56,7 @@ describe('Permit.js test', () => {
     
     permitFunction(req, res, next)
 
-    expect(res.status).to.be.calledWith(401)
+    expect(res.status).to.be.calledWith(403)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Forbidden' })
     expect(next).to.not.be.called
   })

@@ -1,7 +1,7 @@
 import {
   databaseErrorMessage,
   noIdProvidedErrorMessage,
-  userNotFoundMessage,
+  userNotFoundErrorMessage,
 } from '../errorMessages'
 import {
   deleteUser,
@@ -25,7 +25,7 @@ const deleteUserController = async(req, res, next) => {
   }
 
   if (getUserResult.rows.length === 0) {
-    return userNotFoundMessage(res)
+    return userNotFoundErrorMessage(res)
   }
 
   await sqlQuery(deleteUser(doomedId))

@@ -87,7 +87,7 @@ describe('Login controller tests', () => {
   
     await loginController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
     expect(next).to.not.be.called
   })
@@ -105,7 +105,7 @@ describe('Login controller tests', () => {
   
     await loginController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No pin provided' })
     expect(next).to.not.be.called
   })
@@ -150,7 +150,7 @@ describe('Login controller tests', () => {
   
     await loginController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
 
@@ -173,7 +173,7 @@ describe('Login controller tests', () => {
   
     await loginController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
 

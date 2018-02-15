@@ -7,7 +7,7 @@ import {
   invalidCredentialsErrorMessage,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
-  userNotFoundMessage,
+  userNotFoundErrorMessage,
 } from '../errorMessages'
 import { generateUniqueKey } from '../helpers/generateUniqueKey'
 import { sqlQuery } from '../db'
@@ -35,7 +35,7 @@ const loginController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    return userNotFoundMessage(res)
+    return userNotFoundErrorMessage(res)
   }
 
   const user = matchingUsers[0]

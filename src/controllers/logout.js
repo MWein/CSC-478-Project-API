@@ -1,7 +1,7 @@
 import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/queries'
 import {
   databaseErrorMessage,
-  userNotFoundMessage,
+  userNotFoundErrorMessage,
 } from '../errorMessages'
 import { sqlQuery } from '../db'
 
@@ -10,7 +10,7 @@ const logoutController = async(req, res, next) => {
   const id = req.body.id
 
   if (id === undefined) {
-    return userNotFoundMessage(res)
+    return userNotFoundErrorMessage(res)
   }
 
   const queryData = await sqlQuery(allUsersQuery())
@@ -24,7 +24,7 @@ const logoutController = async(req, res, next) => {
   const matchingUsers = allUsers.filter(x => x.id === id)
 
   if (matchingUsers.length === 0) {
-    return userNotFoundMessage(res)
+    return userNotFoundErrorMessage(res)
   }
 
   await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))

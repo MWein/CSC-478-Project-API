@@ -81,7 +81,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No token provided' })
     expect(next).to.not.be.called
   })
@@ -102,7 +102,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
 
@@ -124,7 +124,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(408)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(next).to.not.be.called
 
@@ -146,7 +146,7 @@ describe('getUser middleware tests', () => {
 
     await getUser(req, res, next)
 
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(408)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(dbStub.callCount).to.equal(2)
     expect(next).to.not.be.called

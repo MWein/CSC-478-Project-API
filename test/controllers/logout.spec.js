@@ -54,7 +54,7 @@ describe('logout controller tests', () => {
   
     await logoutController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
   })
@@ -88,7 +88,7 @@ describe('logout controller tests', () => {
   
     await logoutController(req, res, next)
   
-    expect(res.status).to.be.calledWith(500)
+    expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
 
