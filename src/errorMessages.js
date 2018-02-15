@@ -30,6 +30,10 @@ export const noRoleProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No role provided' })
 }
 
+export const idAlreadyExistsErrorMessage = res => {
+  res.status(400).json({ error: true, errorMsg: 'ID already exists' })
+}
+
 export const noTokenProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No token provided' })
 }
