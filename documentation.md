@@ -223,13 +223,15 @@
       id: 'superuser',
       f_name: '',
       l_name: '',
-      role: 'admin'
+      role: 'admin',
+      timestamp: 'Thu Feb 15 2018 23:55:42 GMT-0600 (CST)',
     },
     {
       id: '0123',
       f_name: 'Brad',
       l_name: 'Grimshaw',
       role: 'admin',
+      timestamp: 'Thu Feb 15 2018 23:55:42 GMT-0600 (CST)',
     },
   ],
   error: false,

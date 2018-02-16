@@ -20,6 +20,7 @@ const signedInUsersController = async(req, res, next) => {
     f_name: user.f_name,
     l_name: user.l_name,
     role: user.role,
+    timestamp: new Date(user.timestamp).toString(),
   }))
 
   const returnVal = {
