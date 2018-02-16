@@ -7,7 +7,6 @@ import userManagementRoutes from './userManagementRoutes'
 const router = express.Router() // eslint-disable-line new-cap
 
 router.get('/status', smokeTest)
-
 router.post('/login', loginController)
 router.post('/logout', logoutController)
 

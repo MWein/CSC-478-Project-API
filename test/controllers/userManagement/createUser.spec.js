@@ -1,8 +1,8 @@
-import createUserController from '../../src/controllers/userManagement/createUser'
+import createUserController from '../../../src/controllers/userManagement/createUser'
 import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
-import db from '../../src/db/index'
+import db from '../../../src/db/index'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
