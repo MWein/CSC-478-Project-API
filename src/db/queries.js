@@ -8,9 +8,9 @@ export const getUserRow = id => ({
   values: [ id ],
 })
 
-export const createUser = (id, f_name, l_name, password, role) => ({
-  text: 'INSERT INTO users (id, f_name, l_name, pin, token, timestamp, role) VALUES (($1), ($2), ($3), ($4), \'\', \'\', ($5))',
-  values: [ id, f_name, l_name, password, role ],
+export const createUser = (id, f_name, l_name, password, role, active) => ({
+  text: 'INSERT INTO users (id, f_name, l_name, pin, token, timestamp, role, active) VALUES (($1), ($2), ($3), ($4), \'\', \'\', ($5), ($6))',
+  values: [ id, f_name, l_name, password, role, active ],
 })
 
 export const setUserActive = (id, active) => ({

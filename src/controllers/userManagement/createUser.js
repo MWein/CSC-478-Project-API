@@ -40,7 +40,7 @@ const createUserController = async(req, res, next) => {
     return idAlreadyExistsErrorMessage(res)
   }
 
-  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole))
+  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole, true))
 
   if (qResult.error) {
     return databaseErrorMessage(res)
