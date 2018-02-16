@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
@@ -98,6 +100,41 @@ describe('Login controller tests', () => {
         role: 'employee',
         token: '',
         timestamp: '',
+        secQues: '',
+        secAns: '',
+      },
+      {
+        id: 'averageman',
+        pin: 'batmansucks',
+        f_name: 'Brock',
+        l_name: 'Buster',
+        role: 'admin',
+        token: '',
+        timestamp: '',
+        secQues: 'Some question',
+        secAns: '',
+      },
+      {
+        id: 'aquaman',
+        pin: 'water',
+        f_name: 'I dont know',
+        l_name: 'His name',
+        role: 'employee',
+        token: '',
+        timestamp: '',
+        secQues: '',
+        secAns: 'Some answer',
+      },
+      {
+        id: 'wonder woman',
+        pin: 'invisiblePlane2',
+        f_name: 'Wonder',
+        l_name: 'Woman',
+        role: 'admin',
+        token: '',
+        timestamp: '',
+        secQues: 'Question',
+        secAns: 'Some answer',
       },
     ],
     error: false,
@@ -110,7 +147,7 @@ describe('Login controller tests', () => {
 
     const request = {
       body: {
-        id: 'aquaman',
+        id: 'God',
         pin: 'paSSWoRd',
       },
     }
@@ -125,6 +162,7 @@ describe('Login controller tests', () => {
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
   })
+
 
   it('Returns invalid if pin does not match database', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
@@ -147,7 +185,8 @@ describe('Login controller tests', () => {
     expect(next).to.not.be.called
   })
 
-  it('Returns JSON of user (without password) including key', async() => {
+
+  it('Returns JSON of user (without password) including key, security question needed', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
@@ -173,6 +212,136 @@ describe('Login controller tests', () => {
       l_name: thisUser.l_name,
       role: thisUser.role,
       token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: true,
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    // One for allUsers call
+    // One for setting key and timestamp
+    expect(dbStub.callCount).to.equal(2)
+
+    genUniqTokenStub.restore()
+  })
+
+
+  it('Returns needsSecurityQuestion true if security question is filled but answer is blank', async() => {
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const thisUser = dbReturn.rows[2]
+
+    const request = {
+      body: {
+        id: thisUser.id,
+        pin: thisUser.pin,
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const expected = {
+      id: thisUser.id,
+      f_name: thisUser.f_name,
+      l_name: thisUser.l_name,
+      role: thisUser.role,
+      token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: true,
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    // One for allUsers call
+    // One for setting key and timestamp
+    expect(dbStub.callCount).to.equal(2)
+
+    genUniqTokenStub.restore()
+  })
+
+
+  it('Returns needsSecurityQuestion true if security question is blank and answer is blank', async() => {
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const thisUser = dbReturn.rows[3]
+
+    const request = {
+      body: {
+        id: thisUser.id,
+        pin: thisUser.pin,
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const expected = {
+      id: thisUser.id,
+      f_name: thisUser.f_name,
+      l_name: thisUser.l_name,
+      role: thisUser.role,
+      token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: true,
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    // One for allUsers call
+    // One for setting key and timestamp
+    expect(dbStub.callCount).to.equal(2)
+
+    genUniqTokenStub.restore()
+  })
+
+
+  it('Returns needsSecurityQuestion true if security question and answer is filled', async() => {
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const thisUser = dbReturn.rows[4]
+
+    const request = {
+      body: {
+        id: thisUser.id,
+        pin: thisUser.pin,
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const expected = {
+      id: thisUser.id,
+      f_name: thisUser.f_name,
+      l_name: thisUser.l_name,
+      role: thisUser.role,
+      token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: false,
       error: false,
       errorMsg: '',
     }

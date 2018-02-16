@@ -19,8 +19,7 @@ const loginController = async(req, res, next) => {
 
   if (id === undefined) {
     return noIdProvidedErrorMessage(res)
-  }
-  if (pin === undefined) {
+  } else if (pin === undefined) {
     return noPinProvidedErrorMessage(res)
   }
 
@@ -44,6 +43,8 @@ const loginController = async(req, res, next) => {
     return invalidCredentialsErrorMessage(res)
   }
 
+  const needsSecurityQuestion = user.secQues === '' || user.secAns === ''
+
   const allTokens = allUsers.map(user => user.token)
 
   const newToken = generateUniqueKey(allTokens)
@@ -57,6 +58,7 @@ const loginController = async(req, res, next) => {
     l_name: user.l_name,
     role: user.role,
     token: newToken,
+    needsSecurityQuestion,
     error: false,
     errorMsg: '',
   }
