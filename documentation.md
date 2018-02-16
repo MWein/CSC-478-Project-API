@@ -156,6 +156,7 @@
 **Sample Input**:
 ```javascript
 {
+  token: 'gsmckcksla;',
   id: '0123',
   active: false,
 }
@@ -182,6 +183,7 @@
 **Sample Input**:
 ```javascript
 {
+  token: 'gsmckcksla;',
   id: '0123',
   role: 'admin',
 }
@@ -192,5 +194,45 @@
 {
   error: false,
   errorMsg: ''
+}
+```
+
+---
+
+## **/signedInUsers**
+
+**Protocol**: POST
+
+**Description**: Returns information for all users currently logged in based on timestamp and whether or not they have a key.
+
+**Permissions**: Admin
+
+**Sample Input**:
+```javascript
+{
+  token: 'gsmckcksla;',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  numRows: 2,
+  rows: [
+    {
+      id: 'superuser',
+      f_name: '',
+      l_name: '',
+      role: 'admin'
+    },
+    {
+      id: '0123',
+      f_name: 'Brad',
+      l_name: 'Grimshaw',
+      role: 'admin',
+    },
+  ],
+  error: false,
+  errorMsg: '',
 }
 ```
