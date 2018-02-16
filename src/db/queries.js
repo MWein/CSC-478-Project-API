@@ -18,10 +18,10 @@ export const setUserActive = (id, active) => ({
   values: [ active, id ],
 })
 
-// export const deleteUser = id => ({
-//   text: 'DELETE FROM "users" WHERE id = ($1)',
-//   values: [ id ],
-// })
+export const setUserRole = (id, role) => ({
+  text: 'UPDATE users SET role = ($1) WHERE id = ($2)',
+  values: [ role, id ],
+})
 
 export const updateTimestampForUser = (id, timestamp) => ({
   text: 'UPDATE users SET timestamp = ($1) WHERE id = ($2)',
