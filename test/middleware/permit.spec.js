@@ -1,21 +1,20 @@
+import { mockReq, mockRes } from 'sinon-express-mock'
+import chai from 'chai'
 import permit from '../../src/middleware/permit'
 import sinon from 'sinon'
-import chai from 'chai'
-import { mockReq, mockRes } from 'sinon-express-mock'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
 describe('Permit.js test', () => {
-
   it('Returns a function that responds with a 403 when given a request with no user, does not call next()', () => {
     const permitFunction = permit('admin')
-    
+
     const req = mockReq()
     const res = mockRes()
     const next = sinon.spy()
-    
+
     permitFunction(req, res, next)
 
     expect(res.status).to.be.calledWith(403)
@@ -53,7 +52,7 @@ describe('Permit.js test', () => {
     res.locals.user = {
       role: 'that guy, Fred, who steals from the cash register and thinks I dont know',
     }
-    
+
     permitFunction(req, res, next)
 
     expect(res.status).to.be.calledWith(403)
@@ -72,7 +71,7 @@ describe('Permit.js test', () => {
     res.locals.user = {
       role: 'admin',
     }
-    
+
     permitFunction(req, res, next)
 
     expect(res.status).to.not.be.called
@@ -82,8 +81,8 @@ describe('Permit.js test', () => {
 
 
   it('Returns a function that calls next() with proper multiple permission', () => {
-    const permitFunction = permit(['admin', 'some guy'])
-    
+    const permitFunction = permit([ 'admin', 'some guy' ])
+
     const req = mockReq()
     const res = mockRes()
     const next = sinon.spy()
@@ -91,12 +90,11 @@ describe('Permit.js test', () => {
     res.locals.user = {
       role: 'admin',
     }
-    
+
     permitFunction(req, res, next)
 
     expect(res.status).to.not.be.called
     expect(res.json).to.not.be.called
     expect(next).to.be.called
   })
-
 })

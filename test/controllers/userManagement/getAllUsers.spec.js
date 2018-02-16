@@ -1,16 +1,18 @@
-import getAllUsersController from '../../../src/controllers/userManagement/getAllUsers'
-import sinon from 'sinon'
+/* eslint-disable max-lines */
+
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
+import getAllUsersController from '../../../src/controllers/userManagement/getAllUsers'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
 describe('get all users controller tests', () => {
-
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -380,7 +382,4 @@ describe('get all users controller tests', () => {
 
     expect(dbStub.callCount).to.equal(1)
   })
-
-  
-
 })

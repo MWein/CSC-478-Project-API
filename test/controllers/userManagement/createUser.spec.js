@@ -1,16 +1,16 @@
-import createUserController from '../../../src/controllers/userManagement/createUser'
-import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
+import createUserController from '../../../src/controllers/userManagement/createUser'
 import db from '../../../src/db/index'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
 describe('create user controller tests', () => {
-
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -32,7 +32,7 @@ describe('create user controller tests', () => {
         newFName: 'a stupid first name',
         newLName: 'a stupid last name',
         newRole: 'pain in the ass',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -68,7 +68,7 @@ describe('create user controller tests', () => {
         newFName: 'a stupid first name',
         newLName: 'a stupid last name',
         newRole: 'pain in the ass',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -103,7 +103,7 @@ describe('create user controller tests', () => {
         newFName: 'a stupid first name',
         newLName: 'a stupid last name',
         newRole: 'pain in the ass',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -137,7 +137,7 @@ describe('create user controller tests', () => {
         newFName: 'a stupid first name',
         newLName: 'a stupid last name',
         //newRole: 'pain in the ass',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -172,7 +172,7 @@ describe('create user controller tests', () => {
         newFName: 'a stupid first name',
         newLName: 'a stupid last name',
         newRole: 'pain in the ass',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -207,7 +207,7 @@ describe('create user controller tests', () => {
         newFName: 'Bruce',
         newLName: 'Wayne',
         newRole: 'security',
-      }
+      },
     }
 
     const req = mockReq(request)
@@ -221,5 +221,4 @@ describe('create user controller tests', () => {
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
   })
-
 })

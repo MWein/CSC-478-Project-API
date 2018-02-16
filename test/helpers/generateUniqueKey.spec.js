@@ -1,8 +1,4 @@
-import loginController from '../../src/controllers/login'
-import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
-import db from '../../src/db/index'
-import sinon from 'sinon'
 import genUniqKey from '../../src/helpers/generateUniqueKey'
 
 chai.use(require('sinon-chai'))
@@ -30,8 +26,8 @@ describe('generateUniqueKey tests', () => {
       'hYkkdhsLui',
     ]
     const first = generateUniqueKey(mockKeys)
-    const second = generateUniqueKey([...mockKeys, first])
-    const third = generateUniqueKey([...mockKeys, first, second])
+    const second = generateUniqueKey([ ...mockKeys, first ])
+    const third = generateUniqueKey([ ...mockKeys, first, second ])
 
     expect(first).not.to.equal(second)
     expect(first).not.to.equal(third)

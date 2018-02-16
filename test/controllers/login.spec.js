@@ -1,19 +1,16 @@
-import loginController from '../../src/controllers/login'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
-import sinon from 'sinon'
 import genUniqKey from '../../src/helpers/generateUniqueKey'
+import loginController from '../../src/controllers/login'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
 
-const generateUniqueKey = genUniqKey.generateUniqueKey
-
-
 describe('Login controller tests', () => {
-
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -49,7 +46,6 @@ describe('Login controller tests', () => {
   })
 
 
-
   it('Returns invalid if id is missing from request', async() => {
     const request = {
       body: {
@@ -60,9 +56,9 @@ describe('Login controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await loginController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
     expect(next).to.not.be.called
@@ -78,36 +74,35 @@ describe('Login controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await loginController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No pin provided' })
     expect(next).to.not.be.called
   })
 
-  
+
   const dbReturn = {
     rowNum: 2,
-      rows: [
-        {
-          id: 'superman',
-          pin: 'password',
-        },
-        {
-          id: 'batman',
-          pin: 'fuzzylotus6893',
-          f_name: 'Jerry',
-          l_name: 'Who cares',
-          role: 'employee',
-          token: '',
-          timestamp: '',
-        },
-      ],
-      error: false,
-      errorMsg: null,
+    rows: [
+      {
+        id: 'superman',
+        pin: 'password',
+      },
+      {
+        id: 'batman',
+        pin: 'fuzzylotus6893',
+        f_name: 'Jerry',
+        l_name: 'Who cares',
+        role: 'employee',
+        token: '',
+        timestamp: '',
+      },
+    ],
+    error: false,
+    errorMsg: null,
   }
-
 
 
   it('Returns invalid if id does not exist in database', async() => {
@@ -123,14 +118,12 @@ describe('Login controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await loginController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
-
-    
   })
 
   it('Returns invalid if pin does not match database', async() => {
@@ -146,9 +139,9 @@ describe('Login controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await loginController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
@@ -171,7 +164,7 @@ describe('Login controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await loginController(req, res, next)
 
     const expected = {
@@ -194,5 +187,4 @@ describe('Login controller tests', () => {
 
     genUniqTokenStub.restore()
   })
-
 })

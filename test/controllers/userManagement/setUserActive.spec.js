@@ -1,8 +1,8 @@
-import setUserActiveController from '../../../src/controllers/userManagement/setUserActive'
-import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
+import setUserActiveController from '../../../src/controllers/userManagement/setUserActive'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
@@ -10,6 +10,7 @@ const expect = chai.expect
 
 describe('set user active controller tests', () => {
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -161,5 +162,4 @@ describe('set user active controller tests', () => {
 
     expect(dbStub.callCount).to.equal(2)
   })
-
 })

@@ -1,8 +1,8 @@
-import setUserRoleController from '../../../src/controllers/userManagement/setUserRole'
-import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
+import setUserRoleController from '../../../src/controllers/userManagement/setUserRole'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
@@ -10,6 +10,7 @@ const expect = chai.expect
 
 describe('set user role controller tests', () => {
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -74,7 +75,7 @@ describe('set user role controller tests', () => {
     const request = {
       body: {
         id: 'mrNobody',
-        role: 'the manager nobody likes'
+        role: 'the manager nobody likes',
       },
     }
 
@@ -163,5 +164,4 @@ describe('set user role controller tests', () => {
 
     expect(dbStub.callCount).to.equal(2)
   })
-
 })

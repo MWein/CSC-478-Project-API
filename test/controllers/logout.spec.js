@@ -1,16 +1,16 @@
-import logoutController from '../../src/controllers/logout'
-import sinon from 'sinon'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
+import logoutController from '../../src/controllers/logout'
+import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
 describe('logout controller tests', () => {
-
   let dbStub
+
   afterEach(() => {
     dbStub.restore()
   })
@@ -53,9 +53,9 @@ describe('logout controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await logoutController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
@@ -65,17 +65,18 @@ describe('logout controller tests', () => {
   it('Retuns user not found when id is not found in db', async() => {
     const dbReturn = {
       rowNum: 2,
-        rows: [
-          {
-            id: 'A',
-          },
-          {
-            id: 'B',
-          },
-        ],
-        error: false,
-        errorMsg: null,
+      rows: [
+        {
+          id: 'A',
+        },
+        {
+          id: 'B',
+        },
+      ],
+      error: false,
+      errorMsg: null,
     }
+
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
@@ -87,9 +88,9 @@ describe('logout controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await logoutController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
@@ -99,17 +100,18 @@ describe('logout controller tests', () => {
   it('Returns "Logout successful" when id is found', async() => {
     const dbReturn = {
       rowNum: 2,
-        rows: [
-          {
-            id: 'A',
-          },
-          {
-            id: 'superman',
-          },
-        ],
-        error: false,
-        errorMsg: null,
+      rows: [
+        {
+          id: 'A',
+        },
+        {
+          id: 'superman',
+        },
+      ],
+      error: false,
+      errorMsg: null,
     }
+
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
@@ -121,9 +123,9 @@ describe('logout controller tests', () => {
     const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
-  
+
     await logoutController(req, res, next)
-  
+
     expect(res.status).to.be.calledWith(200)
     expect(res.send).to.be.calledWith('success')
     expect(next.called).to.equal(true)
