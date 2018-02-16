@@ -127,7 +127,7 @@ describe('logout controller tests', () => {
     await logoutController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.send).to.be.calledWith('success')
+    expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next.called).to.equal(true)
   })
 })

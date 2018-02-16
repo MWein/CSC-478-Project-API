@@ -32,6 +32,7 @@ const getAllUsersController = async(req, res, next) => {
   const returnVal = {
     ...usersQuery,
     rows: rowsWithoutSensitiveInfo,
+    errorMsg: '',
   }
 
   res.status(200).json(returnVal)
