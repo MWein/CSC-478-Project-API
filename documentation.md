@@ -28,21 +28,21 @@
 **Sample Input**:
 ```javascript
 {
-  id: 'superuser'
-  pin: 'soMep@sSw0rd'
+  id: 'superuser',
+  pin: 'soMep@sSw0rd',
 }
 ```
 
 **Sample Output**:
 ```javascript
 {
-  id: 'superuser',
-  f_name: '',
-  l_name: '',
+  id: '0123',
+  f_name: 'Mike',
+  l_name: 'Weinberg',
   role: 'admin',
   token: 'fxxatvpeoy',
   error: false,
-  errorMsg: ''
+  errorMsg: '',
 }
 ```
 
@@ -58,13 +58,16 @@
 **Sample Input**:
 ```javascript
 {
-  id: 'superuser'
+  id: 'superuser',
 }
 ```
 
 **Sample Output**:
 ```javascript
-'success'
+{
+  error: false,
+  errorMsg: '',
+}
 ```
 
 ---
@@ -81,6 +84,7 @@
 ```javascript
 {
   token: 'gsmckcksla;'
+  excludeInactive: false, // Optional, default = true
 }
 ```
 
@@ -94,10 +98,18 @@
       f_name: '',
       l_name: '',
       role: 'admin'
+      active: true,
+    },
+    {
+      id: '0123',
+      f_name: 'Brad',
+      l_name: 'Grimshaw',
+      role: 'admin',
+      active: false,
     },
   ],
   error: false,
-  errorMsg: null
+  errorMsg: '',
 }
 ```
 
@@ -118,8 +130,8 @@
   newID: 'mwein3',
   newPin: '0123',
   newRole: 'admin',
-  newFName: 'Mike',
-  newLName: 'Weinberg',
+  newFName: 'Mike', // Optional, default = ''
+  newLName: 'Weinberg', // Optional, default = ''
 }
 ```
 
@@ -133,23 +145,52 @@
 
 ---
 
-## **/deleteUser**
+## **/setUserActive**
 
 **Protocol**: POST
 
-**Description**: Removes a user from the database.
+**Description**: Activates or deactivates a user.
 
 **Permissions**: Admin
 
 **Sample Input**:
 ```javascript
 {
-  token: 'sdfakdfglkadf',
-  doomedId: 'mwein3',
+  id: '0123',
+  active: false,
 }
 ```
 
 **Sample Output**:
 ```javascript
-'success'
+{
+  error: false,
+  errorMsg: ''
+}
+```
+
+---
+
+## **/setUserRole**
+
+**Protocol**: POST
+
+**Description**: Sets the role of a user.
+
+**Permissions**: Admin
+
+**Sample Input**:
+```javascript
+{
+  id: '0123',
+  role: 'admin',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  error: false,
+  errorMsg: ''
+}
 ```
