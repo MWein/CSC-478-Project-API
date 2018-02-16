@@ -42,7 +42,8 @@ describe('signed in users controller tests', () => {
 
 
   it('Returns all signed in users in database without token, password, or timestamp. Does not return inactive users', async() => {
-    const rightNow = new Date()
+    const fiveMinutesAgo = new Date() - 300000
+    const twentyMinutesAgo = new Date() - 1200000
 
     const dbReturn = {
       rowNum: 2,
@@ -53,7 +54,7 @@ describe('signed in users controller tests', () => {
           l_name: 'Somebody',
           pin: 'mypassword',
           token: 'asdlkfjasdf',
-          timestamp: rightNow,
+          timestamp: fiveMinutesAgo,
           role: 'admin',
           active: true,
         },
@@ -63,7 +64,7 @@ describe('signed in users controller tests', () => {
           l_name: 'Sparrow',
           pin: 'mypassword',
           token: 'fklklfglkjfgdjlk',
-          timestamp: 'January 21, 2018',
+          timestamp: twentyMinutesAgo,
           role: 'admin',
           active: true,
         },
@@ -73,7 +74,7 @@ describe('signed in users controller tests', () => {
           l_name: 'Kringle',
           pin: 'passwooooooooooord',
           token: 'asdfasdfdfhfhjhjk',
-          timestamp: rightNow,
+          timestamp: fiveMinutesAgo,
           role: 'employee',
           active: false,
         },
