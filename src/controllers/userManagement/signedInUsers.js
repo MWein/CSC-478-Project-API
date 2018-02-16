@@ -10,10 +10,10 @@ const signedInUsersController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  const activeUsers = usersQuery.rows.filter(user => user.active)
-
-  const rightNow = new Date()
-  const signedInUsers = activeUsers.filter(user => rightNow - new Date(user.timestamp) < 900000 && user.token !== '')
+  const signedInUsers = usersQuery.rows.filter(user =>
+    user.active &&
+    new Date() - new Date(user.timestamp) < 900000 &&
+    user.token !== '')
 
   const rowsWithoutSensitiveInfo = signedInUsers.map(user => ({
     id: user.id,
