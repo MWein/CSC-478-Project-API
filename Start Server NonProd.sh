@@ -25,4 +25,12 @@ echo "Closing this window will not stop the server"
 echo "The port will be blocked and a restart will be necessary if you do"
 echo "Thank you, have a nice day"
 
-npm run dev
+
+host=$(hostname)
+if [ "$host" == "CSC478Team301" ]; then
+  npm run dev
+fi
+
+if [ "$host" == "CSC478Team302" ]; then
+  npm run prod
+fi
