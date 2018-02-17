@@ -30,6 +30,14 @@ export const noRoleProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No role provided' })
 }
 
+export const noQuestionProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No question provided' })
+}
+
+export const noAnswerProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No answer provided' })
+}
+
 export const idAlreadyExistsErrorMessage = res => {
   res.status(400).json({ error: true, errorMsg: 'ID already exists' })
 }

@@ -23,6 +23,11 @@ export const setUserRole = (id, role) => ({
   values: [ role, id ],
 })
 
+export const setSecurityQuestionAndAnswerForUser = (id, ques, ans) => ({
+  text: 'UPDATE users SET secQues = ($1), secAns = ($2) WHERE id = ($2)',
+  values: [ ques, ans, id ],
+})
+
 export const updateTimestampForUser = (id, timestamp) => ({
   text: 'UPDATE users SET timestamp = ($1) WHERE id = ($2)',
   values: [ timestamp, id ],
