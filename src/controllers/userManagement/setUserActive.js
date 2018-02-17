@@ -13,7 +13,7 @@ import { sqlQuery } from '../../db'
 
 const setUserActiveController = async(req, res, next) => {
   const id = req.body.id
-  const active = !req.body.active ? true : req.body.active
+  const active = req.body.active === undefined ? true : req.body.active
 
   if (!id) {
     return noIdProvidedErrorMessage(res)
