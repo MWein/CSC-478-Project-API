@@ -4,7 +4,7 @@ import { sqlQuery } from '../../db'
 
 
 const getAllUsersController = async(req, res, next) => {
-  const excludeInactive = req.body.excludeInactive === undefined ? false : req.body.excludeInactive
+  const excludeInactive = !req.body.excludeInactive ? false : req.body.excludeInactive
 
   const usersQuery = await sqlQuery(allUsers())
 
