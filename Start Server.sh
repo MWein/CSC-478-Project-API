@@ -1,6 +1,10 @@
+# This script is placed in the desktop of the servers
+# It will git pull the project, this script included
+# and start the server in prod or nonprod, depending
+# on the host name
+
 echo ""
 echo "   Copyright (C) 2018 Hex"
-echo ""
 echo ""
 
 cd ..
@@ -29,6 +33,7 @@ echo "Thank you, have a nice day"
 
 
 host=$(hostname)
+
 if [ "$host" == "CSC478Team301" ]; then
   npm run dev
 fi
