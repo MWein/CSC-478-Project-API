@@ -1,7 +1,7 @@
 import {
   allUsers as allUsersQuery,
   createUser,
-} from '../../db/userManagementQueries'
+} from '../../db/userManagement'
 import {
   databaseErrorMessage,
   idAlreadyExistsErrorMessage,

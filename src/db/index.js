@@ -1,9 +1,9 @@
 import { Pool } from 'pg'
 
+require('dotenv').config()
 const getHost = () => {
-  require('dotenv').config()
   if (process.env.NODE_ENV.includes('np')) {
-    return process.env.DB_HOST_NP 
+    return process.env.DB_HOST_NP
   } else if (process.env.NODE_ENV.includes('prod')) {
     return process.env.DB_HOST_P
   }
