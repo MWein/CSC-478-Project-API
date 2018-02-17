@@ -24,7 +24,7 @@ export const setUserRole = (id, role) => ({
 })
 
 export const setSecurityQuestionAndAnswerForUser = (id, ques, ans) => ({
-  text: 'UPDATE users SET secQues = ($1), secAns = ($2) WHERE id = ($2)',
+  text: 'UPDATE users SET question = ($1), answer = ($2) WHERE id = ($3)',
   values: [ ques, ans, id ],
 })
 
