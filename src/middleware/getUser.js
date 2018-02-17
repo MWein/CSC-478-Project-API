@@ -14,7 +14,7 @@ import { sqlQuery } from '../db'
 const getUser = async(req, res, next) => {
   const token = req.body.token
 
-  if (token === undefined) {
+  if (!token) {
     return noTokenProvidedErrorMessage(res)
   }
 

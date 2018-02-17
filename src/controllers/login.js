@@ -17,9 +17,9 @@ const loginController = async(req, res, next) => {
   const id = req.body.id
   const pin = req.body.pin
 
-  if (id === undefined) {
+  if (!id) {
     return noIdProvidedErrorMessage(res)
-  } else if (pin === undefined) {
+  } else if (!pin) {
     return noPinProvidedErrorMessage(res)
   }
 

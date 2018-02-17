@@ -17,16 +17,16 @@ const createUserController = async(req, res, next) => {
   const newPin = req.body.newPin
   const newRole = req.body.newRole
 
-  if (newId === undefined) {
+  if (!newId) {
     return noIdProvidedErrorMessage(res)
-  } else if (newPin === undefined) {
+  } else if (!newPin) {
     return noPinProvidedErrorMessage(res)
-  } else if (newRole === undefined) {
+  } else if (!newRole) {
     return noRoleProvidedErrorMessage(res)
   }
 
-  const newFName = req.body.newFName === undefined ? '' : req.body.newFName
-  const newLName = req.body.newLName === undefined ? '' : req.body.newLName
+  const newFName = !req.body.newFName ? '' : req.body.newFName
+  const newLName = !req.body.newLName ? '' : req.body.newLName
 
   const allUsersQ = await sqlQuery(allUsersQuery())
 

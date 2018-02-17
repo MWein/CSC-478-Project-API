@@ -16,9 +16,9 @@ const setUserRoleController = async(req, res, next) => {
   const id = req.body.id
   const role = req.body.role
 
-  if (id === undefined) {
+  if (!id) {
     return noIdProvidedErrorMessage(res)
-  } else if (role === undefined) {
+  } else if (!role) {
     return noRoleProvidedErrorMessage(res)
   } else if (id === 'superuser') {
     return forbiddenErrorMessage(res)

@@ -9,7 +9,7 @@ import { sqlQuery } from '../db'
 const logoutController = async(req, res, next) => {
   const id = req.body.id
 
-  if (id === undefined) {
+  if (!id) {
     return userNotFoundErrorMessage(res)
   }
 

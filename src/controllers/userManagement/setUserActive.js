@@ -15,7 +15,7 @@ const setUserActiveController = async(req, res, next) => {
   const id = req.body.id
   const active = req.body.active === undefined ? true : req.body.active
 
-  if (id === undefined) {
+  if (!id) {
     return noIdProvidedErrorMessage(res)
   } else if (id === 'superuser' && active === false) {
     return forbiddenErrorMessage(res)
