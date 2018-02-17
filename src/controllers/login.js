@@ -43,10 +43,7 @@ const loginController = async(req, res, next) => {
     return invalidCredentialsErrorMessage(res)
   }
 
-  const needsSecurityQuestion = user.secQues === '' ||
-    user.secQues === null ||
-    user.secAns === '' ||
-    user.secAns === null
+  const needsSecurityQuestion = !user.question || !user.answer
 
   const allTokens = allUsers.map(user => user.token)
 
