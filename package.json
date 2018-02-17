@@ -7,11 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "build": "babel src -d dist --presets es2015,stage-2",
     "test": "jest",
     "lint": "eslint --ext .js ./ --fix",
-    "dev": "babel-node src/server.js --presets es2015,stage-2",
-    "serve": "node dist/server.js"
+    "dev": "set NODE_ENV=np && babel-node src/server.js --presets es2015,stage-2",
+    "prod": "set NODE_ENV=prod && babel-node src/server.js --presets es2015,stage-2"
   },
   "repository": {
     "type": "git",
