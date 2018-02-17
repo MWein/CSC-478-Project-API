@@ -7,7 +7,7 @@ import {
 import {
   getUserRow,
   setUserActive,
-} from '../../db/queries'
+} from '../../db/userManagementQueries'
 import { sqlQuery } from '../../db'
 
 

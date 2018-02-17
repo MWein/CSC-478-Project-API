@@ -1,4 +1,4 @@
-import { allUsers } from '../../db/queries'
+import { allUsers } from '../../db/userManagementQueries'
 import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 

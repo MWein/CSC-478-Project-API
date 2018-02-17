@@ -8,7 +8,7 @@ import {
 import {
   getUserRow,
   setUserRole,
-} from '../../db/queries'
+} from '../../db/userManagementQueries'
 import { sqlQuery } from '../../db'
 
 

@@ -1,4 +1,4 @@
-import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/queries'
+import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/userManagementQueries'
 import {
   databaseErrorMessage,
   userNotFoundErrorMessage,

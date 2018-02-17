@@ -1,7 +1,7 @@
 import {
   allUsers as allUsersQuery,
   updateTokenAndTimestampForUser,
-} from '../db/queries'
+} from '../db/userManagementQueries'
 import {
   databaseErrorMessage,
   invalidCredentialsErrorMessage,
