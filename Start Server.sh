@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This script is placed in the desktop of the servers
 # It will git pull the project, this script included
 # and start the server in prod or nonprod, depending
