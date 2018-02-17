@@ -1,14 +1,18 @@
 import { Pool } from 'pg'
 
-
-require('dotenv').config()
-const dbHost = process.env.ENV === 'prod' ? process.env.DB_HOST_P : process.env.DB_HOST_NP
-
+const getHost = () => {
+  require('dotenv').config()
+  if (process.env.NODE_ENV.includes('np')) {
+    return process.env.DB_HOST_NP 
+  } else if (process.env.NODE_ENV.includes('prod')) {
+    return process.env.DB_HOST_P
+  }
+}
 
 const pool = new Pool({
   user: process.env.DB_USER,
   database: process.env.DB_NAME,
-  host: dbHost,
+  host: getHost(),
   port: process.env.DB_PORT,
 })
 
