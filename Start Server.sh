@@ -1,5 +1,7 @@
 echo ""
 echo "   Copyright (C) 2018 Hex"
+echo ""
+echo ""
 
 cd ..
 cd server
