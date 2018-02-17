@@ -23,6 +23,11 @@ export const setUserRole = (id, role) => ({
   values: [ role, id ],
 })
 
+export const setUserPin = (id, pin) => ({
+  text: 'UPDATE users SET pin = ($1) WHERE id = ($2)',
+  values: [ pin, id ],
+})
+
 export const setSecurityQuestionAndAnswerForUser = (id, ques, ans) => ({
   text: 'UPDATE users SET question = ($1), answer = ($2) WHERE id = ($3)',
   values: [ ques, ans, id ],
