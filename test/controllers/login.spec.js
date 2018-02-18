@@ -12,9 +12,11 @@ const expect = chai.expect
 
 describe('Login controller tests', () => {
   let dbStub
+  let genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
   afterEach(() => {
     dbStub.restore()
+    genUniqTokenStub.restore()
   })
 
   it('Responds properly to database error', async() => {
@@ -189,7 +191,7 @@ describe('Login controller tests', () => {
   it('Returns JSON of user (without password) including key, security question needed', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const thisUser = dbReturn.rows[1]
 
@@ -224,15 +226,81 @@ describe('Login controller tests', () => {
     // One for allUsers call
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+  })
 
-    genUniqTokenStub.restore()
+
+  it('Creates superuser if no users exist in the database. Returns superuser info', async() => {
+    const noUsersDbReturn = {
+      rowNum: 0,
+      rows: [],
+      error: false,
+      errorMsg: null,
+    }
+    const superuserDbReturn = {
+      rowNum: 1,
+      rows: [
+        {
+          id: 'superuser',
+          pin: 'password',
+          f_name: '',
+          l_name: '',
+          role: 'admin',
+          token: '',
+          timestamp: '',
+          question: '',
+          answer: '',
+        },
+      ],
+      error: false,
+      errorMsg: null,
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+    dbStub.onCall(0).returns(noUsersDbReturn)
+    dbStub.onCall(2).returns(superuserDbReturn)
+
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const request = {
+      body: {
+        id: 'superuser',
+        pin: 'password',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const expected = {
+      id: 'superuser',
+      f_name: '',
+      l_name: '',
+      role: 'admin',
+      token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: true,
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    // One for allUsers call
+    // One for creating superuser
+    // One for second allUsers call
+    // One for setting key and timestamp
+    expect(dbStub.callCount).to.equal(4)
   })
 
 
   it('Returns needsSecurityQuestion true if security question is filled but answer is blank', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const thisUser = dbReturn.rows[2]
 
@@ -267,15 +335,13 @@ describe('Login controller tests', () => {
     // One for allUsers call
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
-
-    genUniqTokenStub.restore()
   })
 
 
   it('Returns needsSecurityQuestion true if security question is blank and answer is blank', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const thisUser = dbReturn.rows[3]
 
@@ -310,15 +376,13 @@ describe('Login controller tests', () => {
     // One for allUsers call
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
-
-    genUniqTokenStub.restore()
   })
 
 
   it('Returns needsSecurityQuestion true if security question and answer is filled', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const thisUser = dbReturn.rows[4]
 
@@ -353,7 +417,5 @@ describe('Login controller tests', () => {
     // One for allUsers call
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
-
-    genUniqTokenStub.restore()
   })
 })

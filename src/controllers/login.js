@@ -1,5 +1,6 @@
 import {
   allUsers as allUsersQuery,
+  createUser,
   updateTokenAndTimestampForUser,
 } from '../db/userManagement'
 import {
@@ -29,7 +30,17 @@ const loginController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  const allUsers = queryData.rows
+  const getAllUsers = async() => {
+    if (queryData.rows.length === 0) {
+      await sqlQuery(createUser('superuser', '', '', 'password', 'admin', true))
+      const newQueryData = await sqlQuery(allUsersQuery())
+
+      return newQueryData.rows
+    }
+
+    return queryData.rows
+  }
+  const allUsers = await getAllUsers()
 
   const matchingUsers = allUsers.filter(x => x.id === id)
 
