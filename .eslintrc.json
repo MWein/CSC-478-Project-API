@@ -115,7 +115,6 @@
     "keyword-spacing": [ "error" ],
     "line-comment-position": [ "error", "above" ],
     "max-lines": [ "error", 250 ],
-    "max-params": [ "warn", 7 ],
     "max-len": [ "error", {
       "code": 150,
       "ignoreComments": true,

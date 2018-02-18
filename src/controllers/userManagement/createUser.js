@@ -25,8 +25,10 @@ const createUserController = async(req, res, next) => {
     return noRoleProvidedErrorMessage(res)
   }
 
-  const newFName = !req.body.fName ? '' : req.body.fName
-  const newLName = !req.body.lName ? '' : req.body.lName
+  const newFName = !req.body.f_name ? '' : req.body.f_name
+  const newLName = !req.body.l_name ? '' : req.body.l_name
+  const newPhoneNum = !req.body.phoneNum ? '' : req.body.phoneNum
+  const newAddress = !req.body.address ? '' : req.body.address
 
   const allUsersQ = await sqlQuery(allUsersQuery())
 
@@ -40,7 +42,7 @@ const createUserController = async(req, res, next) => {
     return idAlreadyExistsErrorMessage(res)
   }
 
-  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole, true))
+  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole, true, newPhoneNum, newAddress))
 
   if (qResult.error) {
     return databaseErrorMessage(res)

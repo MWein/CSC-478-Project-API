@@ -8,9 +8,9 @@ export const getUserRow = id => ({
   values: [ id ],
 })
 
-export const createUser = (id, f_name, l_name, password, role, active) => ({
-  text: 'INSERT INTO users (id, f_name, l_name, pin, token, timestamp, role, active) VALUES (($1), ($2), ($3), ($4), \'\', \'\', ($5), ($6))',
-  values: [ id, f_name, l_name, password, role, active ],
+export const createUser = (id, f_name, l_name, password, role, active, phoneNum, address) => ({
+  text: 'INSERT INTO users (id, f_name, l_name, pin, token, timestamp, role, active, phoneNum, address) VALUES (($1), ($2), ($3), ($4), \'\', \'\', ($5), ($6), ($7), ($8))', // eslint-disable-line max-len
+  values: [ id, f_name, l_name, password, role, active, phoneNum, address ],
 })
 
 export const editUser = (id, f_name, l_name, role, active, phoneNum, address) => ({

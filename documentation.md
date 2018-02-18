@@ -109,6 +109,8 @@ Note: Timestamp is the time of the last action performed by the user. The user i
       l_name: '',
       role: 'admin'
       active: true,
+      phoneNum: '1234',
+      address: '123 Fake Street',
       timestamp: '2018-02-17T21:28:35.154-06:00',
     },
     {
@@ -117,6 +119,8 @@ Note: Timestamp is the time of the last action performed by the user. The user i
       l_name: 'Grimshaw',
       role: 'admin',
       active: false,
+      phoneNum: '555-0123',
+      address: '123 Elm Street',
       timestamp: '2018-02-17T21:28:35.154-06:00',
     },
   ],
@@ -142,8 +146,10 @@ Note: Timestamp is the time of the last action performed by the user. The user i
   id: 'mwein3',
   pin: '0123',
   role: 'admin',
-  fName: 'Mike', // Optional, default = ''
-  lName: 'Weinberg', // Optional, default = ''
+  f_name: 'Mike', // Optional, default = ''
+  l_name: 'Weinberg', // Optional, default = ''
+  phoneNum: '123456', // Optional, default = ''
+  address: '5678 3rd Street', // Optional, default = ''
 }
 ```
 

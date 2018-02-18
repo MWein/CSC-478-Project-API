@@ -33,6 +33,8 @@ const getAllUsersController = async(req, res, next) => {
     l_name: user.l_name,
     role: user.role,
     active: user.active,
+    phoneNum: user.phoneNum,
+    address: user.address,
     timestamp: user.timestamp,
   }))
 

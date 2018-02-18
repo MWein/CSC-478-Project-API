@@ -29,9 +29,11 @@ describe('create user controller tests', () => {
       body: {
         id: 'some jerk',
         pin: 'with some password',
-        fname: 'a stupid first name',
-        lname: 'a stupid last name',
+        f_name: 'a stupid first name',
+        l_name: 'a stupid last name',
         role: 'pain in the ass',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
       },
     }
 
@@ -65,9 +67,11 @@ describe('create user controller tests', () => {
       body: {
         //id: 'some jerk',
         pin: 'with some password',
-        fname: 'a stupid first name',
-        lname: 'a stupid last name',
+        f_name: 'a stupid first name',
+        l_name: 'a stupid last name',
         role: 'pain in the ass',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
       },
     }
 
@@ -100,9 +104,11 @@ describe('create user controller tests', () => {
       body: {
         id: 'some jerk',
         //pin: 'with some password',
-        fname: 'a stupid first name',
-        lname: 'a stupid last name',
+        f_name: 'a stupid first name',
+        l_name: 'a stupid last name',
         role: 'pain in the ass',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
       },
     }
 
@@ -134,9 +140,11 @@ describe('create user controller tests', () => {
       body: {
         id: 'some jerk',
         pin: 'with some password',
-        fname: 'a stupid first name',
-        lname: 'a stupid last name',
+        f_name: 'a stupid first name',
+        l_name: 'a stupid last name',
         //role: 'pain in the ass',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
       },
     }
 
@@ -169,9 +177,11 @@ describe('create user controller tests', () => {
       body: {
         id: 'Santa',
         pin: 'with some password',
-        fname: 'a stupid first name',
-        lname: 'a stupid last name',
+        f_name: 'a stupid first name',
+        l_name: 'a stupid last name',
         role: 'pain in the ass',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
       },
     }
 
@@ -204,8 +214,42 @@ describe('create user controller tests', () => {
       body: {
         id: 'Batman',
         pin: 'SupermanSucks123',
-        fname: 'Bruce',
-        lname: 'Wayne',
+        f_name: 'Bruce',
+        l_name: 'Wayne',
+        role: 'security',
+        phoneNum: '123456',
+        address: '45 3rd Ave',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await createUserController(req, res, next)
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
+    expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(2)
+  })
+
+  it('Creates the new user in database, without optional parameters', async() => {
+    const dbReturn = {
+      rowNum: 1,
+      rows: [
+        { id: 'Santa' },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'Batman',
+        pin: 'SupermanSucks123',
         role: 'security',
       },
     }
