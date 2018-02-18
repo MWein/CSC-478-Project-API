@@ -1,4 +1,4 @@
-import { allUsers } from '../../db/userManagement'
+import { allCustomers } from '../../db/customerManagement'
 import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 
@@ -7,7 +7,7 @@ const getAllCustomersController = async(req, res, next) => {
   const phone = req.body.phone
   const excludeInactive = req.body.excludeInactive
 
-  const customerQuery = await sqlQuery(allUsers())
+  const customerQuery = await sqlQuery(allCustomers())
 
   if (customerQuery.error) {
     return databaseErrorMessage(res)
