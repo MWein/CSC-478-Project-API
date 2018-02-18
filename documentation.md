@@ -21,7 +21,9 @@
 
 **Protocol**: POST
 
-**Description**: Given a proper ID and pin, logs the user in and returns the user information in JSON format. Includes a token which will be used for permission calls.
+**Description**: Given a proper ID and pin or security question answer, logs the user in and returns the user information in JSON format. Includes a token which will be used for permission calls.
+Note: pin and answer are both declared optional however at least one must be passed.
+Note: Will return needsSecurityQuestion. If true is returned, user should be prompted to create a security question for password recovery.
 
 **Permissions**: Everyone
 
@@ -29,23 +31,26 @@
 ```javascript
 {
   id: 'superuser',
-  pin: 'soMep@sSw0rd',
+  pin: 'soMep@sSw0rd', // Optional
+  answer: 'May', // Optional
 }
 ```
 
 **Sample Output**:
 ```javascript
 {
-  id: '0123',
-  f_name: 'Mike',
-  l_name: 'Weinberg',
-  role: 'admin',
-  token: 'fxxatvpeoy',
+  id: "superuser",
+  f_name: "",
+  l_name: "",
+  role: "admin",
+  token: "wrrliibrja",
+  needsSecurityQuestion: false,
   error: false,
-  errorMsg: '',
+  errorMsg: ""
 }
 ```
 
+---
 
 ## **/logout**
 
@@ -76,7 +81,11 @@
 
 **Protocol**: POST
 
-**Description**: Returns a list of all users in the database. Passwords, tokens, and timestamps are not returned for security purposes.
+**Description**: Returns a list of all users in the database. Passwords and tokens are not returned for security purposes.
+
+excludeInactive: If set to true, only active users will be returned.
+signedIn: If set to false, all users will be returned. If true, only signed in users will be returned.
+Note: Timestamp is the time of the last action performed by the user. The user is automatically logged out after 15 minutes of inactivity.
 
 **Permissions**: Admin
 
@@ -85,6 +94,7 @@
 {
   token: 'gsmckcksla;'
   excludeInactive: false, // Optional, default = true
+  signedIn: true, // Optional, default = false
 }
 ```
 
@@ -99,6 +109,7 @@
       l_name: '',
       role: 'admin'
       active: true,
+      timestamp: '2018-02-17T21:28:35.154-06:00',
     },
     {
       id: '0123',
@@ -106,6 +117,7 @@
       l_name: 'Grimshaw',
       role: 'admin',
       active: false,
+      timestamp: '2018-02-17T21:28:35.154-06:00',
     },
   ],
   error: false,
@@ -127,65 +139,11 @@
 ```javascript
 {
   token: 'sdfakdfglkadf',
-  newID: 'mwein3',
-  newPin: '0123',
-  newRole: 'admin',
-  newFName: 'Mike', // Optional, default = ''
-  newLName: 'Weinberg', // Optional, default = ''
-}
-```
-
-**Sample Output**:
-```javascript
-{
-  error: false,
-  errorMsg: ''
-}
-```
-
----
-
-## **/setUserActive**
-
-**Protocol**: POST
-
-**Description**: Activates or deactivates a user.
-
-**Permissions**: Admin
-
-**Sample Input**:
-```javascript
-{
-  token: 'gsmckcksla;',
-  id: '0123',
-  active: false,
-}
-```
-
-**Sample Output**:
-```javascript
-{
-  error: false,
-  errorMsg: ''
-}
-```
-
----
-
-## **/setUserRole**
-
-**Protocol**: POST
-
-**Description**: Sets the role of a user.
-
-**Permissions**: Admin
-
-**Sample Input**:
-```javascript
-{
-  token: 'gsmckcksla;',
-  id: '0123',
+  id: 'mwein3',
+  pin: '0123',
   role: 'admin',
+  fName: 'Mike', // Optional, default = ''
+  lName: 'Weinberg', // Optional, default = ''
 }
 ```
 
@@ -199,42 +157,147 @@
 
 ---
 
-## **/signedInUsers**
+## **/editUser**
 
 **Protocol**: POST
 
-**Description**: Returns information for all users currently logged in based on timestamp and whether or not they have a key.
+**Description**: Edits information about the user in the database.
+Note: Values not included in the request body will not be changed.
 
 **Permissions**: Admin
 
 **Sample Input**:
 ```javascript
 {
-  token: 'gsmckcksla;',
+  token: 'sdfakdfglkadf',
+  id: 'mwein3',
+  f_name: 'Mike', // Optional
+  l_name: 'Weinberg', // Optional
+  role: 'admin', // Optional
+  active: false, // Optional
+  phoneNum: '867-5309', // Optional
+  address: '123 Fake Street', // Optional
 }
 ```
 
 **Sample Output**:
 ```javascript
 {
-  numRows: 2,
-  rows: [
-    {
-      id: 'superuser',
-      f_name: '',
-      l_name: '',
-      role: 'admin',
-      timestamp: 'Thu Feb 15 2018 23:55:42 GMT-0600 (CST)',
-    },
-    {
-      id: '0123',
-      f_name: 'Brad',
-      l_name: 'Grimshaw',
-      role: 'admin',
-      timestamp: 'Thu Feb 15 2018 23:55:42 GMT-0600 (CST)',
-    },
-  ],
+  id: 'mwein3',
+  f_name: 'Mike',
+  l_name: 'Weinberg',
+  role: 'admin',
+  active: false,
+  phoneNum: '867-5309',
+  address: '123 Fake Street',
   error: false,
-  errorMsg: '',
+  errorMsg: ''
+}
+```
+
+---
+
+## **/adminSetPassword**
+
+**Protocol**: POST
+
+**Description**: Password recovery method. Changes the password of a given user. 
+Note: This should only be used if /login using the security answer is unsuccessful.
+Note: This is a method for a user with admin permissions to change the password of another user. This is not for a user to set their own password. /setPassword is used for that.
+
+**Permissions**: Admin
+
+**Sample Input**:
+```javascript
+{
+  token: 'sdfakdfglkadf',
+  id: 'mwein3',
+  pin: '123NewPassword',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  error: false,
+  errorMsg: ''
+}
+```
+
+---
+
+## **/setPassword**
+
+**Protocol**: POST
+
+**Description**: Changes the password of the loggin in user.
+
+**Permissions**: Logged in user
+
+**Sample Input**:
+```javascript
+{
+  token: 'sdfakdfglkadf',
+  pin: '123NewPassword',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  error: false,
+  errorMsg: ''
+}
+```
+
+---
+
+## **/getSecurityQuestion**
+
+**Protocol**: POST
+
+**Description**: Returns the security question of a given user.
+
+**Permissions**: Everyone
+
+**Sample Input**:
+```javascript
+{
+  id: 'mawein3',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  question: 'First car?',
+  error: false,
+  errorMsg: ''
+}
+```
+
+---
+
+## **/setSecurityQuestion**
+
+**Protocol**: POST
+
+**Description**: Sets the security question and answer for the logged in user.
+
+**Permissions**: Logged in user
+
+**Sample Input**:
+```javascript
+{
+  question: 'First car?',
+  answer: 'A sedan',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  error: false,
+  errorMsg: ''
 }
 ```
