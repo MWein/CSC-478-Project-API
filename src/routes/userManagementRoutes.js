@@ -16,7 +16,7 @@ router.post('/allUsers', getUser, permit('admin'), getAllUsersController)
 
 router.post('/createUser', getUser, permit('admin'), createUserController)
 
-router.post('/adminChangePassword', getUser, permit('admin'), superuserResetPassword)
+router.post('/adminSetPassword', getUser, permit('admin'), superuserResetPassword)
 
 router.post('/setPassword', getUser, setPasswordController)
 router.post('/getSecurityQuestion', getSecurityQuestionController)

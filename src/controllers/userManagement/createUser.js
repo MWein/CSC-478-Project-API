@@ -13,9 +13,9 @@ import { sqlQuery } from '../../db'
 
 
 const createUserController = async(req, res, next) => {
-  const newId = req.body.newId
-  const newPin = req.body.newPin
-  const newRole = req.body.newRole
+  const newId = req.body.id
+  const newPin = req.body.pin
+  const newRole = req.body.role
 
   if (!newId) {
     return noIdProvidedErrorMessage(res)
@@ -25,8 +25,8 @@ const createUserController = async(req, res, next) => {
     return noRoleProvidedErrorMessage(res)
   }
 
-  const newFName = !req.body.newFName ? '' : req.body.newFName
-  const newLName = !req.body.newLName ? '' : req.body.newLName
+  const newFName = !req.body.fName ? '' : req.body.fName
+  const newLName = !req.body.lName ? '' : req.body.lName
 
   const allUsersQ = await sqlQuery(allUsersQuery())
 

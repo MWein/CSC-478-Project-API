@@ -27,11 +27,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        newId: 'some jerk',
-        newPin: 'with some password',
-        newFName: 'a stupid first name',
-        newLName: 'a stupid last name',
-        newRole: 'pain in the ass',
+        id: 'some jerk',
+        pin: 'with some password',
+        fname: 'a stupid first name',
+        lname: 'a stupid last name',
+        role: 'pain in the ass',
       },
     }
 
@@ -63,11 +63,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        //newId: 'some jerk',
-        newPin: 'with some password',
-        newFName: 'a stupid first name',
-        newLName: 'a stupid last name',
-        newRole: 'pain in the ass',
+        //id: 'some jerk',
+        pin: 'with some password',
+        fname: 'a stupid first name',
+        lname: 'a stupid last name',
+        role: 'pain in the ass',
       },
     }
 
@@ -98,11 +98,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        newId: 'some jerk',
-        //newPin: 'with some password',
-        newFName: 'a stupid first name',
-        newLName: 'a stupid last name',
-        newRole: 'pain in the ass',
+        id: 'some jerk',
+        //pin: 'with some password',
+        fname: 'a stupid first name',
+        lname: 'a stupid last name',
+        role: 'pain in the ass',
       },
     }
 
@@ -132,11 +132,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        newId: 'some jerk',
-        newPin: 'with some password',
-        newFName: 'a stupid first name',
-        newLName: 'a stupid last name',
-        //newRole: 'pain in the ass',
+        id: 'some jerk',
+        pin: 'with some password',
+        fname: 'a stupid first name',
+        lname: 'a stupid last name',
+        //role: 'pain in the ass',
       },
     }
 
@@ -167,11 +167,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        newId: 'Santa',
-        newPin: 'with some password',
-        newFName: 'a stupid first name',
-        newLName: 'a stupid last name',
-        newRole: 'pain in the ass',
+        id: 'Santa',
+        pin: 'with some password',
+        fname: 'a stupid first name',
+        lname: 'a stupid last name',
+        role: 'pain in the ass',
       },
     }
 
@@ -202,11 +202,11 @@ describe('create user controller tests', () => {
 
     const request = {
       body: {
-        newId: 'Batman',
-        newPin: 'SupermanSucks123',
-        newFName: 'Bruce',
-        newLName: 'Wayne',
-        newRole: 'security',
+        id: 'Batman',
+        pin: 'SupermanSucks123',
+        fname: 'Bruce',
+        lname: 'Wayne',
+        role: 'security',
       },
     }
 
