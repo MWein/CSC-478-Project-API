@@ -109,7 +109,7 @@ signedIn: If set to false, all users will be returned. If true, only signed in u
       l_name: '',
       role: 'admin'
       active: true,
-      phoneNum: '1234',
+      phone: '1234',
       address: '123 Fake Street',
       timestamp: '2018-02-17T21:28:35.154-06:00',
     },
@@ -119,7 +119,7 @@ signedIn: If set to false, all users will be returned. If true, only signed in u
       l_name: 'Grimshaw',
       role: 'admin',
       active: false,
-      phoneNum: '555-0123',
+      phone: '555-0123',
       address: '123 Elm Street',
       timestamp: '2018-02-17T21:28:35.154-06:00',
     },
@@ -148,7 +148,7 @@ signedIn: If set to false, all users will be returned. If true, only signed in u
   role: 'admin',
   f_name: 'Mike', // Optional, default = ''
   l_name: 'Weinberg', // Optional, default = ''
-  phoneNum: '123456', // Optional, default = ''
+  phone: '123456', // Optional, default = ''
   address: '5678 3rd Street', // Optional, default = ''
 }
 ```
@@ -181,7 +181,7 @@ signedIn: If set to false, all users will be returned. If true, only signed in u
   l_name: 'Weinberg', // Optional
   role: 'admin', // Optional
   active: false, // Optional
-  phoneNum: '867-5309', // Optional
+  phone: '867-5309', // Optional
   address: '123 Fake Street', // Optional
 }
 ```
@@ -194,7 +194,7 @@ signedIn: If set to false, all users will be returned. If true, only signed in u
   l_name: 'Weinberg',
   role: 'admin',
   active: false,
-  phoneNum: '867-5309',
+  phone: '867-5309',
   address: '123 Fake Street',
   error: false,
   errorMsg: ''

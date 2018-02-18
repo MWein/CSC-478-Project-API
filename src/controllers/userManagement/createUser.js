@@ -27,7 +27,7 @@ const createUserController = async(req, res, next) => {
 
   const newFName = !req.body.f_name ? '' : req.body.f_name
   const newLName = !req.body.l_name ? '' : req.body.l_name
-  const newPhoneNum = !req.body.phoneNum ? '' : req.body.phoneNum
+  const newphone = !req.body.phone ? '' : req.body.phone
   const newAddress = !req.body.address ? '' : req.body.address
 
   const allUsersQ = await sqlQuery(allUsersQuery())
@@ -42,7 +42,7 @@ const createUserController = async(req, res, next) => {
     return idAlreadyExistsErrorMessage(res)
   }
 
-  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole, true, newPhoneNum, newAddress))
+  const qResult = await sqlQuery(createUser(newId, newFName, newLName, newPin, newRole, true, newphone, newAddress))
 
   if (qResult.error) {
     return databaseErrorMessage(res)

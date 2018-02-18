@@ -34,7 +34,7 @@ describe('create user controller tests', () => {
         f_name: 'a stupid first name',
         l_name: 'a stupid last name',
         role: 'pain in the ass',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }
@@ -72,7 +72,7 @@ describe('create user controller tests', () => {
         f_name: 'a stupid first name',
         l_name: 'a stupid last name',
         role: 'pain in the ass',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }
@@ -109,7 +109,7 @@ describe('create user controller tests', () => {
         f_name: 'a stupid first name',
         l_name: 'a stupid last name',
         role: 'pain in the ass',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }
@@ -145,7 +145,7 @@ describe('create user controller tests', () => {
         f_name: 'a stupid first name',
         l_name: 'a stupid last name',
         //role: 'pain in the ass',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }
@@ -182,7 +182,7 @@ describe('create user controller tests', () => {
         f_name: 'a stupid first name',
         l_name: 'a stupid last name',
         role: 'pain in the ass',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }
@@ -219,7 +219,7 @@ describe('create user controller tests', () => {
         f_name: 'Bruce',
         l_name: 'Wayne',
         role: 'security',
-        phoneNum: '123456',
+        phone: '123456',
         address: '45 3rd Ave',
       },
     }

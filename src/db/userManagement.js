@@ -8,14 +8,14 @@ export const getUserRow = id => ({
   values: [ id ],
 })
 
-export const createUser = (id, f_name, l_name, password, role, active, phoneNum, address) => ({
-  text: 'INSERT INTO users (id, f_name, l_name, pin, token, timestamp, role, active, phoneNum, address) VALUES (($1), ($2), ($3), ($4), \'\', \'\', ($5), ($6), ($7), ($8))', // eslint-disable-line max-len
-  values: [ id, f_name, l_name, password, role, active, phoneNum, address ],
+export const createUser = (id, f_name, l_name, password, role, active, phone, address) => ({
+  text: 'INSERT INTO users (id, f_name, l_name, pin, role, active, phone, address) VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7), ($8))', // eslint-disable-line max-len
+  values: [ id, f_name, l_name, password, role, active, phone, address ],
 })
 
-export const editUser = (id, f_name, l_name, role, active, phoneNum, address) => ({
-  text: 'UPDATE users SET f_name = ($2), l_name = ($3), role = ($4), active = ($5), phoneNum = ($6), address = ($7) WHERE id = ($1)',
-  values: [ id, f_name, l_name, role, active, phoneNum, address ],
+export const editUser = (id, f_name, l_name, role, active, phone, address) => ({
+  text: 'UPDATE users SET f_name = ($2), l_name = ($3), role = ($4), active = ($5), phone = ($6), address = ($7) WHERE id = ($1)',
+  values: [ id, f_name, l_name, role, active, phone, address ],
 })
 
 export const setUserPin = (id, pin) => ({

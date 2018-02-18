@@ -137,7 +137,7 @@ describe('set user active controller tests', () => {
         l_name: 'Nobody',
         role: 'employee',
         active: false,
-        phoneNum: '123456789',
+        phone: '123456789',
         address: '123 FakeNews Street',
       },
     ],
@@ -156,7 +156,7 @@ describe('set user active controller tests', () => {
         l_name: 'Somebody',
         role: 'admin',
         active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
         address: '123 Fake Street',
       },
     }
@@ -192,7 +192,7 @@ describe('set user active controller tests', () => {
         //l_name: 'Somebody',
         role: 'admin',
         active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
         address: '123 Fake Street',
       },
     }
@@ -228,7 +228,7 @@ describe('set user active controller tests', () => {
         l_name: 'Somebody',
         //role: 'admin',
         active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
         address: '123 Fake Street',
       },
     }
@@ -264,7 +264,7 @@ describe('set user active controller tests', () => {
         l_name: 'Somebody',
         role: 'admin',
         //active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
         address: '123 Fake Street',
       },
     }
@@ -290,7 +290,7 @@ describe('set user active controller tests', () => {
   })
 
 
-  it('Successfully edits user, without changing phoneNum', async() => {
+  it('Successfully edits user, without changing phone', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
@@ -300,14 +300,14 @@ describe('set user active controller tests', () => {
         l_name: 'Somebody',
         role: 'admin',
         active: true,
-        //phoneNum: '8675309',
+        //phone: '8675309',
         address: '123 Fake Street',
       },
     }
 
     const expected = {
       ...request.body,
-      phoneNum: dbReturn.rows[0].phoneNum,
+      phone: dbReturn.rows[0].phone,
       error: false,
       errorMsg: '',
     }
@@ -335,7 +335,7 @@ describe('set user active controller tests', () => {
         l_name: 'Somebody',
         role: 'admin',
         active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
         //address: '123 Fake Street',
       },
     }
@@ -369,7 +369,7 @@ describe('set user active controller tests', () => {
         id: 'mrSomebody',
         l_name: 'Somebody',
         active: true,
-        phoneNum: '8675309',
+        phone: '8675309',
       },
     }
 
