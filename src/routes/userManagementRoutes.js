@@ -1,6 +1,7 @@
 import createUserController from '../controllers/userManagement/createUser'
 import express from 'express'
 import getAllUsersController from '../controllers/userManagement/getAllUsers'
+import getSecurityQuestionController from '../controllers/userManagement/getSecurityQuestion'
 import getUser from '../middleware/getUser'
 import permit from '../middleware/permit'
 import setPasswordController from '../controllers/userManagement/setPassword'
@@ -17,6 +18,7 @@ router.post('/signedInUsers', getUser, permit('admin'), signedInUsersController)
 router.post('/createUser', getUser, permit('admin'), createUserController)
 
 router.post('/setPassword', getUser, setPasswordController)
+router.post('/securityQuestion', getSecurityQuestionController)
 
 router.post('/setUserActive', getUser, permit('admin'), setUserActiveController)
 router.post('/setUserRole', getUser, permit('admin'), setUserRoleController)
