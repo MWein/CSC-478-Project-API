@@ -89,6 +89,7 @@ describe('get all users controller tests', () => {
           l_name: 'Somebody',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'jackspar',
@@ -96,6 +97,7 @@ describe('get all users controller tests', () => {
           l_name: 'Sparrow',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
       ],
       error: dbReturn.error,
@@ -172,6 +174,7 @@ describe('get all users controller tests', () => {
           l_name: 'Somebody',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'jackspar',
@@ -179,6 +182,7 @@ describe('get all users controller tests', () => {
           l_name: 'Sparrow',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'Santa',
@@ -186,6 +190,7 @@ describe('get all users controller tests', () => {
           l_name: 'Kringle',
           role: 'employee',
           active: false,
+          timestamp: 'January 21, 2018',
         },
       ],
       error: dbReturn.error,
@@ -262,6 +267,7 @@ describe('get all users controller tests', () => {
           l_name: 'Somebody',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'jackspar',
@@ -269,6 +275,7 @@ describe('get all users controller tests', () => {
           l_name: 'Sparrow',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'Santa',
@@ -276,6 +283,7 @@ describe('get all users controller tests', () => {
           l_name: 'Kringle',
           role: 'employee',
           active: false,
+          timestamp: 'January 21, 2018',
         },
       ],
       error: dbReturn.error,
@@ -349,6 +357,7 @@ describe('get all users controller tests', () => {
           l_name: 'Somebody',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
         {
           id: 'jackspar',
@@ -356,6 +365,7 @@ describe('get all users controller tests', () => {
           l_name: 'Sparrow',
           role: 'admin',
           active: true,
+          timestamp: 'January 21, 2018',
         },
       ],
       error: dbReturn.error,
@@ -367,6 +377,97 @@ describe('get all users controller tests', () => {
     const request = {
       body: {
         excludeInactive: 'true',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await getAllUsersController(req, res, next)
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    expect(dbStub.callCount).to.equal(1)
+  })
+
+
+  it('Returns all signed in users in database without token, password, or timestamp. Does not return inactive users', async() => {
+    const fiveMinutesAgo = new Date() - 300000
+    const twentyMinutesAgo = new Date() - 1200000
+
+    const dbReturn = {
+      rowNum: 2,
+      rows: [
+        {
+          id: 'mrSomebody',
+          f_name: 'Mister',
+          l_name: 'Somebody',
+          pin: 'mypassword',
+          token: 'asdlkfjasdf',
+          timestamp: new Date(fiveMinutesAgo).toString(),
+          role: 'admin',
+          active: true,
+        },
+        {
+          id: 'jackspar',
+          f_name: 'Jack',
+          l_name: 'Sparrow',
+          pin: 'mypassword',
+          token: 'fklklfglkjfgdjlk',
+          timestamp: new Date(twentyMinutesAgo).toString(),
+          role: 'admin',
+          active: true,
+        },
+        {
+          id: 'Santa',
+          f_name: 'Chris',
+          l_name: 'Kringle',
+          pin: 'passwooooooooooord',
+          token: 'asdfasdfdfhfhjhjk',
+          timestamp: new Date(fiveMinutesAgo).toString(),
+          role: 'employee',
+          active: false,
+        },
+        {
+          id: 'Santa',
+          f_name: 'Chris',
+          l_name: 'Kringle',
+          pin: 'passwooooooooooord',
+          token: '',
+          timestamp: new Date(fiveMinutesAgo).toString(),
+          role: 'employee',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    const expected = {
+      rowNum: dbReturn.rowNum,
+      rows: [
+        {
+          id: 'mrSomebody',
+          f_name: 'Mister',
+          l_name: 'Somebody',
+          role: 'admin',
+          active: true,
+          timestamp: new Date(fiveMinutesAgo).toString(),
+        },
+      ],
+      error: dbReturn.error,
+      errorMsg: dbReturn.errorMsg,
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        excludeInactive: false,
+        signedIn: true,
       },
     }
 

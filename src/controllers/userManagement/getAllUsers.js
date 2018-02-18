@@ -5,6 +5,7 @@ import { sqlQuery } from '../../db'
 
 const getAllUsersController = async(req, res, next) => {
   const excludeInactive = !req.body.excludeInactive ? false : req.body.excludeInactive
+  const signedInOnly = !req.body.signedIn ? false : req.body.signedIn
 
   const usersQuery = await sqlQuery(allUsers())
 
@@ -13,7 +14,12 @@ const getAllUsersController = async(req, res, next) => {
   }
 
   const applyExclusion = () => {
-    if (excludeInactive === 'true' || excludeInactive === true) {
+    if (signedInOnly === 'true' || signedInOnly === true) {
+      return usersQuery.rows.filter(user =>
+        user.active &&
+        new Date() - new Date(user.timestamp) < 900000 &&
+        user.token !== '')
+    } else if (excludeInactive === 'true' || excludeInactive === true) {
       return usersQuery.rows.filter(user => user.active)
     }
 
@@ -27,6 +33,7 @@ const getAllUsersController = async(req, res, next) => {
     l_name: user.l_name,
     role: user.role,
     active: user.active,
+    timestamp: user.timestamp,
   }))
 
   const returnVal = {
