@@ -1,3 +1,4 @@
+import customerManagementRoutes from './customerManagementRoutes'
 import express from 'express'
 import loginController from '../controllers/login'
 import logoutController from '../controllers/logout'
@@ -11,5 +12,6 @@ router.post('/login', loginController)
 router.post('/logout', logoutController)
 
 router.use('/', userManagementRoutes)
+router.use('/', customerManagementRoutes)
 
 module.exports = router
