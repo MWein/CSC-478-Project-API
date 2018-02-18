@@ -58,12 +58,12 @@
 
 **Description**: Logs the user out and clears the bearer token from the database.
 
-**Permissions**: Everyone
+**Permissions**: Logged in user
 
 **Sample Input**:
 ```javascript
 {
-  id: 'superuser',
+  token: 'lkjdfa;lkdf',
 }
 ```
 

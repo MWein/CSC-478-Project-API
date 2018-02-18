@@ -7,7 +7,7 @@ import { sqlQuery } from '../db'
 
 
 const logoutController = async(req, res, next) => {
-  const id = req.body.id
+  const id = res.locals.user.id
 
   if (!id) {
     return userNotFoundErrorMessage(res)

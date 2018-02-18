@@ -25,14 +25,13 @@ describe('logout controller tests', () => {
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const request = {
-      body: {
-        id: 'hello',
-      },
+    const req = mockReq()
+    const res = mockRes()
+
+    res.locals.user = {
+      id: 'hello',
     }
 
-    const req = mockReq(request)
-    const res = mockRes()
     const next = sinon.spy()
 
     await logoutController(req, res, next)
@@ -46,12 +45,11 @@ describe('logout controller tests', () => {
 
 
   it('Returns user not found error when no id is sent in body', async() => {
-    const request = {
-      body: {},
-    }
-
-    const req = mockReq(request)
+    const req = mockReq()
     const res = mockRes()
+
+    res.locals.user = {}
+
     const next = sinon.spy()
 
     await logoutController(req, res, next)
@@ -79,14 +77,13 @@ describe('logout controller tests', () => {
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const request = {
-      body: {
-        id: 'superman',
-      },
+    const req = mockReq()
+    const res = mockRes()
+
+    res.locals.user = {
+      id: 'superman',
     }
 
-    const req = mockReq(request)
-    const res = mockRes()
     const next = sinon.spy()
 
     await logoutController(req, res, next)
@@ -114,14 +111,13 @@ describe('logout controller tests', () => {
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const request = {
-      body: {
-        id: 'superman',
-      },
+    const req = mockReq()
+    const res = mockRes()
+
+    res.locals.user = {
+      id: 'superman',
     }
 
-    const req = mockReq(request)
-    const res = mockRes()
     const next = sinon.spy()
 
     await logoutController(req, res, next)
