@@ -22,8 +22,8 @@
 **Protocol**: POST
 
 **Description**: Given a proper ID and pin or security question answer, logs the user in and returns the user information in JSON format. Includes a token which will be used for permission calls.
-Note: pin and answer are both declared optional however at least one must be passed.
-Note: Will return needsSecurityQuestion. If true is returned, user should be prompted to create a security question for password recovery.
+<br />*Note*: pin and answer are both declared optional however at least one must be passed.
+<br />*Note*: Will return needsSecurityQuestion. If true is returned, user should be prompted to create a security question for password recovery.
 
 **Permissions**: Everyone
 
@@ -85,7 +85,7 @@ Note: Will return needsSecurityQuestion. If true is returned, user should be pro
 
 excludeInactive: If set to true, only active users will be returned.
 signedIn: If set to false, all users will be returned. If true, only signed in users will be returned.
-Note: Timestamp is the time of the last action performed by the user. The user is automatically logged out after 15 minutes of inactivity.
+<br />*Note*: Timestamp is the time of the last action performed by the user. The user is automatically logged out after 15 minutes of inactivity.
 
 **Permissions**: Admin
 
@@ -168,7 +168,7 @@ Note: Timestamp is the time of the last action performed by the user. The user i
 **Protocol**: POST
 
 **Description**: Edits information about the user in the database.
-Note: Values not included in the request body will not be changed.
+<br />*Note*: Values not included in the request body will not be changed.
 
 **Permissions**: Admin
 
@@ -208,8 +208,8 @@ Note: Values not included in the request body will not be changed.
 **Protocol**: POST
 
 **Description**: Password recovery method. Changes the password of a given user. 
-Note: This should only be used if /login using the security answer is unsuccessful.
-Note: This is a method for a user with admin permissions to change the password of another user. This is not for a user to set their own password. /setPassword is used for that.
+<br />*Note*: This should only be used if /login using the security answer is unsuccessful.
+<br />*Note*: This is a method for a user with admin permissions to change the password of another user. This is not for a user to set their own password. /setPassword is used for that.
 
 **Permissions**: Admin
 
