@@ -5,7 +5,7 @@ import chai from 'chai'
 import db from '../../../src/db/index'
 import genUniqKey from '../../../src/helpers/generateUniqueKey'
 import sinon from 'sinon'
-import sqLoginController from '../../../src/controllers/userManagement/sqLogin'
+import sqLoginController from '../../../src/controllers/sqLogin'
 
 chai.use(require('sinon-chai'))
 const expect = chai.expect

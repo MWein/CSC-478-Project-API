@@ -1,7 +1,7 @@
 import {
   allUsers as allUsersQuery,
   updateTokenAndTimestampForUser,
-} from '../../db/userManagement'
+} from '../db/userManagement'
 import {
   databaseErrorMessage,
   incorrectAnswerErrorMessage,
@@ -9,9 +9,9 @@ import {
   noIdProvidedErrorMessage,
   securityQuestionNotSetErrorMessage,
   userNotFoundErrorMessage,
-} from '../../errorMessages'
-import { generateUniqueKey } from '../../helpers/generateUniqueKey'
-import { sqlQuery } from '../../db'
+} from '../errorMessages'
+import { generateUniqueKey } from '../helpers/generateUniqueKey'
+import { sqlQuery } from '../db'
 
 
 const sqLoginController = async(req, res, next) => {

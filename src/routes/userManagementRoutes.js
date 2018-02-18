@@ -9,7 +9,7 @@ import setSecurityQuestionController from '../controllers/userManagement/setSecu
 import setUserActiveController from '../controllers/userManagement/setUserActive'
 import setUserRoleController from '../controllers/userManagement/setUserRole'
 import signedInUsersController from '../controllers/userManagement/signedInUsers'
-import sqLoginController from '../controllers/userManagement/sqLogin'
+import sqLoginController from '../controllers/sqLogin'
 
 const router = express.Router() // eslint-disable-line new-cap
 
