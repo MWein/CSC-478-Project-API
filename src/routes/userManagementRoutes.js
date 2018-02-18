@@ -8,12 +8,15 @@ import setPasswordController from '../controllers/userManagement/setPassword'
 import setSecurityQuestionController from '../controllers/userManagement/setSecurityQuestion'
 import setUserActiveController from '../controllers/userManagement/setUserActive'
 import setUserRoleController from '../controllers/userManagement/setUserRole'
+import superuserResetPassword from '../controllers/userManagement/superuserResetPassword'
 
 const router = express.Router() // eslint-disable-line new-cap
 
 router.post('/allUsers', getUser, permit('admin'), getAllUsersController)
 
 router.post('/createUser', getUser, permit('admin'), createUserController)
+
+router.post('/adminChangePassword', getUser, permit('admin'), superuserResetPassword)
 
 router.post('/setPassword', getUser, setPasswordController)
 router.post('/getSecurityQuestion', getSecurityQuestionController)
