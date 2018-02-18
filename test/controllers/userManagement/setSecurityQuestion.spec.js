@@ -8,7 +8,7 @@ chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
-describe('set user active controller tests', () => {
+describe('set user security question controller tests', () => {
   let dbStub
 
   afterEach(() => {
