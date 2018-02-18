@@ -1,4 +1,3 @@
-// users table queries
 export const allUsers = () => ({
   text: 'SELECT * FROM "users"',
 })
