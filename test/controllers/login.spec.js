@@ -418,4 +418,168 @@ describe('Login controller tests', () => {
     // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
   })
+
+
+  // SECURITY QUESTION LOGIN TESTS
+
+  it('Returns an error if pin is not provided and security question is not set', async() => {
+    const dbReturn = {
+      rowNum: 2,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+          question: '',
+          answer: null,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'superman',
+        answer: 'Im actually batman',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    expect(res.status).to.be.calledWith(449)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Security question not set' })
+    expect(next).to.not.be.called
+  })
+
+
+  it('Returns an error if security answer is not set', async() => {
+    const dbReturn = {
+      rowNum: 2,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+          question: 'Who am I?',
+          answer: null,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'superman',
+        answer: 'Im actually batman',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    expect(res.status).to.be.calledWith(449)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Security question not set' })
+    expect(next).to.not.be.called
+  })
+
+
+  it('Returns an error if security answer provided is incorrect', async() => {
+    const dbReturn = {
+      rowNum: 2,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+          question: 'Who am I?',
+          answer: 'Im Spiderman',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {
+        id: 'superman',
+        answer: 'Im actually batman',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    expect(res.status).to.be.calledWith(449)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Incorrect answer' })
+    expect(next).to.not.be.called
+  })
+
+  it('Returns user information if the answer was correct', async() => {
+    const dbReturn = {
+      rowNum: 2,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+          f_name: 'Megan',
+          l_name: 'Fox',
+          role: 'admin',
+          question: 'Who am I?',
+          answer: 'Im Spiderman',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const request = {
+      body: {
+        id: 'superman',
+        answer: 'Im Spiderman',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const thisUser = dbReturn.rows[0]
+    const expected = {
+      id: thisUser.id,
+      f_name: thisUser.f_name,
+      l_name: thisUser.l_name,
+      role: thisUser.role,
+      token: genUniqTokenStub.returnValues[0],
+      needsSecurityQuestion: false,
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+
+    expect(dbStub.callCount).to.equal(2)
+  })
 })

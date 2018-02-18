@@ -5,9 +5,11 @@ import {
 } from '../db/userManagement'
 import {
   databaseErrorMessage,
+  incorrectAnswerErrorMessage,
   invalidCredentialsErrorMessage,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
+  securityQuestionNotSetErrorMessage,
   userNotFoundErrorMessage,
 } from '../errorMessages'
 import { generateUniqueKey } from '../helpers/generateUniqueKey'
@@ -17,10 +19,11 @@ import { sqlQuery } from '../db'
 const loginController = async(req, res, next) => {
   const id = req.body.id
   const pin = req.body.pin
+  const answer = req.body.answer
 
   if (!id) {
     return noIdProvidedErrorMessage(res)
-  } else if (!pin) {
+  } else if (!pin && !answer) {
     return noPinProvidedErrorMessage(res)
   }
 
@@ -50,7 +53,14 @@ const loginController = async(req, res, next) => {
 
   const user = matchingUsers[0]
 
-  if (user.pin !== pin) {
+
+  if (!pin) {
+    if (!user.question || !user.answer) {
+      return securityQuestionNotSetErrorMessage(res)
+    } else if (user.answer !== answer) {
+      return incorrectAnswerErrorMessage(res)
+    }
+  } else if (user.pin !== pin) {
     return invalidCredentialsErrorMessage(res)
   }
 

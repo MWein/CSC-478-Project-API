@@ -9,7 +9,6 @@ import setSecurityQuestionController from '../controllers/userManagement/setSecu
 import setUserActiveController from '../controllers/userManagement/setUserActive'
 import setUserRoleController from '../controllers/userManagement/setUserRole'
 import signedInUsersController from '../controllers/userManagement/signedInUsers'
-import sqLoginController from '../controllers/sqLogin'
 
 const router = express.Router() // eslint-disable-line new-cap
 
@@ -19,11 +18,10 @@ router.post('/signedInUsers', getUser, permit('admin'), signedInUsersController)
 router.post('/createUser', getUser, permit('admin'), createUserController)
 
 router.post('/setPassword', getUser, setPasswordController)
-router.post('/securityQuestion', getSecurityQuestionController)
-router.post('/answerSecQuestion', sqLoginController)
+router.post('/getSecurityQuestion', getSecurityQuestionController)
 
 router.post('/setUserActive', getUser, permit('admin'), setUserActiveController)
 router.post('/setUserRole', getUser, permit('admin'), setUserRoleController)
-router.post('/secQuestion', getUser, setSecurityQuestionController)
+router.post('/setSecQuestion', getUser, setSecurityQuestionController)
 
 module.exports = router
