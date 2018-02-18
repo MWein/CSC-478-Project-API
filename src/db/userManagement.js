@@ -13,14 +13,9 @@ export const createUser = (id, f_name, l_name, password, role, active) => ({
   values: [ id, f_name, l_name, password, role, active ],
 })
 
-export const setUserActive = (id, active) => ({
-  text: 'UPDATE users SET active = ($1) WHERE id = ($2)',
-  values: [ active, id ],
-})
-
-export const setUserRole = (id, role) => ({
-  text: 'UPDATE users SET role = ($1) WHERE id = ($2)',
-  values: [ role, id ],
+export const editUser = (id, f_name, l_name, role, active, phoneNum, address) => ({
+  text: 'UPDATE users SET f_name = ($2), l_name = ($3), role = ($4), active = ($5), phoneNum = ($6), address = ($7) WHERE id = ($1)',
+  values: [ id, f_name, l_name, role, active, phoneNum, address ],
 })
 
 export const setUserPin = (id, pin) => ({
