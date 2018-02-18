@@ -31,7 +31,11 @@ const superuserResetPassword = async(req, res, next) => {
     return userNotFoundErrorMessage(res)
   }
 
-  await sqlQuery(setUserPin(id, newPassword))
+  const setUserPinResponse = await sqlQuery(setUserPin(id, newPassword))
+
+  if (setUserPinResponse.error) {
+    return databaseErrorMessage(res)
+  }
 
   res.status(200).json({ error: false, errorMsg: '' })
   next()

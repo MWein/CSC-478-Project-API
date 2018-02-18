@@ -258,6 +258,7 @@ describe('Login controller tests', () => {
     dbStub = sinon.stub(db, 'sqlQuery')
     dbStub.onCall(0).returns(noUsersDbReturn)
     dbStub.onCall(2).returns(superuserDbReturn)
+    dbStub.onCall(3).returns(superuserDbReturn)
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 

@@ -39,7 +39,11 @@ const editUserController = async(req, res, next) => {
   const phone = !req.body.phone ? user.phone : req.body.phone
   const address = !req.body.address ? user.address : req.body.address
 
-  await sqlQuery(editUser(id, f_name, l_name, role, active, phone, address))
+  const editUserResponse = await sqlQuery(editUser(id, f_name, l_name, role, active, phone, address))
+
+  if (editUserResponse.error) {
+    return databaseErrorMessage(res)
+  }
 
   const response = {
     id,

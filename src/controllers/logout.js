@@ -27,7 +27,11 @@ const logoutController = async(req, res, next) => {
     return userNotFoundErrorMessage(res)
   }
 
-  await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))
+  const updateTokeanAndTimestampResponse = await sqlQuery(updateTokenAndTimestampForUser(id, '', ''))
+
+  if (updateTokeanAndTimestampResponse.error) {
+    return databaseErrorMessage(res)
+  }
 
   res.status(200).json({ error: false, errorMsg: '' })
   next()

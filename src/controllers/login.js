@@ -71,7 +71,11 @@ const loginController = async(req, res, next) => {
   const newToken = generateUniqueKey(allTokens)
   const timestamp = new Date()
 
-  await sqlQuery(updateTokenAndTimestampForUser(id, newToken, timestamp))
+  const response = await sqlQuery(updateTokenAndTimestampForUser(id, newToken, timestamp))
+
+  if (response.error) {
+    return databaseErrorMessage(res)
+  }
 
   const resultJson = {
     id: user.id,
