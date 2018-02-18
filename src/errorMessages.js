@@ -38,6 +38,14 @@ export const noAnswerProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No answer provided' })
 }
 
+export const securityQuestionNotSetErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Security question not set' })
+}
+
+export const incorrectAnswerErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Incorrect answer' })
+}
+
 export const idAlreadyExistsErrorMessage = res => {
   res.status(400).json({ error: true, errorMsg: 'ID already exists' })
 }
