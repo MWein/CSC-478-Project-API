@@ -1,6 +1,5 @@
 import {
   databaseErrorMessage,
-  forbiddenErrorMessage,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
   userNotFoundErrorMessage,
