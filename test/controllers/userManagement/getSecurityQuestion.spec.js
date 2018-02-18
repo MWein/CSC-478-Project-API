@@ -27,7 +27,13 @@ describe('get security question controller tests', () => {
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
-    const req = mockReq()
+    const request = {
+      body: {
+        id: 'fake user',
+      },
+    }
+
+    const req = mockReq(request)
     const res = mockRes()
     const next = sinon.spy()
 
@@ -38,6 +44,33 @@ describe('get security question controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
+  })
+
+
+  it('Returns an error if the id is not provided', async() => {
+    const dbReturn = {
+      rowNum: 0,
+      rows: [],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+
+    const request = {
+      body: {},
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await getSecurityQuestionController(req, res, next)
+
+    expect(res.status).to.be.calledWith(449)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
+    expect(next).to.not.be.called
+    expect(dbStub).to.not.be.called
   })
 
 

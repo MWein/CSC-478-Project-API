@@ -1,5 +1,6 @@
 import {
   databaseErrorMessage,
+  noIdProvidedErrorMessage,
   userNotFoundErrorMessage,
 } from '../../errorMessages'
 import {
@@ -10,6 +11,10 @@ import { sqlQuery } from '../../db'
 
 const getSecurityQuestionController = async(req, res, next) => {
   const id = req.body.id
+
+  if (!id) {
+    return noIdProvidedErrorMessage(res)
+  }
 
   const usersQuery = await sqlQuery(getUserRow(id))
 
