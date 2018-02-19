@@ -18,6 +18,36 @@
 
 ---
 
+## **/createCustomer**
+
+**Protocol**: POST
+
+**Description**: Creates a new customer in the database.
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  f_name: 'Rick',
+  l_name: 'Sanchez',
+  phone: '867-5309',
+  address: '', // Optional, default = ''
+  email: '', // Optional, default = ''
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  error: false,
+  errorMsg: '',
+}
+```
+
+---
+
 ## **/allCustomers**
 
 **Protocol**: POST
