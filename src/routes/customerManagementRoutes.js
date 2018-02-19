@@ -6,7 +6,7 @@ import permit from '../middleware/permit'
 
 const router = express.Router() // eslint-disable-line new-cap
 
-router.post('/allCustomers', getUser, permit('employee', 'admin'), getAllCustomersController)
-router.post('/editCustomer', getUser, permit('employee', 'admin'), editCustomerController)
+router.post('/allCustomers', getUser, permit('admin', 'manager', 'employee'), getAllCustomersController)
+router.post('/editCustomer', getUser, permit('admin', 'manager', 'employee'), editCustomerController)
 
 module.exports = router
