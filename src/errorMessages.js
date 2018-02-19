@@ -53,3 +53,15 @@ export const idAlreadyExistsErrorMessage = res => {
 export const noTokenProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No token provided' })
 }
+
+export const noFNameProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No first name provided' })
+}
+
+export const noLNameProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No last name provided' })
+}
+
+export const noPhoneNumProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No phone number provided' })
+}

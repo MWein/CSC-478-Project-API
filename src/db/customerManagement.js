@@ -2,6 +2,11 @@ export const allCustomers = () => ({
   text: 'SELECT * FROM "customers"',
 })
 
+export const createCustomer = (id, f_name, l_name, phone, address, active, email) => ({
+  text: 'INSERT INTO customers (id, f_name, l_name, phone, address, active, email) VALUES (($1), ($2), ($3), ($4), ($5), ($6), ($7))', // eslint-disable-line max-len
+  values: [ id, f_name, l_name, phone, address, active, email ],
+})
+
 export const customerById = id => ({
   text: 'SELECT * FROM "customers" WHERE id = ($1)',
   values: [ id ],
