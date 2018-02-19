@@ -1,0 +1,101 @@
+# API Documentation - Customer Management
+
+## **Description of overall system**: These endpoints are used for management of Lackluster Video customers.
+
+## **Customer Database Schema**:
+```javascript
+{
+  id: 'System generated unique ID',
+  f_name: 'First name',
+  l_name: 'Last name',
+  phone: 'Phone number',
+  address: 'Address',
+  active: 'Whether or not the customer still frequents the business',
+  email: 'Email',
+}
+```
+
+
+---
+
+## **/allCustomers**
+
+**Protocol**: POST
+
+**Description**: Returns a list of all customers in the database.
+
+excludeInactive: If set to true, only active customers will be returned.
+phone: Returns customers with matching phone number.
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  phone: '867-5309', // Optional, default = ''
+  excludeInactive: true, // Optional, default = false
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  numRows: 1,
+  rows: [
+    {
+      id: "55648",
+      f_name: "Jack",
+      l_name: "Bower",
+      phone: "867-5309",
+      address: "123 Fake Street",
+      active: true,
+      email: 'jb@bmail.com',
+      error: false,
+      errorMsg: ""
+    }
+  ],
+  error: false,
+  errorMsg: '',
+}
+```
+
+---
+
+## **/editCustomer**
+
+**Protocol**: POST
+
+**Description**: Edits information about the customer in the database.
+<br />*Note*: Values not included in the request body will not be changed.
+
+**Permissions**: Admin
+
+**Sample Input**:
+```javascript
+{
+  token: 'sdfakdfglkadf',
+  id: '45875',
+  f_name: 'Mike', // Optional
+  l_name: 'Weinberg', // Optional
+  phone: '867-5309', // Optional
+  address: '123 Fake Street', // Optional
+  email: 'mw@bmail.com', // Optional
+  active: true, // Optional
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  id: '45875',
+  f_name: 'Mike',
+  l_name: 'Weinberg',
+  phone: '867-5309',
+  address: '123 Fake Street',
+  email: 'mw@bmail.com',
+  active: true,
+  error: false,
+  errorMsg: '',
+}
+```

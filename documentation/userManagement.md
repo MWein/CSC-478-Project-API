@@ -1,18 +1,23 @@
-# API Documentation
+# API Documentation - User Management
 
-## **/status**
+## **Description of overall system**: These endpoints are used for management of Lackluster Video employees.
 
-**Protocol**: GET
-
-**Description**: Retuns 'ok' to verify that the server is listening
-
-**Permissions**: Everyone
-
-**Sample Input**: N/A
-
-**Sample Output**:
+## **User Database Schema**:
 ```javascript
-'ok'
+{
+  id: 'The username with which the user logs in',
+  pin: 'The password with which the user logs in',
+  f_name: 'First name',
+  l_name: 'Last name',
+  role: 'The type of employee. Possible values include admin, manager, and clerk',
+  active: 'Whether or not the employee still works with the business',
+  question: 'Users security question for password recovery',
+  answer: 'Answer to the security question',
+  phone: 'Employees phone number',
+  address: 'Employees address',
+  token: 'This is the unique token generated upon login. This is used in place of username and password for most endpoints throughout the system',
+  timestamp: 'This is the time of the last action performed by the employee. The user is automatically logged out after 15 minutes of inactivity',
+}
 ```
 
 ---
@@ -76,6 +81,7 @@
 ```
 
 ---
+
 
 ## **/allUsers**
 
