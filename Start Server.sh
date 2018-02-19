@@ -14,6 +14,7 @@ cd server
 cd csc-478-project-api
 
 echo "Updating project from Git"
+git stash
 git pull
 
 echo ""
