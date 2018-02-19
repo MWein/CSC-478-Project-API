@@ -4,6 +4,7 @@ import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import createCustomerController from '../../../src/controllers/customerManagement/createCustomer'
 import db from '../../../src/db/index'
+import genUniqKey from '../../../src/helpers/generateUniqueKey'
 import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
@@ -156,6 +157,8 @@ describe('create customer controller tests', () => {
   })
 
   it('Creates the new customer in database', async() => {
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
     const dbReturn = {
       rowNum: 1,
       rows: [
@@ -184,12 +187,16 @@ describe('create customer controller tests', () => {
     await createCustomerController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
+    expect(res.json).to.be.calledWith({ id: 'hello', error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+
+    genUniqTokenStub.restore()
   })
 
   it('Creates the new customer in database, without optional parameters', async() => {
+    const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
     const dbReturn = {
       rowNum: 1,
       rows: [
@@ -216,8 +223,10 @@ describe('create customer controller tests', () => {
     await createCustomerController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
+    expect(res.json).to.be.calledWith({ id: 'hello', error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+
+    genUniqTokenStub.restore()
   })
 })

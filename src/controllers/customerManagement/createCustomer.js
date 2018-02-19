@@ -42,7 +42,7 @@ const createCustomerController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  res.status(200).json({ error: false, errorMsg: '' })
+  res.status(200).json({ id, error: false, errorMsg: '' })
   next()
 }
 
