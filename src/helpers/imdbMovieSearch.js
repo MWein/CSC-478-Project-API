@@ -8,24 +8,15 @@ const deriveJsonFromIMDBResponse = text => {
 
   const responseJson = JSON.parse(text.substring(text.indexOf('(') + 1, text.length - 1))
 
-  const movieData = responseJson.d.filter(item => {
-    const type = item.q
-
-    if (!type) {
-      return false
-    }
-
-    return type === 'feature'
-  })
-
-  const readableMovieData = movieData.map(movie => ({
-    title: movie.l,
-    year: movie.y,
-    poster: movie.i[0],
-  }))
+  const movieData = responseJson.d.filter(item => item.q && item.q === 'feature')
+    .map(movie => ({
+      title: movie.l,
+      year: movie.y,
+      poster: movie.i[0],
+    }))
 
   return {
-    data: readableMovieData,
+    data: movieData,
     error: false,
     errorMsg: '',
   }
