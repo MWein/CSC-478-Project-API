@@ -3,6 +3,7 @@ import express from 'express'
 import getUser from '../middleware/getUser'
 import loginController from '../controllers/login'
 import logoutController from '../controllers/logout'
+import movieManagementRoutes from './movieManagementRoutes'
 import smokeTest from '../controllers/smokeTest'
 import userManagementRoutes from './userManagementRoutes'
 
@@ -14,5 +15,6 @@ router.post('/logout', getUser, logoutController)
 
 router.use('/', userManagementRoutes)
 router.use('/', customerManagementRoutes)
+router.use('/', movieManagementRoutes)
 
 module.exports = router
