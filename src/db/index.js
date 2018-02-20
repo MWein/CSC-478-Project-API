@@ -16,21 +16,6 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 })
 
-// // Fired when a new Client is connected.
-// pool.on('connect', client => {
-//   logger.info(`postgres client connected, total: ${pool.totalCount}`)
-
-//   client.on('error', err => logger.info(`bizarre client error: ${err.message}`))
-// })
-
-// // Fired when an idle Client emits an error.
-// pool.on('error', err => logger.error(`idle client error: ${err.message}`))
-
-// // Fired when a Client is closed and removed from the pool.
-// pool.on('remove', () => logger.info(`postgres client released, total: ${pool.totalCount}`))
-
-// Export the query function --- will execute a straight query
-// or a parameterized query. DOES NOT currently support transactions.
 const sqlQuery = async({ text, values }) => {
   try {
     const client = await pool.connect()
@@ -45,8 +30,6 @@ const sqlQuery = async({ text, values }) => {
       errorMsg: null,
     }
   } catch (e) {
-    //logger.error(`sql error: ${e.message}`)
-
     return {
       numRows: 0,
       rows: [],
