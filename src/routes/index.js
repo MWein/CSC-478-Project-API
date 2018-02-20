@@ -1,15 +1,15 @@
 import customerManagementRoutes from './customerManagementRoutes'
 import express from 'express'
 import getUser from '../middleware/getUser'
+import healthController from '../controllers/health'
 import loginController from '../controllers/login'
 import logoutController from '../controllers/logout'
 import movieManagementRoutes from './movieManagementRoutes'
-import smokeTest from '../controllers/smokeTest'
 import userManagementRoutes from './userManagementRoutes'
 
 const router = express.Router() // eslint-disable-line new-cap
 
-router.get('/status', smokeTest)
+router.get('/status', healthController)
 router.post('/login', loginController)
 router.post('/logout', getUser, logoutController)
 
