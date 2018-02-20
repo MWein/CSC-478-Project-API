@@ -20,15 +20,22 @@ describe('imdbMovieSearch tests', () => {
     expect(actual).to.deep.equal({ data: [], error: false, errorMsg: '' })
   })
 
-  it('Returns array of feature movies from a list including non-features and actors', async() => {
+  it('Returns array of feature movies from a list excluding non-features and actors', async() => {
     const imdbReturn = 'imdb$jack({"v":1,"q":"jack","d":[{"l":"Jack Nicholson (I)","id":"nm0000197","s":"Actor, Chinatown (1974)","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ3OTY0ODk0M15BMl5BanBnXkFtZTYwNzE4Njc4._V1_.jpg",289,400]},{"l":"Jack O\'Connell (IV)","id":"nm1925239","s":"Actor, Unbroken (2014)","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMTU4MjU0NjI4NF5BMl5BanBnXkFtZTgwNjU3NTUzMDI@._V1_.jpg",973,1338]},{"l":"Jack Ryan","id":"tt5057054","s":"John Krasinski, Abbie Cornish","y":2018,"q":"TV series","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMjM2ODYyMDAxNV5BMl5BanBnXkFtZTgwODgwODk2NDM@._V1_.jpg",1382,2048]},{"l":"Jack Black (I)","id":"nm0085312","s":"Actor, The School of Rock (2003)","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMjE2MjI4NTQxN15BMl5BanBnXkFtZTgwMDMyMDg4NTE@._V1_.jpg",807,1024]},{"l":"Jack Reacher","id":"tt0790724","s":"Tom Cruise, Rosamund Pike","y":2012,"q":"feature","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1NjUxMDI3OV5BMl5BanBnXkFtZTcwNjg1ODM3OA@@._V1_.jpg",1392,2000]},{"l":"Jack Reacher: Never Go Back","id":"tt3393786","s":"Tom Cruise, Cobie Smulders","y":2016,"q":"video","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BODQ3ODQ3NDI4NV5BMl5BanBnXkFtZTgwMDY1Mzk5OTE@._V1_.jpg",960,1500]},{"l":"Jack Davenport (I)","id":"nm0202603","s":"Actor, Pirates of the Caribbean: Dead Man\'s Chest (2006)","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMTMwNDI0MzgxOV5BMl5BanBnXkFtZTYwMTAwMDY0._V1_.jpg",271,400]},{"l":"Jack Huston","id":"nm1658935","s":"Actor, Kill Your Darlings (2013)","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMjM5NjU3Mzk0NV5BMl5BanBnXkFtZTgwNjU4MTU5ODE@._V1_.jpg",765,1106]}]})'
 
     const actual = await deriveJsonFromIMDBResponse(imdbReturn)
     const expected = {
       data: [
         {
+          title: 'Jack Ryan',
+          year: 2018,
+          format: 'TV series',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjM2ODYyMDAxNV5BMl5BanBnXkFtZTgwODgwODk2NDM@._V1_.jpg',
+        },
+        {
           title: 'Jack Reacher',
           year: 2012,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1NjUxMDI3OV5BMl5BanBnXkFtZTcwNjg1ODM3OA@@._V1_.jpg',
         },
       ],
@@ -48,32 +55,83 @@ describe('imdbMovieSearch tests', () => {
         {
           title: 'Solo: A Star Wars Story',
           year: 2018,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
         },
         {
           title: 'Star Wars: The Last Jedi',
           year: 2017,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ1MzcxNjg4N15BMl5BanBnXkFtZTgwNzgwMjY4MzI@._V1_.jpg',
         },
         {
           title: 'Rogue One: A Star Wars Story',
           year: 2016,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEwMzMxODIzOV5BMl5BanBnXkFtZTgwNzg3OTAzMDI@._V1_.jpg',
         },
         {
           title: 'Star Wars: The Force Awakens',
           year: 2015,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_.jpg',
         },
         {
           title: 'Star Wars: Episode IV - A New Hope',
           year: 1977,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
+        },
+        {
+          title: 'Star Wars: Rebels',
+          year: 2014,
+          format: 'TV series',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BY2Q1ZTAzNzMtMzlmNy00NjdjLThhYjgtMzgxN2ZkYmFhMDIwXkEyXkFqcGdeQXVyMjg5NDMwMQ@@._V1_.jpg',
         },
         {
           title: 'Star Wars: Episode I - The Phantom Menace',
           year: 1999,
+          format: 'feature',
           poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    expect(actual).to.deep.equal(expected)
+  })
+
+
+  it('Returns TV shows and movies', async() => {
+    const imdbReturn = 'imdb$breaking_bad({"v":1,"q":"breaking_bad","d":[{"l":"Breaking Bad","id":"tt0903747","s":"Bryan Cranston, Aaron Paul","y":2008,"q":"TV series","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BZDNhNzhkNDctOTlmOS00NWNmLWEyODQtNWMxM2UzYmJiNGMyXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_.jpg",571,800]},{"l":"Breaking Bad: Original Minisodes","id":"tt2387761","s":"Bob Odenkirk, Matt Jones","y":2009,"q":"TV mini-series","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BMDdlM2QzOGMtODc2My00NTFjLWIyZGUtYjQ4NDNhZjYyM2NkXkEyXkFqcGdeQXVyMDM0MzU2NA@@._V1_.jpg",440,640]},{"l":"The Bad News Bears in Breaking Training","id":"tt0075718","s":"William Devane, Jackie Earle Haley","y":1977,"q":"feature","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BNjI0ZTRmNTEtYjVhMC00MTM0LWFjNDQtYjBhNTNlNWRlMDgxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",960,1440]},{"l":"Breaking Bad Movie Deal Gone Bad","id":"tt4669580","s":"Don Alphonso, Gustavo Ruben Valenzuela","y":2015,"q":"feature","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BZGVhNzc2MmItZjY1Ni00ZGQzLTlhMzUtZmIwMWE1ZDc4YmQ3XkEyXkFqcGdeQXVyMzY4MDAyMDQ@._V1_.jpg",1448,2048]},{"l":"Breaking Bad: The Middle School Musical","id":"tt4135410","s":"Delaney Dillan, Logan Gould","y":2013,"q":"video","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BNDcwYjM2OTEtMzg4NC00YjU5LTg4ZWMtNjcxYzU3Njc5OGU0XkEyXkFqcGdeQXVyMTIxMDUyOTI@._V1_.jpg",660,330]},{"l":"Breaking Bad Cereal","id":"tt4327552","s":"Vanessa Golembewski, Vanessa Golembewski","y":2014,"q":"video"},{"l":"Breaking Bad Season 3: Silent But Deadly - The Brothers Moncada","id":"tt2380191","s":"Vince Gilligan, Daniel Moncada","y":2011,"q":"video"},{"l":"Breaking In","id":"tt7137846","s":"Gabrielle Union, Billy Burke","y":2018,"q":"feature","i":["https://images-na.ssl-images-amazon.com/images/M/MV5BNWQ3OTRjNTUtM2JiNC00NTZjLTg4YjAtMWI5NmZhOGJlZDA5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg",3158,5000]}]})'
+
+    const actual = await deriveJsonFromIMDBResponse(imdbReturn)
+    const expected = {
+      data: [
+        {
+          title: 'Breaking Bad',
+          year: 2008,
+          format: 'TV series',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BZDNhNzhkNDctOTlmOS00NWNmLWEyODQtNWMxM2UzYmJiNGMyXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_.jpg',
+        },
+        {
+          title: 'The Bad News Bears in Breaking Training',
+          year: 1977,
+          format: 'feature',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjI0ZTRmNTEtYjVhMC00MTM0LWFjNDQtYjBhNTNlNWRlMDgxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+        },
+        {
+          title: 'Breaking Bad Movie Deal Gone Bad',
+          year: 2015,
+          format: 'feature',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BZGVhNzc2MmItZjY1Ni00ZGQzLTlhMzUtZmIwMWE1ZDc4YmQ3XkEyXkFqcGdeQXVyMzY4MDAyMDQ@._V1_.jpg',
+        },
+        {
+          title: 'Breaking In',
+          year: 2018,
+          format: 'feature',
+          poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BNWQ3OTRjNTUtM2JiNC00NTZjLTg4YjAtMWI5NmZhOGJlZDA5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg',
         },
       ],
       error: false,
