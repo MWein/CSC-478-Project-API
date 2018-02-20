@@ -35,7 +35,8 @@
     "eslint-plugin-jest": "^21.12.1",
     "express": "4.16.2",
     "lodash": "4.17.4",
-    "pg": "^7.4.1"
+    "pg": "^7.4.1",
+    "superagent": "^3.8.2"
   },
   "jest": {
     "roots": [
