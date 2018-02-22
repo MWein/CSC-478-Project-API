@@ -1,11 +1,12 @@
 [ ] Create helper that creates initial tables
-	[ ] Checks for and creates users
-		[ ] Inserts superuser
-	[ ] Checks for and creates customers
-	[ ] Checks for and creates movies
-	[ ] Called by login controller
-	[ ] Update login test
-	[ ] Create test for helper
+	[X] Checks for and creates users
+		[X] Inserts superuser
+	[X] Checks for and creates customers
+	[X] Checks for and creates movies
+	[X] Remove superuser creation from login
+	[X] Update login test
+	[ ] Create test for healthv2
+	[ ] Remove old health controller and test
 
 [ ] Add copy controller
 	[ ] Controller

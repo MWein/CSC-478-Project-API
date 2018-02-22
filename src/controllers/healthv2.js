@@ -6,10 +6,10 @@ import {
   createMoviesTable,
   createUsersTable,
 } from '../db/createTables'
+import { createUser } from '../db/userManagement'
 import { sqlQuery } from '../db'
 
 const healthController = async(req, res, next) => {
-
   const checkForUsersTable = async() => {
     const usersCheck = await sqlQuery(checkUsersTable())
 
@@ -26,6 +26,8 @@ const healthController = async(req, res, next) => {
     return { error: false, errorMsg: '' }
   }
   const usersCheck = await checkForUsersTable()
+
+  await sqlQuery(createUser('superuser', '', '', 'password', 'admin', true))
 
 
   const checkForCustomersTable = async() => {
