@@ -12,7 +12,6 @@
 }
 ```
 
-
 ---
 
 ## **/imdbSearch**
@@ -41,6 +40,37 @@
       poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
       },
     ],
+    error: false,
+    errorMsg: '',
+  }
+```
+
+---
+
+## **/createMovie**
+
+**Protocol**: POST
+
+**Description**: Creates a movie in the database
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  upc: '123456',
+  poster_loc: 'http://www.imdb.com/somePoster', // Optional, default = ''
+  copies: [
+    'dkfasdkf',
+    'safdlkjasdfd',
+  ], // Optional, default = [], must be an array of strings
+}
+```
+
+**Sample Output**:
+```javascript
+{
     error: false,
     errorMsg: '',
   }

@@ -15,11 +15,11 @@
 	[ ] Test
 	[ ] Documentation
 
-[ ] Create movie controller
-	[ ] Controller
-	[ ] Route
-	[ ] Test
-	[ ] Documentation
+[X] Create movie controller
+	[X] Controller
+	[X] Route
+	[X] Test
+	[X] Documentation
 
 [ ] Add copy controller
 	[ ] Controller
