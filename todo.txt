@@ -3,6 +3,7 @@
 		[X] Inserts superuser
 	[X] Checks for and creates customers
 	[X] Checks for and creates movies
+	[ ] Checks for connection to IMDB
 	[X] Remove superuser creation from login
 	[X] Update login test
 	[ ] Create test for healthv2
