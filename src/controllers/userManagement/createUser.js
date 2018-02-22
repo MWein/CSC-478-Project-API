@@ -1,6 +1,6 @@
 import {
-  allUsers as allUsersQuery,
   createUser,
+  allUserIDs as userIDsQuery,
 } from '../../db/userManagement'
 import {
   databaseErrorMessage,
@@ -30,13 +30,13 @@ const createUserController = async(req, res, next) => {
   const newphone = !req.body.phone ? '' : req.body.phone
   const newAddress = !req.body.address ? '' : req.body.address
 
-  const allUsersQ = await sqlQuery(allUsersQuery())
+  const allUserIDsQ = await sqlQuery(userIDsQuery())
 
-  if (allUsersQ.error) {
+  if (allUserIDsQ.error) {
     return databaseErrorMessage(res)
   }
 
-  const allUserIDs = allUsersQ.rows.map(user => user.id)
+  const allUserIDs = allUserIDsQ.rows.map(user => user.id)
 
   if (allUserIDs.includes(newId)) {
     return idAlreadyExistsErrorMessage(res)

@@ -2,6 +2,10 @@ export const allUsers = () => ({
   text: 'SELECT * FROM "users"',
 })
 
+export const allUserIDs = () => ({
+  text: 'SELECT id FROM "users"',
+})
+
 export const getUserRow = id => ({
   text: 'SELECT * FROM "users" WHERE id = ($1)',
   values: [ id ],
