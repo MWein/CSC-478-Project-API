@@ -87,3 +87,7 @@ export const noTitleProvidedErrorMessage = res => {
 export const copiesIsNotAnArrayErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'Copies must be of type "array"' })
 }
+
+export const copiesIsNotArrayOfStringsErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Copies must be an array of strings' })
+}

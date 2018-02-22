@@ -4,6 +4,7 @@ import {
 } from '../../db/movieManagement'
 import {
   copiesIsNotAnArrayErrorMessage,
+  copiesIsNotArrayOfStringsErrorMessage,
   databaseErrorMessage,
   noError,
   noTitleProvidedErrorMessage,
@@ -40,6 +41,19 @@ const createMovieController = async(req, res, next) => {
   if (!Array.isArray(copies)) {
     return copiesIsNotAnArrayErrorMessage(res)
   }
+
+  const typeCheck = copies.reduce((acc, copy) => {
+    if (typeof copy !== 'string') {
+      return acc + 1
+    }
+
+    return acc
+  }, 0)
+
+  if (typeCheck > 0) {
+    return copiesIsNotArrayOfStringsErrorMessage(res)
+  }
+
 
   const qResult = await sqlQuery(createMovie(upc, title, poster_loc, copies))
 
