@@ -5,7 +5,10 @@
 ## **Movie Database Schema**:
 ```javascript
 {
-  Not yet created
+  upc: 'Unique product code',
+  title: 'Movie title',
+  poster_loc: 'URL to a poster image on IMDB',
+  copies: 'A "stringified" Javascript array of movie copy IDs',
 }
 ```
 

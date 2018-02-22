@@ -7,7 +7,7 @@
 	[ ] Update login test
 	[ ] Create test for helper
 
-[ ] Database schema documentation
+[X] Database schema documentation for movies
 
 [ ] AllMovies controller
 	[ ] Controller
