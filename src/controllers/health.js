@@ -1,4 +1,4 @@
-const healthController = async(req, res, next) => {
+const healthController = (req, res, next) => {
   res.status(200).send('ok')
   next()
 }
