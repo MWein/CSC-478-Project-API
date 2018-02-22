@@ -1,3 +1,6 @@
+export const checkUsersTable = () => ({
+  text: 'SELECT count(*) FROM users',
+})
 export const createUsersTable = () => ({
   text: `CREATE TABLE users (
     id          text NOT NULL,
@@ -16,6 +19,9 @@ export const createUsersTable = () => ({
   )`,
 })
 
+export const checkCustomersTable = () => ({
+  text: 'SELECT count(*) FROM customers',
+})
 export const createCustomersTable = () => ({
   text: `CREATE TABLE customers (
     id          text NOT NULL,
@@ -29,6 +35,9 @@ export const createCustomersTable = () => ({
   )`,
 })
 
+export const checkMoviesTable = () => ({
+  text: 'SELECT count(*) FROM movies',
+})
 export const createMoviesTable = () => ({
   text: `CREATE TABLE movies (
     upc          text NOT NULL,

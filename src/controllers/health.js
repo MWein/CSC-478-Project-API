@@ -1,8 +1,4 @@
-const healthController = (req, res, next) => {
-  // TODO Check status of users database
-  // TODO Check status of customers database
-  // TODO Check connection to IMDB
-
+const healthController = async(req, res, next) => {
   res.status(200).send('ok')
   next()
 }
