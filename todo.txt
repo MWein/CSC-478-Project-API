@@ -13,7 +13,7 @@
 	[ ] Test
 	[ ] Documentation
 
-[ ] Return movie by copy ID
+[ ] Return movie info by copy ID
 	[ ] Controller
 	[ ] Route
 	[ ] Test
