@@ -1,0 +1,25 @@
+[ ] Create helper that creates initial tables
+	[ ] Checks for and creates users
+		[ ] Inserts superuser
+	[ ] Checks for and creates customers
+	[ ] Checks for and creates movies
+	[ ] Called by login controller
+	[ ] Update login test
+	[ ] Create test for helper
+
+[ ] Database schema documentation
+
+[ ] AllMovies controller
+	[ ] Controller
+	[ ] Test
+	[ ] Documentation
+
+[ ] Create movie controller
+	[ ] Controller
+	[ ] Test
+	[ ] Documentation
+
+[ ] Add copy controller
+	[ ] Controller
+	[ ] Test
+	[ ] Documentation
