@@ -4,6 +4,7 @@ import {
 } from '../../db/customerManagement'
 import {
   databaseErrorMessage,
+  noError,
   noFNameProvidedErrorMessage,
   noLNameProvidedErrorMessage,
   noPhoneNumProvidedErrorMessage,
@@ -42,7 +43,7 @@ const createCustomerController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  res.status(200).json({ id, error: false, errorMsg: '' })
+  res.status(200).json({ id, ...noError() })
   next()
 }
 

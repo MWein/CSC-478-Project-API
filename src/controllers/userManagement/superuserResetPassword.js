@@ -1,5 +1,6 @@
 import {
   databaseErrorMessage,
+  noError,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
   userNotFoundErrorMessage,
@@ -37,7 +38,7 @@ const superuserResetPassword = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  res.status(200).json({ error: false, errorMsg: '' })
+  res.status(200).json(noError())
   next()
 }
 

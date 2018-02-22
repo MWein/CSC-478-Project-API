@@ -1,6 +1,7 @@
 import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/userManagement'
 import {
   databaseErrorMessage,
+  noError,
   userNotFoundErrorMessage,
 } from '../errorMessages'
 import { sqlQuery } from '../db'
@@ -33,7 +34,7 @@ const logoutController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  res.status(200).json({ error: false, errorMsg: '' })
+  res.status(200).json(noError())
   next()
 }
 

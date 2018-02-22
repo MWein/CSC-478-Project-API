@@ -1,6 +1,7 @@
 import {
   databaseErrorMessage,
   noAnswerProvidedErrorMessage,
+  noError,
   noQuestionProvidedErrorMessage,
 } from '../../errorMessages'
 import {
@@ -26,7 +27,7 @@ const setSecurityQuestionController = async(req, res, next) => {
     return databaseErrorMessage(res)
   }
 
-  res.status(200).json({ error: false, errorMsg: '' })
+  res.status(200).json(noError())
   next()
 }
 

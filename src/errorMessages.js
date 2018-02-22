@@ -1,3 +1,5 @@
+export const noError = () => ({ error: false, errorMsg: '' })
+
 export const forbiddenErrorMessage = res => {
   res.status(403).json({ error: true, errorMsg: 'Forbidden' })
 }
@@ -68,4 +70,20 @@ export const noPhoneNumProvidedErrorMessage = res => {
 
 export const noSearchStringProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No search string provided' })
+}
+
+export const noUPCProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No UPC provided' })
+}
+
+export const upcAlreadyExistsErrorMessage = res => {
+  res.status(400).json({ error: true, errorMsg: 'UPC already exists' })
+}
+
+export const noTitleProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No title provided' })
+}
+
+export const copiesIsNotAnArrayErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Copies must be of type "array"' })
 }
