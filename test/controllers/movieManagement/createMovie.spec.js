@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import createMovieController from '../../../src/controllers/movieManagement/createMovie'
