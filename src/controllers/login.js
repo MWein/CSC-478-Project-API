@@ -1,6 +1,5 @@
 import {
   allUsers as allUsersQuery,
-  createUser,
   updateTokenAndTimestampForUser,
 } from '../db/userManagement'
 import {
