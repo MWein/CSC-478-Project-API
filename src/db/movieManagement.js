@@ -12,7 +12,7 @@ export const getMovieRow = upc => ({
 })
 
 export const createMovie = (upc, title, poster, copies) => ({
-  text: 'INSERT INTO movies (upc, title, poster, copies) VALUES (($1), ($2), ($3), ($4))',
+  text: 'INSERT INTO movies (upc, title, poster_loc, copies) VALUES (($1), ($2), ($3), ($4))',
   values: [ upc, title, poster, copies ],
 })
 

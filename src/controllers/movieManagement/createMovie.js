@@ -41,9 +41,7 @@ const createMovieController = async(req, res, next) => {
     return copiesIsNotAnArrayErrorMessage(res)
   }
 
-  const copiesString = JSON.stringify(copies)
-
-  const qResult = await sqlQuery(createMovie(upc, title, poster_loc, copiesString))
+  const qResult = await sqlQuery(createMovie(upc, title, poster_loc, copies))
 
   if (qResult.error) {
     return databaseErrorMessage(res)
