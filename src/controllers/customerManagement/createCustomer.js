@@ -1,5 +1,5 @@
 import {
-  allCustomers,
+  allCustomerIDs,
   createCustomer,
 } from '../../db/customerManagement'
 import {
@@ -25,12 +25,12 @@ const createCustomerController = async(req, res, next) => {
     return noPhoneNumProvidedErrorMessage(res)
   }
 
-  const allCustomersQ = await sqlQuery(allCustomers())
+  const allCustomerIDsQ = await sqlQuery(allCustomerIDs())
 
-  if (allCustomersQ.error) {
+  if (allCustomerIDsQ.error) {
     return databaseErrorMessage(res)
   }
-  const allCustomerIds = allCustomersQ.rows.map(customer => customer.id)
+  const allCustomerIds = allCustomerIDsQ.rows.map(customer => customer.id)
 
   const id = generateUniqueKey(allCustomerIds)
   const address = !req.body.address ? '' : req.body.address
