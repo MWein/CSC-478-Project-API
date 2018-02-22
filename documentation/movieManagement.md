@@ -71,7 +71,46 @@
 **Sample Output**:
 ```javascript
 {
-    error: false,
-    errorMsg: '',
-  }
+  error: false,
+  errorMsg: '',
+}
+```
+
+---
+
+## **/allMovies**
+
+**Protocol**: POST
+
+**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. It is recommended that upc or title are sent, but not both.
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  upc: '123456',
+  title: 'Fast and Furious 45',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  numRows: 1,
+  rows: [
+    {
+      upc: '123456',
+      title: 'Fast and Furious 45',
+      poster_loc: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
+      copies: [
+        'asdfasdf',
+        'dfhhjssa',
+      ]
+    }
+  ]
+  error: false,
+  errorMsg: '',
+}
 ```

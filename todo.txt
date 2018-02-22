@@ -7,20 +7,6 @@
 	[ ] Update login test
 	[ ] Create test for helper
 
-[X] Database schema documentation for movies
-
-[ ] AllMovies controller
-	[ ] Controller
-	[ ] Route
-	[ ] Test
-	[ ] Documentation
-
-[X] Create movie controller
-	[X] Controller
-	[X] Route
-	[X] Test
-	[X] Documentation
-
 [ ] Add copy controller
 	[ ] Controller
 	[ ] Route
