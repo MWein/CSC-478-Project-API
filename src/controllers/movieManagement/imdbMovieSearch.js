@@ -1,12 +1,13 @@
 import { XMLHttpRequest } from 'xmlhttprequest'
 import imdbResponseParser from '../../helpers/imdbResponseParser'
+import { noSearchStringProvidedErrorMessage } from '../../errorMessages'
 
 
 const imdbMovieSearchController = async(req, res, next) => {
   const searchStr = req.body.searchStr
 
   if (!searchStr) {
-    return res.status(449).json({ error: true, errorMsg: 'No search string provided' })
+    return noSearchStringProvidedErrorMessage(res)
   }
 
   const searchableText = searchStr.split(' ').join('_')

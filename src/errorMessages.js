@@ -65,3 +65,7 @@ export const noLNameProvidedErrorMessage = res => {
 export const noPhoneNumProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No phone number provided' })
 }
+
+export const noSearchStringProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'No search string provided' })
+}

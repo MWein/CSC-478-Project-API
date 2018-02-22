@@ -11,15 +11,18 @@
 
 [ ] AllMovies controller
 	[ ] Controller
+	[ ] Route
 	[ ] Test
 	[ ] Documentation
 
 [ ] Create movie controller
 	[ ] Controller
+	[ ] Route
 	[ ] Test
 	[ ] Documentation
 
 [ ] Add copy controller
 	[ ] Controller
+	[ ] Route
 	[ ] Test
 	[ ] Documentation
