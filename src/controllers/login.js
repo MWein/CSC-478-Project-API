@@ -6,6 +6,7 @@ import {
   databaseErrorMessage,
   incorrectAnswerErrorMessage,
   invalidCredentialsErrorMessage,
+  noError,
   noIdProvidedErrorMessage,
   noPinProvidedErrorMessage,
   securityQuestionNotSetErrorMessage,
@@ -73,8 +74,7 @@ const loginController = async(req, res, next) => {
     role: user.role,
     token: newToken,
     needsSecurityQuestion,
-    error: false,
-    errorMsg: '',
+    ...noError(),
   }
 
   res.status(200).json(resultJson)

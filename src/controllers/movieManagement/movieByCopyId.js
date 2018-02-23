@@ -1,5 +1,8 @@
+import {
+  copyIDNotProvidedErrorMessage,
+  databaseErrorMessage,
+} from '../../errorMessages'
 import { allMovies } from '../../db/movieManagement'
-import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 
 
@@ -7,7 +10,7 @@ const movieByCopyIdController = async(req, res, next) => {
   const copy = !req.body.copy ? '' : req.body.copy
 
   if (!copy) {
-    return res.status(449).json({ error: true, errorMsg: 'Copy ID not provided' })
+    return copyIDNotProvidedErrorMessage(res)
   }
 
   const moviesQuery = await sqlQuery(allMovies())

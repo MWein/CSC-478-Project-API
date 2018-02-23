@@ -95,3 +95,7 @@ export const copiesIsNotAnArrayErrorMessage = res => {
 export const copiesIsNotArrayOfStringsErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'Copies must be an array of strings' })
 }
+
+export const copyIDNotProvidedErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Copy ID not provided' })
+}

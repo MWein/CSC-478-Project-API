@@ -1,3 +1,5 @@
+import { noError } from '../errorMessages'
+
 const imdbResponseParser = text => {
   if (!text) {
     return { error: true, errorMsg: 'No response' }
@@ -15,8 +17,7 @@ const imdbResponseParser = text => {
 
   return {
     data: movieData,
-    error: false,
-    errorMsg: '',
+    ...noError(),
   }
 }
 

@@ -1,5 +1,6 @@
 import {
   databaseErrorMessage,
+  noError,
   noIdProvidedErrorMessage,
   userNotFoundErrorMessage,
 } from '../../errorMessages'
@@ -32,8 +33,7 @@ const getSecurityQuestionController = async(req, res, next) => {
 
   res.status(200).json({
     question,
-    error: false,
-    errorMsg: '',
+    ...noError(),
   })
   next()
 }
