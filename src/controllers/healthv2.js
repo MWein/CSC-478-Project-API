@@ -11,7 +11,7 @@ import { sqlQuery } from '../db'
 
 
 const tableCheckReturn = async(check, tableName, createTableQuery) => {
-  if (check.error && check.errorMsg.contains('does not exist')) {
+  if (check.error && check.errorMsg.includes('does not exist')) {
     const usersTableCreation = await sqlQuery(createTableQuery)
 
     if (usersTableCreation.error) {
@@ -33,7 +33,7 @@ export const checkForUsersTable = async() => {
 }
 
 
-const checkForCustomersTable = async() => {
+export const checkForCustomersTable = async() => {
   const customersCheck = await sqlQuery(checkCustomersTable())
   const returnVal = await tableCheckReturn(customersCheck, 'customers', createCustomersTable())
 
@@ -41,7 +41,7 @@ const checkForCustomersTable = async() => {
 }
 
 
-const checkForMoviesTable = async() => {
+export const checkForMoviesTable = async() => {
   const moviesCheck = await sqlQuery(checkMoviesTable())
   const returnVal = await tableCheckReturn(moviesCheck, 'movies', createMoviesTable())
 
