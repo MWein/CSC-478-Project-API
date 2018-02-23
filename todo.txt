@@ -6,8 +6,8 @@
 	[ ] Checks for connection to IMDB
 	[X] Remove superuser creation from login
 	[X] Update login test
-	[ ] Create test for healthv2
-	[ ] Remove old health controller and test
+	[X] Create test for healthv2
+	[X] Remove old health controller and test
 
 [ ] Add copy controller
 	[ ] Controller
