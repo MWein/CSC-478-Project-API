@@ -80,6 +80,10 @@ export const upcAlreadyExistsErrorMessage = res => {
   res.status(400).json({ error: true, errorMsg: 'UPC already exists' })
 }
 
+export const movieNotFoundErrorMessage = res => {
+  res.status(404).json({ error: true, errorMsg: 'Movie not found' })
+}
+
 export const noTitleProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'No title provided' })
 }

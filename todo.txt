@@ -9,11 +9,11 @@
 	[X] Create test for healthv2
 	[X] Remove old health controller and test
 
-[ ] Add copy controller
-	[ ] Controller
-	[ ] Route
-	[ ] Test
-	[ ] Documentation
+[X] Edit movie controller
+	[X] Controller
+	[X] Route
+	[X] Test
+	[X] Documentation
 
 [ ] Return movie info by copy ID
 	[ ] Controller

@@ -114,3 +114,42 @@
   errorMsg: '',
 }
 ```
+
+---
+
+## **/editMovie**
+
+**Protocol**: POST
+
+**Description**: Edits information about the movie in the database.
+<br />*Note*: Values not included in the request body will not be changed.
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  upc: '123456', // Optional
+  title: 'Fast and Furious 45', // Optional
+  copies: [
+    'fdkjsdlkjsdf',
+    'adgadfgsdfg',
+  ], // Optional
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  token: 'asdfasdf',
+  upc: '123456',
+  title: 'Fast and Furious 45',
+  copies: [
+    'fdkjsdlkjsdf',
+    'adgadfgsdfg',
+  ],
+  error: false,
+  errorMsg: '',
+}
+```
