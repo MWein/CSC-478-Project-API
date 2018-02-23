@@ -153,3 +153,39 @@
   errorMsg: '',
 }
 ```
+
+---
+
+## **/lookupCopyId**
+
+**Protocol**: POST
+
+**Description**: Returns an array of movies with a matching copy ID.
+
+**Permissions**: Admin, Manager, Employee
+
+**Sample Input**:
+```javascript
+{
+  token: 'asdfasdf',
+  copy: 'fdkjsdlkjsdf',
+}
+```
+
+**Sample Output**:
+```javascript
+{
+  movies: [
+    {
+      upc: '123456',
+      title: 'Fast and Furious 45',
+      copies: [
+        'fdkjsdlkjsdf',
+        'adgadfgsdfg',
+      ],
+    },
+  ]
+  error: false,
+  errorMsg: '',
+}
+```

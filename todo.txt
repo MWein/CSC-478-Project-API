@@ -9,13 +9,14 @@
 	[X] Create test for healthv2
 	[X] Remove old health controller and test
 
-[X] Edit movie controller
+[X] Return movie info by copy ID
 	[X] Controller
 	[X] Route
 	[X] Test
 	[X] Documentation
 
-[ ] Return movie info by copy ID
+[ ] Delete movie controller
+	[ ] Needed?
 	[ ] Controller
 	[ ] Route
 	[ ] Test
