@@ -3,7 +3,7 @@
 ## **Input Values**:
 
 ### Most API endpoints use the POST protocol. This means that all input information must be stored in the **body** of the http call.
-**javascript
+```javascript
 {
   body: {
     id: 'mwein3',
@@ -65,3 +65,37 @@
 #### Each endpoint has specific permissions. For example, **managers** have permission to edit users in the database but **employees** do not. This documentation details every endpoint complete with the permissions needed for access.
 
 ### A **timestamp** is retained for each user in the system. The timestamp is the time and date of the last action performed by the user. The user is logged out after 15 minutes of inactivity.
+
+---
+
+## **/status**
+
+**Protocol**: GET
+
+**Description**: Checks the status of users, customers, and movies tables in the database. If these tables do not exist, this function creates them. In the case of the users table, superuser will be created. For table creation reasons this endpoint **must** be called on startup.
+
+**Permissions**: Everyone
+
+**Sample Input**:
+```javascript
+N/A
+```
+
+**Sample Output**:
+```javascript
+{
+  usersDatabase: {
+    error: false,
+    errorMsg: "",
+  },
+  customersDatabase: {
+    error: false,
+    errorMsg: "",
+  },
+  moviesDatabase: {
+    error: false,
+    errorMsg: "",
+  },
+  error: false,
+}
+```
