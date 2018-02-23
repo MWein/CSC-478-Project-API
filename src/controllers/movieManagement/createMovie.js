@@ -42,13 +42,7 @@ const createMovieController = async(req, res, next) => {
     return copiesIsNotAnArrayErrorMessage(res)
   }
 
-  const typeCheck = copies.reduce((acc, copy) => {
-    if (typeof copy !== 'string') {
-      return acc + 1
-    }
-
-    return acc
-  }, 0)
+  const typeCheck = copies.reduce((acc, copy) => typeof copy !== 'string' ? acc + 1 : acc, 0)
 
   if (typeCheck > 0) {
     return copiesIsNotArrayOfStringsErrorMessage(res)
