@@ -18,7 +18,7 @@ describe('set user security question controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -54,7 +54,7 @@ describe('set user security question controller tests', () => {
 
   it('Returns an error if question is not passed to controller', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           id: 'fakeUser',
@@ -91,7 +91,7 @@ describe('set user security question controller tests', () => {
 
   it('Returns an error if answer is not passed to controller', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           id: 'fakeUser',
@@ -128,7 +128,7 @@ describe('set user security question controller tests', () => {
 
   it('Successfully sets security question and answer', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           id: 'fakeUser',

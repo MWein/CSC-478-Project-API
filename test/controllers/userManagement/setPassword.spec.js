@@ -18,7 +18,7 @@ describe('set user password controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -72,7 +72,7 @@ describe('set user password controller tests', () => {
 
   it('Successfully changes role of user', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [
         {
           id: 'mrSomebody',

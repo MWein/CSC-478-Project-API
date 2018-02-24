@@ -13,7 +13,7 @@ const expect = chai.expect
 
 
 const dbReturn = {
-  rowNum: 2,
+  numRows: 2,
   rows: [
     {
       id: 'the_real_batman',
@@ -48,7 +48,7 @@ describe('getUser middleware tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturnError = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',

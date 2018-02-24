@@ -19,7 +19,7 @@ const getSecurityQuestionController = async(req, res, next) => {
 
   if (usersQuery.error) {
     return databaseErrorMessage(res)
-  } else if (usersQuery.rowNum === 0) {
+  } else if (usersQuery.numRows === 0) {
     return userNotFoundErrorMessage(res)
   }
 

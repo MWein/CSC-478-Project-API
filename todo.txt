@@ -1,17 +1,10 @@
-[ ] Find and fix all controllers where rowNum may be incorrect
-
-
 [ ] Manual testing
 	[ ] /status
 		[ ] Creates user table
 		[ ] Creates superuser
-		[ ] Creates customer table
+		[X] Creates customer table
 		[ ] Creates movie copies table
-		[ ] Returns health of all tables
-	[X] Customer management
-		[X] createCustomer
-		[X] editCustomer
-		[X] getAllCustomers
+		[X] Returns health of all tables
 	[ ] User management
 		[ ] createUser
 		[ ] editUser
@@ -30,6 +23,11 @@
 	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation
+
+[ ] Update createMovie
+	[ ] Create movieCopies
+	[ ] Update Test
+	[ ] Documentation
 
 [ ] Create movie copy by UPC
 	[ ] Controller

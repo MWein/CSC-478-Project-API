@@ -21,7 +21,7 @@ describe('Superuser reset password controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -70,7 +70,7 @@ describe('Superuser reset password controller tests', () => {
 
   it('returns an error if id is not found in database', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: false,
       errorMsg: '',
@@ -99,7 +99,7 @@ describe('Superuser reset password controller tests', () => {
 
   it('Successfully changes password of user', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [
         {
           id: 'mrSomebody',

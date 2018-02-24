@@ -25,7 +25,7 @@ describe('Login controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -92,7 +92,7 @@ describe('Login controller tests', () => {
 
 
   const dbReturn = {
-    rowNum: 2,
+    numRows: 2,
     rows: [
       {
         id: 'superman',
@@ -372,7 +372,7 @@ describe('Login controller tests', () => {
 
   it('Returns an error if pin is not provided and security question is not set', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'superman',
@@ -410,7 +410,7 @@ describe('Login controller tests', () => {
 
   it('Returns an error if security answer is not set', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'superman',
@@ -448,7 +448,7 @@ describe('Login controller tests', () => {
 
   it('Returns an error if security answer provided is incorrect', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'superman',
@@ -485,7 +485,7 @@ describe('Login controller tests', () => {
 
   it('Returns user information if the answer was correct', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'superman',

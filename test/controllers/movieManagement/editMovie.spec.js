@@ -23,7 +23,7 @@ describe('Edit movie controller test', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -69,7 +69,7 @@ describe('Edit movie controller test', () => {
 
   it('returns an error if upc is not found in database', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: false,
       errorMsg: '',
@@ -96,7 +96,7 @@ describe('Edit movie controller test', () => {
 
 
   const dbReturn = {
-    rowNum: 0,
+    numRows: 0,
     rows: [
       {
         upc: '654987',

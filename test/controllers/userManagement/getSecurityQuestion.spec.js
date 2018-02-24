@@ -20,7 +20,7 @@ describe('get security question controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -50,7 +50,7 @@ describe('get security question controller tests', () => {
 
   it('Returns an error if the id is not provided', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: false,
       errorMsg: '',
@@ -77,7 +77,7 @@ describe('get security question controller tests', () => {
 
   it('Returns an error if the user does not exist in the database', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: false,
       errorMsg: '',
@@ -107,7 +107,7 @@ describe('get security question controller tests', () => {
 
   it('Returns error if a security question has not been set', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           id: 'fake user',
@@ -142,7 +142,7 @@ describe('get security question controller tests', () => {
 
   it('Successfully returns security question', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           id: 'fake user',

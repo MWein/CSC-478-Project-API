@@ -21,7 +21,7 @@ describe('logout controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -66,7 +66,7 @@ describe('logout controller tests', () => {
 
   it('Retuns user not found when id is not found in db', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'A',
@@ -102,7 +102,7 @@ describe('logout controller tests', () => {
 
   it('Returns "Logout successful" when id is found', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           id: 'A',

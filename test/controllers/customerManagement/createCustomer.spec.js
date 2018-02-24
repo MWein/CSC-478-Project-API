@@ -24,7 +24,7 @@ describe('create customer controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -58,7 +58,7 @@ describe('create customer controller tests', () => {
 
   it('Returns error if f_name is not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -93,7 +93,7 @@ describe('create customer controller tests', () => {
 
   it('Returns error if l_name is not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -128,7 +128,7 @@ describe('create customer controller tests', () => {
 
   it('Returns error if phone is not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -164,7 +164,7 @@ describe('create customer controller tests', () => {
     const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -211,7 +211,7 @@ describe('create customer controller tests', () => {
     const genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],

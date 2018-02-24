@@ -23,7 +23,7 @@ describe('Edit customer controller test', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -70,7 +70,7 @@ describe('Edit customer controller test', () => {
 
   it('returns an error if id is not found in database', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: false,
       errorMsg: '',
@@ -97,7 +97,7 @@ describe('Edit customer controller test', () => {
 
 
   const dbReturn = {
-    rowNum: 0,
+    numRows: 0,
     rows: [
       {
         id: '654987',

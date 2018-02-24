@@ -32,7 +32,7 @@ const getAllMoviesController = async(req, res, next) => {
   const moviesList = moviesQuery.rows
 
   const returnVal = {
-    rowNum: moviesList.length,
+    numRows: moviesList.length,
     rows: moviesList,
     error: false,
     errorMsg: '',

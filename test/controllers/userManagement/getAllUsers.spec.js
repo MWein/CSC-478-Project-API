@@ -20,7 +20,7 @@ describe('get all users controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -44,7 +44,7 @@ describe('get all users controller tests', () => {
 
   it('Returns all active users in database without token, password, or timestamp', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -88,7 +88,7 @@ describe('get all users controller tests', () => {
     }
 
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 2,
       rows: [
         {
           id: 'mrSomebody',
@@ -139,7 +139,7 @@ describe('get all users controller tests', () => {
 
   it('Returns all users, active or not, in database without token, password, or timestamp', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -183,7 +183,7 @@ describe('get all users controller tests', () => {
     }
 
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -244,7 +244,7 @@ describe('get all users controller tests', () => {
 
   it('Returns all users, active or not, in database without token, password, or timestamp if excludeInactive is not sent', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -288,7 +288,7 @@ describe('get all users controller tests', () => {
     }
 
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -346,7 +346,7 @@ describe('get all users controller tests', () => {
 
   it('Returns all active users, with excludeInactive as string "true"', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 3,
       rows: [
         {
           id: 'mrSomebody',
@@ -390,7 +390,7 @@ describe('get all users controller tests', () => {
     }
 
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 2,
       rows: [
         {
           id: 'mrSomebody',
@@ -444,7 +444,7 @@ describe('get all users controller tests', () => {
     const twentyMinutesAgo = new Date() - 1200000
 
     const dbReturn = {
-      rowNum: 2,
+      numRows: 4,
       rows: [
         {
           id: 'mrSomebody',
@@ -500,7 +500,7 @@ describe('get all users controller tests', () => {
     }
 
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 1,
       rows: [
         {
           id: 'mrSomebody',

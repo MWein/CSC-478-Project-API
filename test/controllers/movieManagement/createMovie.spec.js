@@ -23,7 +23,7 @@ describe('create movie controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -110,7 +110,7 @@ describe('create movie controller tests', () => {
 
   it('Returns error UPC already exists in the database', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           upc: '245345345534',
@@ -146,7 +146,7 @@ describe('create movie controller tests', () => {
 
   it('Successfully creates movie without poster location', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           upc: '245345345534',
@@ -183,7 +183,7 @@ describe('create movie controller tests', () => {
 
   it('Successfully creates movie with poster location', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           upc: '245345345534',

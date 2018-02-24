@@ -22,7 +22,7 @@ describe('get all movies controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -52,7 +52,7 @@ describe('get all movies controller tests', () => {
 
   it('Successfully returns all movies without UPC or title filters', async() => {
     const dbReturn = {
-      rowNum: 2,
+      numRows: 2,
       rows: [
         {
           upc: '245345345534',
@@ -88,7 +88,7 @@ describe('get all movies controller tests', () => {
 
   it('Successfully returns all movies with a UPC filter', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           upc: '889443493345',
@@ -121,7 +121,7 @@ describe('get all movies controller tests', () => {
 
   it('Successfully returns all movies with a title filter', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           upc: '245345345534',
@@ -154,7 +154,7 @@ describe('get all movies controller tests', () => {
 
   it('Successfully returns all movies with a upc and title filter', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         {
           upc: '245345345534',

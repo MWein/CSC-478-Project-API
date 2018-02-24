@@ -23,7 +23,7 @@ describe('create user controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -59,7 +59,7 @@ describe('create user controller tests', () => {
 
   it('Returns error if id not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -96,7 +96,7 @@ describe('create user controller tests', () => {
 
   it('Returns error if pin not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -132,7 +132,7 @@ describe('create user controller tests', () => {
 
   it('Returns error if role not provided', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -169,7 +169,7 @@ describe('create user controller tests', () => {
 
   it('Returns error if ID already exists in database', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -207,7 +207,7 @@ describe('create user controller tests', () => {
 
   it('Creates the new user in database', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
@@ -254,7 +254,7 @@ describe('create user controller tests', () => {
 
   it('Creates the new user in database, without optional parameters', async() => {
     const dbReturn = {
-      rowNum: 1,
+      numRows: 1,
       rows: [
         { id: 'Santa' },
       ],
