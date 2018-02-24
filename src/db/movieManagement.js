@@ -17,11 +17,11 @@ export const getMovieRowTitle = title => ({
 })
 
 export const createMovie = (upc, title, poster) => ({
-  text: 'INSERT INTO movies (upc, title, poster) VALUES (($1), ($2), ($3)',
+  text: 'INSERT INTO movies (upc, title, poster) VALUES (($1), ($2), ($3))',
   values: [ upc, title, poster ],
 })
 
 export const editMovie = (upc, title, poster) => ({
-  text: 'UPDATE users SET title = ($2), poster = ($3) WHERE upc = ($1)',
+  text: 'UPDATE movies SET title = ($2), poster = ($3) WHERE upc = ($1)',
   values: [ upc, title, poster ],
 })

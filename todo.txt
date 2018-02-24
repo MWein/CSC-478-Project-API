@@ -9,8 +9,6 @@
 		[ ] Creates movie table
 		[ ] Creates movie copies table
 		[ ] Returns health of all tables
-	[ ] Login
-	[ ] Logout
 	[ ] Customer management
 		[ ] createCustomer
 		[ ] editCustomer
@@ -23,20 +21,9 @@
 		[ ] setSecurityQuestion
 		[ ] setPassword
 		[ ] superuserResetPassword
-	[ ] Movie Management
-		[ ] allMovies
-		[ ] createMovie
-		[ ] editMovie
-		[ ] imdbMovieSearch
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
 
-
-[X] Make fixes to all tests
-	[X] User Management
-		[X] superuserResetPassword.spec.js
-			[X] Labels
-			[X] Appropriate database calls
 
 
 [ ] Append health controller
