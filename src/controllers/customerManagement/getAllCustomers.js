@@ -22,8 +22,9 @@ const getAllCustomersController = async(req, res, next) => {
     customerList
 
   const returnVal = {
-    ...customerQuery,
+    numRows: activeCustomerList.length,
     rows: activeCustomerList,
+    error: false,
     errorMsg: '',
   }
 

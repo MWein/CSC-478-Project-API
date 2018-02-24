@@ -34,12 +34,23 @@ const editCustomerController = async(req, res, next) => {
 
   const f_name = !req.body.f_name ? user.f_name : req.body.f_name
   const l_name = !req.body.l_name ? user.l_name : req.body.l_name
-  const active = !req.body.active ? user.active : req.body.active
+  const active = req.body.active === undefined ? user.active : req.body.active
   const phone = !req.body.phone ? user.phone : req.body.phone
   const address = !req.body.address ? user.address : req.body.address
   const email = !req.body.email ? user.email : req.body.email
 
-  const editUserResponse = await sqlQuery(editCustomer(id, f_name, l_name, phone, address, active, email))
+  const convertStrToBool = () => {
+    if (active === 'true') {
+      return true
+    } else if (active === 'false') {
+      return false
+    }
+
+    return active
+  }
+  const booleanActive = convertStrToBool()
+
+  const editUserResponse = await sqlQuery(editCustomer(id, f_name, l_name, phone, address, booleanActive, email))
 
   if (editUserResponse.error) {
     return databaseErrorMessage(res)
@@ -52,7 +63,7 @@ const editCustomerController = async(req, res, next) => {
     phone,
     address,
     email,
-    active,
+    active: booleanActive,
     error: false,
     errorMsg: '',
   }

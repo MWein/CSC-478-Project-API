@@ -29,7 +29,7 @@ export const createCustomersTable = () => ({
     l_name      text,
     phone       text,
     address     text,
-    active      text,
+    active      boolean,
     email       text,
     PRIMARY KEY(id)
   )`,

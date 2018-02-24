@@ -6,13 +6,12 @@
 		[ ] Creates user table
 		[ ] Creates superuser
 		[ ] Creates customer table
-		[ ] Creates movie table
 		[ ] Creates movie copies table
 		[ ] Returns health of all tables
-	[ ] Customer management
-		[ ] createCustomer
-		[ ] editCustomer
-		[ ] getAllCustomers
+	[X] Customer management
+		[X] createCustomer
+		[X] editCustomer
+		[X] getAllCustomers
 	[ ] User management
 		[ ] createUser
 		[ ] editUser

@@ -20,7 +20,7 @@ describe('get all customers controller tests', () => {
 
   it('Responds properly to database error', async() => {
     const dbReturn = {
-      rowNum: 0,
+      numRows: 0,
       rows: [],
       error: true,
       errorMsg: 'Some database error',
@@ -43,7 +43,7 @@ describe('get all customers controller tests', () => {
 
 
   const dbReturn = {
-    rowNum: 2,
+    numRows: 3,
     rows: [
       {
         id: '456789',
@@ -80,7 +80,7 @@ describe('get all customers controller tests', () => {
 
   it('Returns all active customers in database', async() => {
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 2,
       rows: [
         {
           id: '456789',
@@ -129,7 +129,7 @@ describe('get all customers controller tests', () => {
 
   it('Returns all users, active or not', async() => {
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 3,
       rows: [
         {
           id: '456789',
@@ -187,7 +187,7 @@ describe('get all customers controller tests', () => {
 
   it('Returns all customers, active or not if excludeInactive is not sent', async() => {
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 3,
       rows: [
         {
           id: '456789',
@@ -242,7 +242,7 @@ describe('get all customers controller tests', () => {
 
   it('Returns all active users, with excludeInactive as string "true"', async() => {
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 2,
       rows: [
         {
           id: '456789',
@@ -291,7 +291,7 @@ describe('get all customers controller tests', () => {
 
   it('Returns customers by phone number', async() => {
     const expected = {
-      rowNum: dbReturn.rowNum,
+      numRows: 1,
       rows: [
         {
           id: '852147',
