@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 
 import { mockReq, mockRes } from 'sinon-express-mock'
+import { allUsers } from '../../../src/db/userManagement'
 import chai from 'chai'
 import db from '../../../src/db/index'
 import getAllUsersController from '../../../src/controllers/userManagement/getAllUsers'
@@ -36,8 +37,8 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -131,8 +132,8 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -236,8 +237,8 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -339,8 +340,8 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
   it('Returns all active users, with excludeInactive as string "true"', async() => {
@@ -433,8 +434,8 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -534,7 +535,7 @@ describe('get all users controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 })
