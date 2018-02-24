@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  editMovie,
+  getMovieRowUPC,
+} from '../../../src/db/movieManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
@@ -42,8 +46,8 @@ describe('Edit movie controller test', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
   })
 
 
@@ -97,7 +101,7 @@ describe('Edit movie controller test', () => {
       {
         upc: '654987',
         title: 'Black Panther',
-        poster: 'nowhereToBeFound',
+        poster_loc: 'nowhereToBeFound',
       },
     ],
     error: false,
@@ -112,7 +116,7 @@ describe('Edit movie controller test', () => {
       body: {
         upc: '654987',
         //title: 'Iron Man',
-        poster: 'www.ironman.com/poster',
+        poster_loc: 'www.ironman.com/poster',
       },
     }
 
@@ -132,8 +136,9 @@ describe('Edit movie controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, dbReturn.rows[0].title, request.body.poster_loc))
   })
 
 
@@ -144,13 +149,13 @@ describe('Edit movie controller test', () => {
       body: {
         upc: '654987',
         title: 'Iron Man',
-        //poster: 'www.ironman.com/poster',
+        //poster_loc: 'www.ironman.com/poster',
       },
     }
 
     const expected = {
       ...request.body,
-      poster: dbReturn.rows[0].poster,
+      poster_loc: dbReturn.rows[0].poster_loc,
       error: false,
       errorMsg: '',
     }
@@ -164,7 +169,8 @@ describe('Edit movie controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, request.body.title, dbReturn.rows[0].poster_loc))
   })
 })

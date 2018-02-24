@@ -34,12 +34,9 @@
 
 [ ] Make fixes to all tests
 	[ ] Movie Management
-		[X] createMovie.spec.js
+		[X] editMovie.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] editMovie.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 		[ ] imdbMovieSearch.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
