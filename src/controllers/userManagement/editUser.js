@@ -35,11 +35,22 @@ const editUserController = async(req, res, next) => {
   const f_name = !req.body.f_name ? user.f_name : req.body.f_name
   const l_name = !req.body.l_name ? user.l_name : req.body.l_name
   const role = !req.body.role ? user.role : req.body.role
-  const active = !req.body.active ? user.active : req.body.active
+  const active = req.body.active === undefined ? user.active : req.body.active
   const phone = !req.body.phone ? user.phone : req.body.phone
   const address = !req.body.address ? user.address : req.body.address
 
-  const editUserResponse = await sqlQuery(editUser(id, f_name, l_name, role, active, phone, address))
+  const convertStrToBool = () => {
+    if (active === 'true') {
+      return true
+    } else if (active === 'false') {
+      return false
+    }
+
+    return active
+  }
+  const booleanActive = convertStrToBool()
+
+  const editUserResponse = await sqlQuery(editUser(id, f_name, l_name, role, booleanActive, phone, address))
 
   if (editUserResponse.error) {
     return databaseErrorMessage(res)
@@ -50,7 +61,7 @@ const editUserController = async(req, res, next) => {
     f_name,
     l_name,
     role,
-    active,
+    active: booleanActive,
     phone,
     address,
     error: false,
