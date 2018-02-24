@@ -33,13 +33,10 @@
 
 
 [ ] Make fixes to all tests
-	[ ] Customer Management
-		[X] editCustomer.spec.js
+	[X] Customer Management
+		[X] getAllCustomers.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] getAllCustomers.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 	[ ] Movie Management
 		[ ] allMovies.spec.js
 			[ ] Labels

@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 
 import { mockReq, mockRes } from 'sinon-express-mock'
+import { allCustomers } from '../../../src/db/customerManagement'
 import chai from 'chai'
 import db from '../../../src/db/index'
 import getAllCustomersController from '../../../src/controllers/customerManagement/getAllCustomers'
@@ -36,8 +37,8 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 
 
@@ -121,8 +122,8 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 
 
@@ -179,8 +180,8 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 
 
@@ -235,8 +236,8 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 
   it('Returns all active users, with excludeInactive as string "true"', async() => {
@@ -283,8 +284,8 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 
 
@@ -323,7 +324,7 @@ describe('get all customers controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomers())
   })
 })
