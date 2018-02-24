@@ -6,6 +6,10 @@ export const allUPCs = () => ({
   text: 'SELECT upc FROM "movies"',
 })
 
+export const allUPCAndCopyIds = () => ({
+  text: 'SELECT id, upc FROM "movie_copies"',
+})
+
 export const getMovieRowUPC = upc => ({
   text: 'SELECT * FROM "movies" WHERE upc = ($1)',
   values: [ upc ],
@@ -24,4 +28,9 @@ export const createMovie = (upc, title, poster) => ({
 export const editMovie = (upc, title, poster) => ({
   text: 'UPDATE movies SET title = ($2), poster = ($3) WHERE upc = ($1)',
   values: [ upc, title, poster ],
+})
+
+export const createMovieCopy = (id, upc, active) => ({
+  text: 'INSERT INTO movie_copies (id, upc, active) VALUES (($1), ($2), ($3))',
+  values: [ id, upc, active ],
 })

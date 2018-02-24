@@ -99,3 +99,7 @@ export const copiesIsNotArrayOfStringsErrorMessage = res => {
 export const copyIDNotProvidedErrorMessage = res => {
   res.status(449).json({ error: true, errorMsg: 'Copy ID not provided' })
 }
+
+export const copyIDAlreadyExistsErrorMessage = res => {
+  res.status(449).json({ error: true, errorMsg: 'Copy ID already exists' })
+}

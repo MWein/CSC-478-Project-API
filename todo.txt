@@ -1,35 +1,29 @@
 [ ] Manual testing
 	[ ] /status
 		[ ] Creates user table
-		[ ] Creates superuser
+		[X] Creates superuser
 		[X] Creates customer table
+		[X] Creates movie table
 		[ ] Creates movie copies table
 		[X] Returns health of all tables
-	[ ] User management
-		[ ] createUser
-		[ ] editUser
-		[ ] getAllUsers
-		[ ] getSecurityQuestion
-		[ ] setSecurityQuestion
-		[ ] setPassword
-		[ ] superuserResetPassword
+	[ ] Movie Management
+		[ ] CreateMovie
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
 
 
 
 [ ] Append health controller
-	[X] Checks for and creates movie copy table
 	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation
 
-[ ] Update createMovie
-	[ ] Create movieCopies
-	[ ] Update Test
-	[ ] Documentation
+[X] Update createMovie
+	[X] Create movieCopies
+	[X] Update Test
+	[X] Documentation
 
-[ ] Create movie copy by UPC
+[ ] Create movie copies by UPC
 	[ ] Controller
 	[ ] Test
 	[ ] Route

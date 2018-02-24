@@ -16,6 +16,7 @@
 {
   id: 'asdfasdfasdf',
   upc: 'dfdfdfasdfs',
+  active: true,
 }
 ```
 
@@ -58,7 +59,7 @@
 
 **Protocol**: POST
 
-**Description**: Creates a movie in the database
+**Description**: Creates a movie and its copies in the database
 
 **Permissions**: Admin, Manager, Employee
 
@@ -68,6 +69,10 @@
   token: 'asdfasdf',
   upc: '123456',
   poster: 'http://www.imdb.com/somePoster', // Optional, default = ''
+  copies: [
+    'asdfasdf',
+    'fjfjdhss',
+  ] // Optional, default = []
 }
 ```
 

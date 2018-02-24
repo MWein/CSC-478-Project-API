@@ -54,6 +54,7 @@ export const createMovieCopiesTable = () => ({
   text: `CREATE TABLE movie_copies (
     id           text NOT NULL,
     upc          text,
+    active       boolean,
     PRIMARY KEY(id)
   )`,
 })
