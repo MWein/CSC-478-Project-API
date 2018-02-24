@@ -1,8 +1,10 @@
 import {
   checkCustomersTable,
+  checkMovieCopiesTable,
   checkMoviesTable,
   checkUsersTable,
   createCustomersTable,
+  createMovieCopiesTable,
   createMoviesTable,
   createUsersTable,
 } from '../db/createTables'
@@ -49,11 +51,19 @@ export const checkForMoviesTable = async() => {
 }
 
 
+export const checkForMovieCopiesTable = async() => {
+  const moviesCheck = await sqlQuery(checkMovieCopiesTable())
+  const returnVal = await tableCheckReturn(moviesCheck, 'movie copies', createMovieCopiesTable())
+
+  return returnVal
+}
+
+
 const healthController = async(req, res, next) => {
   const usersStatus = await checkForUsersTable()
   const customersStatus = await checkForCustomersTable()
   const moviesStatus = await checkForMoviesTable()
-
+  const movieCopyStatus = await checkForMovieCopiesTable()
 
   await sqlQuery(createUser('superuser', '', '', 'password', 'admin', true))
 
@@ -65,6 +75,7 @@ const healthController = async(req, res, next) => {
     usersDatabase: usersStatus,
     customersDatabase: customersStatus,
     moviesDatabase: moviesStatus,
+    movieCopiesDatabase: movieCopyStatus,
   }
 
 

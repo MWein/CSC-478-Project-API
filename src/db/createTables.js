@@ -46,3 +46,14 @@ export const createMoviesTable = () => ({
     PRIMARY KEY(upc)
   )`,
 })
+
+export const checkMovieCopiesTable = () => ({
+  text: 'SELECT count(*) FROM movie_copies',
+})
+export const createMovieCopiesTable = () => ({
+  text: `CREATE TABLE movie_copies (
+    id           text NOT NULL,
+    upc          text,
+    PRIMARY KEY(id)
+  )`,
+})

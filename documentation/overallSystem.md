@@ -96,6 +96,10 @@ N/A
     error: false,
     errorMsg: "",
   },
+  movieCopiesDatabase: {
+    error: false,
+    errorMsg: "",
+  },
   error: false,
 }
 ```

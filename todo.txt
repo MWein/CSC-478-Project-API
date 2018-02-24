@@ -6,7 +6,7 @@
 	[ ] Update documentation
 
 [ ] Append health controller
-	[ ] Checks for and creates movie copy table
+	[X] Checks for and creates movie copy table
 	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation
