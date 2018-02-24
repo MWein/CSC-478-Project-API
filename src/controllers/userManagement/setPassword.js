@@ -3,9 +3,7 @@ import {
   noError,
   noPinProvidedErrorMessage,
 } from '../../errorMessages'
-import {
-  setUserPin,
-} from '../../db/userManagement'
+import { setUserPin } from '../../db/userManagement'
 import { sqlQuery } from '../../db'
 
 

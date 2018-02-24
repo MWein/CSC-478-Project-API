@@ -2,6 +2,7 @@ import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
 import setPasswordController from '../../../src/controllers/userManagement/setPassword'
+import { setUserPin } from '../../../src/db/userManagement'
 import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
@@ -45,8 +46,8 @@ describe('set user password controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(setUserPin(res.locals.user.id, request.body.pin))
   })
 
 
@@ -106,7 +107,7 @@ describe('set user password controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(setUserPin(res.locals.user.id, request.body.pin))
   })
 })
