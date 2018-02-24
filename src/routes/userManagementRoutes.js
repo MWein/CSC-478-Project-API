@@ -11,10 +11,10 @@ import superuserResetPassword from '../controllers/userManagement/superuserReset
 
 const router = express.Router() // eslint-disable-line new-cap
 
-router.post('/allUsers', getUser, permit('admin', 'manager'), getAllUsersController)
+router.post('/allUsers', getUser, permit([ 'admin', 'manager' ]), getAllUsersController)
 
-router.post('/createUser', getUser, permit('admin', 'manager'), createUserController)
-router.post('/editUser', getUser, permit('admin', 'manager'), editUserController)
+router.post('/createUser', getUser, permit([ 'admin', 'manager' ]), createUserController)
+router.post('/editUser', getUser, permit([ 'admin', 'manager' ]), editUserController)
 
 router.post('/adminSetPassword', getUser, permit('admin'), superuserResetPassword)
 
