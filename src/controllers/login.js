@@ -43,7 +43,6 @@ const loginController = async(req, res, next) => {
 
   const user = matchingUsers[0]
 
-
   if (!pin) {
     if (!user.question || !user.answer) {
       return securityQuestionNotSetErrorMessage(res)
@@ -51,6 +50,10 @@ const loginController = async(req, res, next) => {
       return incorrectAnswerErrorMessage(res)
     }
   } else if (user.pin !== pin) {
+    return invalidCredentialsErrorMessage(res)
+  }
+
+  if (!user.active) {
     return invalidCredentialsErrorMessage(res)
   }
 

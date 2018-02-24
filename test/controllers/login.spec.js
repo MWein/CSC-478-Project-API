@@ -97,6 +97,7 @@ describe('Login controller tests', () => {
       {
         id: 'superman',
         pin: 'password',
+        active: true,
       },
       {
         id: 'batman',
@@ -108,6 +109,7 @@ describe('Login controller tests', () => {
         timestamp: '',
         question: '',
         answer: '',
+        active: true,
       },
       {
         id: 'averageman',
@@ -119,6 +121,7 @@ describe('Login controller tests', () => {
         timestamp: '',
         question: 'Some question',
         answer: '',
+        active: true,
       },
       {
         id: 'aquaman',
@@ -130,6 +133,7 @@ describe('Login controller tests', () => {
         timestamp: '',
         question: '',
         answer: 'Some answer',
+        active: true,
       },
       {
         id: 'wonder woman',
@@ -141,6 +145,7 @@ describe('Login controller tests', () => {
         timestamp: '',
         question: 'Question',
         answer: 'Some answer',
+        active: true,
       },
     ],
     error: false,
@@ -455,6 +460,7 @@ describe('Login controller tests', () => {
           pin: 'password',
           question: 'Who am I?',
           answer: 'Im Spiderman',
+          active: true,
         },
       ],
       error: false,
@@ -495,6 +501,7 @@ describe('Login controller tests', () => {
           role: 'admin',
           question: 'Who am I?',
           answer: 'Im Spiderman',
+          active: true,
         },
       ],
       error: false,
@@ -537,6 +544,58 @@ describe('Login controller tests', () => {
     expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(allUsers())
     expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
+  })
+
+
+  it('Disallows login for inactive user', async() => {
+    const dbReturn = {
+      numRows: 1,
+      rows: [
+        {
+          id: 'superman',
+          pin: 'password',
+          f_name: 'Megan',
+          l_name: 'Fox',
+          role: 'admin',
+          question: 'Who am I?',
+          answer: 'Im Spiderman',
+          active: false,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
+
+    genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
+
+    const request = {
+      body: {
+        id: 'superman',
+        pin: 'password',
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await loginController(req, res, next)
+
+    const expected = {
+      error: true,
+      errorMsg: 'Invalid credentials',
+    }
+
+    expect(res.status).to.be.calledWith(401)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
 
     clock.restore()
   })
