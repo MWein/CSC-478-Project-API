@@ -52,9 +52,7 @@ const createMovieController = async(req, res, next) => {
 
   const uniqCopies = _.uniq(copies)
 
-  const duplicateIDs = uniqCopies.reduce((acc, id) => allCopyIDs.includes(id) ? acc + 1 : acc, 0)
-
-  if (duplicateIDs > 0) {
+  if (uniqCopies.reduce((acc, id) => allCopyIDs.includes(id) ? acc + 1 : acc, 0) > 0) {
     return copyIDAlreadyExistsErrorMessage(res)
   }
 
@@ -70,9 +68,8 @@ const createMovieController = async(req, res, next) => {
     return thisQ
   })
   const movieCopyQResults = await Promise.all(movieCopyQPromises)
-  const movieCopyDatabaseErrors = movieCopyQResults.reduce((acc, result) => result.error ? acc + 1 : acc, 0)
 
-  if (movieCopyDatabaseErrors > 0) {
+  if (movieCopyQResults.reduce((acc, result) => result.error ? acc + 1 : acc, 0) > 0) {
     return databaseErrorMessage(res)
   }
 
