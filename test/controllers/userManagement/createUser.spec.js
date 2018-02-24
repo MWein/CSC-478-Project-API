@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  allUserIDs,
+  createUser,
+} from '../../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import createUserController from '../../../src/controllers/userManagement/createUser'
@@ -48,8 +52,8 @@ describe('create user controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUserIDs())
   })
 
 
@@ -197,6 +201,7 @@ describe('create user controller tests', () => {
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'ID already exists' })
     expect(next).to.not.be.called
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUserIDs())
   })
 
 
@@ -234,6 +239,17 @@ describe('create user controller tests', () => {
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUserIDs())
+    expect(dbStub).to.be.calledWith(createUser(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.pin,
+      request.body.role,
+      true,
+      request.body.phone,
+      request.body.address
+    ))
   })
 
   it('Creates the new user in database, without optional parameters', async() => {
@@ -266,5 +282,16 @@ describe('create user controller tests', () => {
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUserIDs())
+    expect(dbStub).to.be.calledWith(createUser(
+      request.body.id,
+      '',
+      '',
+      request.body.pin,
+      request.body.role,
+      true,
+      '',
+      ''
+    ))
   })
 })

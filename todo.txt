@@ -34,9 +34,9 @@
 
 [ ] Make fixes to all tests
 	[ ] User Management
-		[ ] createUser.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
+		[X] createUser.spec.js
+			[X] Labels
+			[X] Appropriate database calls
 		[ ] editUser.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
@@ -55,12 +55,6 @@
 		[ ] superuserResetPassword.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
-	[ ] Middleware
-		[X] getUser.spec.js
-			[X] Labels
-			[X] Appropriate database calls
-		[ ] permit.spec.js
-			[ ] Labels
 
 
 [ ] Append health controller
@@ -74,7 +68,7 @@
 	[ ] Test
 	[ ] Route
 	[ ] Documentation
-
+ 
 [ ] Activate/Deactivate movie copy
 	[ ] Controller
 	[ ] Test
