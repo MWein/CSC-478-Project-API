@@ -1,18 +1,17 @@
 import {
   allMovies,
+  getMovieCopiesUPC,
   getMovieRowTitle,
   getMovieRowUPC,
 } from '../../db/movieManagement'
+import _ from 'lodash'
 import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 
-
 const getAllMoviesController = async(req, res, next) => {
-  // const upc = !req.body.upc ? '' : req.body.upc
-  // const title = !req.body.title ? '' : req.body.title
-
   const upc = req.body.upc
   const title = req.body.title
+  const excludeInactive = req.body.excludeInactive === undefined ? true : req.body.excludeInactive
 
   const decideMoviesQuery = () => {
     if (!upc && !title) {
@@ -31,9 +30,31 @@ const getAllMoviesController = async(req, res, next) => {
 
   const moviesList = moviesQuery.rows
 
+
+  const movieCopiesPromise = await moviesList.map(async movie => {
+    const copiesQ = await sqlQuery(getMovieCopiesUPC(movie.upc))
+
+    return copiesQ.rows
+  })
+  const movieCopies = await Promise.all(movieCopiesPromise)
+  const flatMovieCopies = _.flatten(movieCopies)
+
+
+  const moviesWithCopies = moviesList.map(movie => {
+    const thisMoviesCopies = flatMovieCopies.filter(copy => copy.upc === movie.upc)
+    const activeFilteredCopies = excludeInactive ? thisMoviesCopies.filter(copy => copy.active) : thisMoviesCopies
+    const copyIds = activeFilteredCopies.map(copy => copy.id)
+
+    return {
+      ...movie,
+      copies: copyIds,
+    }
+  })
+
+
   const returnVal = {
-    numRows: moviesList.length,
-    rows: moviesList,
+    numRows: moviesWithCopies.length,
+    rows: moviesWithCopies,
     error: false,
     errorMsg: '',
   }

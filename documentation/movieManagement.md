@@ -90,7 +90,7 @@
 
 **Protocol**: POST
 
-**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. If UPC and Title are sent, UPC will be used.
+**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. If UPC and Title are sent, UPC will be used. If ecludeInactive is true, inactive copies will not be returned.
 
 **Permissions**: Admin, Manager, Employee
 
@@ -100,6 +100,7 @@
   token: 'asdfasdf',
   upc: '123456', // Optional
   title: 'Fast and Furious 45', // Optional
+  excludeInactive: false // Optional, default = true
 }
 ```
 
@@ -112,6 +113,10 @@
       upc: '123456',
       title: 'Fast and Furious 45',
       poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
+      copies: [
+        'fffffff',
+        'trrskdlf',
+      ]
     }
   ]
   error: false,

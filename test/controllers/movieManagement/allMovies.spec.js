@@ -1,5 +1,8 @@
+/* eslint-disable max-lines */
+
 import {
   allMovies,
+  getMovieCopiesUPC,
   getMovieRowTitle,
   getMovieRowUPC,
 } from '../../../src/db/movieManagement'
@@ -51,7 +54,7 @@ describe('get all movies controller tests', () => {
   })
 
   it('Successfully returns all movies without UPC or title filters', async() => {
-    const dbReturn = {
+    const allMoviesDbReturn = {
       numRows: 2,
       rows: [
         {
@@ -67,7 +70,46 @@ describe('get all movies controller tests', () => {
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const copiesDbReturn1 = {
+      numRows: 4,
+      rows: [
+        {
+          id: 'gggjgggjggj',
+          upc: '245345345534',
+          active: true,
+        },
+        {
+          id: 'gggggjjjjjjjjj',
+          upc: '245345345534',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    const copiesDbReturn2 = {
+      numRows: 4,
+      rows: [
+        {
+          id: 'asldkfjasl;dkfj',
+          upc: '889443493345',
+          active: true,
+        },
+        {
+          id: 'ttttttttttttt',
+          upc: '889443493345',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+      .onCall(0).returns(allMoviesDbReturn)
+      .onCall(1).returns(copiesDbReturn1)
+      .onCall(2).returns(copiesDbReturn2)
 
     const request = {
       body: {
@@ -80,14 +122,41 @@ describe('get all movies controller tests', () => {
 
     await getAllMoviesController(req, res, next)
 
+
+    const expected = {
+      ...allMoviesDbReturn,
+      rows: [
+        {
+          upc: '245345345534',
+          title: 'Fast and Furious 42',
+          copies: [
+            'gggjgggjggj',
+            'gggggjjjjjjjjj',
+          ],
+        },
+        {
+          upc: '889443493345',
+          title: 'Pulp Fiction',
+          copies: [
+            'asldkfjasl;dkfj',
+            'ttttttttttttt',
+          ],
+        },
+      ],
+    }
+
+
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(dbReturn)
+    expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(3)
     expect(dbStub).to.be.calledWith(allMovies())
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[0].upc))
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[1].upc))
   })
 
   it('Successfully returns all movies with a UPC filter', async() => {
-    const dbReturn = {
+    const allMoviesDbReturn = {
       numRows: 1,
       rows: [
         {
@@ -99,7 +168,22 @@ describe('get all movies controller tests', () => {
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const copiesDbReturn = {
+      numRows: 1,
+      rows: [
+        {
+          id: 'gggjgggjggj',
+          upc: '889443493345',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+      .onCall(0).returns(allMoviesDbReturn)
+      .onCall(1).returns(copiesDbReturn)
 
     const request = {
       body: {
@@ -113,30 +197,60 @@ describe('get all movies controller tests', () => {
 
     await getAllMoviesController(req, res, next)
 
+    const expected = {
+      ...allMoviesDbReturn,
+      rows: [
+        {
+          upc: '889443493345',
+          title: 'Pulp Fiction',
+          copies: [
+            'gggjgggjggj',
+          ],
+        },
+      ],
+    }
+
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(dbReturn)
+    expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[0].upc))
   })
 
   it('Successfully returns all movies with a title filter', async() => {
-    const dbReturn = {
+    const allMoviesDbReturn = {
       numRows: 1,
       rows: [
         {
-          upc: '245345345534',
-          title: 'Fast and Furious 42',
+          upc: '889443493345',
+          title: 'Pulp Fiction',
         },
       ],
       error: false,
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const copiesDbReturn = {
+      numRows: 1,
+      rows: [
+        {
+          id: 'gggjgggjggj',
+          upc: '889443493345',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+      .onCall(0).returns(allMoviesDbReturn)
+      .onCall(1).returns(copiesDbReturn)
 
     const request = {
       body: {
-        title: 'Fast and Furious 42',
+        title: 'Pulp Fiction',
       },
     }
 
@@ -146,10 +260,25 @@ describe('get all movies controller tests', () => {
 
     await getAllMoviesController(req, res, next)
 
+    const expected = {
+      ...allMoviesDbReturn,
+      rows: [
+        {
+          upc: '889443493345',
+          title: 'Pulp Fiction',
+          copies: [
+            'gggjgggjggj',
+          ],
+        },
+      ],
+    }
+
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(dbReturn)
+    expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(getMovieRowTitle(request.body.title))
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[0].upc))
   })
 
   it('Successfully returns all movies with a upc and title filter', async() => {
@@ -165,7 +294,22 @@ describe('get all movies controller tests', () => {
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const copiesDbReturn = {
+      numRows: 1,
+      rows: [
+        {
+          id: 'gggjgggjggj',
+          upc: '245345345534',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+      .onCall(0).returns(dbReturn)
+      .onCall(1).returns(copiesDbReturn)
 
     const request = {
       body: {
@@ -180,9 +324,127 @@ describe('get all movies controller tests', () => {
 
     await getAllMoviesController(req, res, next)
 
+    const expected = {
+      ...dbReturn,
+      rows: [
+        {
+          upc: '245345345534',
+          title: 'Fast and Furious 42',
+          copies: [
+            'gggjgggjggj',
+          ],
+        },
+      ],
+    }
+
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(dbReturn)
+    expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(dbReturn.rows[0].upc))
+  })
+
+  it('Successfully returns all movies with excludeInactive filter set to false', async() => {
+    const allMoviesDbReturn = {
+      numRows: 2,
+      rows: [
+        {
+          upc: '245345345534',
+          title: 'Fast and Furious 42',
+        },
+        {
+          upc: '889443493345',
+          title: 'Pulp Fiction',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    const copiesDbReturn1 = {
+      numRows: 4,
+      rows: [
+        {
+          id: 'gggjgggjggj',
+          upc: '245345345534',
+          active: true,
+        },
+        {
+          id: 'gggggjjjjjjjjj',
+          upc: '245345345534',
+          active: true,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    const copiesDbReturn2 = {
+      numRows: 4,
+      rows: [
+        {
+          id: 'asldkfjasl;dkfj',
+          upc: '889443493345',
+          active: true,
+        },
+        {
+          id: 'ttttttttttttt',
+          upc: '889443493345',
+          active: false,
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery')
+      .onCall(0).returns(allMoviesDbReturn)
+      .onCall(1).returns(copiesDbReturn1)
+      .onCall(2).returns(copiesDbReturn2)
+
+    const request = {
+      body: {
+        excludeInactive: false,
+      },
+    }
+
+    const req = mockReq(request)
+    const res = mockRes()
+    const next = sinon.spy()
+
+    await getAllMoviesController(req, res, next)
+
+
+    const expected = {
+      ...allMoviesDbReturn,
+      rows: [
+        {
+          upc: '245345345534',
+          title: 'Fast and Furious 42',
+          copies: [
+            'gggjgggjggj',
+            'gggggjjjjjjjjj',
+          ],
+        },
+        {
+          upc: '889443493345',
+          title: 'Pulp Fiction',
+          copies: [
+            'asldkfjasl;dkfj',
+            'ttttttttttttt',
+          ],
+        },
+      ],
+    }
+
+
+    expect(res.status).to.be.calledWith(200)
+    expect(res.json).to.be.calledWith(expected)
+    expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(3)
+    expect(dbStub).to.be.calledWith(allMovies())
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[0].upc))
+    expect(dbStub).to.be.calledWith(getMovieCopiesUPC(allMoviesDbReturn.rows[1].upc))
   })
 })

@@ -34,3 +34,8 @@ export const createMovieCopy = (id, upc, active) => ({
   text: 'INSERT INTO movie_copies (id, upc, active) VALUES (($1), ($2), ($3))',
   values: [ id, upc, active ],
 })
+
+export const getMovieCopiesUPC = upc => ({
+  text: 'SELECT * FROM movie_copies WHERE upc = ($1)',
+  values: [ upc ],
+})

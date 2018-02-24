@@ -6,22 +6,17 @@
 		[X] Creates movie table
 		[ ] Creates movie copies table
 		[X] Returns health of all tables
-	[ ] Movie Management
-		[ ] CreateMovie
+	[X] Movie Management
+		[X] CreateMovie
+		[X] AllMovies
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
-
 
 
 [ ] Append health controller
 	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation
-
-[X] Update createMovie
-	[X] Create movieCopies
-	[X] Update Test
-	[X] Documentation
 
 [ ] Create movie copies by UPC
 	[ ] Controller
@@ -35,8 +30,8 @@
 	[ ] Route
 	[ ] Documentation
 
-[ ] Get movie info by copy ID || get all copy IDs for movie
-	[ ] Controller
-	[ ] Route
-	[ ] Test
-	[ ] Documentation
+[X] Change allMovies to include copy IDs
+	[X] Controller
+	[X] Route
+	[X] Test
+	[X] Documentation
