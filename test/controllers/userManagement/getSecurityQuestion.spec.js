@@ -4,6 +4,7 @@ import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
 import getSecurityQuestionController from '../../../src/controllers/userManagement/getSecurityQuestion'
+import { getUserRow } from '../../../src/db/userManagement'
 import sinon from 'sinon'
 
 chai.use(require('sinon-chai'))
@@ -42,8 +43,8 @@ describe('get security question controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -99,8 +100,8 @@ describe('get security question controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -134,8 +135,8 @@ describe('get security question controller tests', () => {
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Security question not set' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -169,7 +170,7 @@ describe('get security question controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ question: dbReturn.rows[0].question, error: false, errorMsg: '' })
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 })

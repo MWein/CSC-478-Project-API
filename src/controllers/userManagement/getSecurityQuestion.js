@@ -4,9 +4,7 @@ import {
   noIdProvidedErrorMessage,
   userNotFoundErrorMessage,
 } from '../../errorMessages'
-import {
-  getUserRow,
-} from '../../db/userManagement'
+import { getUserRow } from '../../db/userManagement'
 import { sqlQuery } from '../../db'
 
 
