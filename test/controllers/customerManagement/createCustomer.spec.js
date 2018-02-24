@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  allCustomerIDs,
+  createCustomer,
+} from '../../../src/db/customerManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import createCustomerController from '../../../src/controllers/customerManagement/createCustomer'
@@ -49,6 +53,7 @@ describe('create customer controller tests', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allCustomerIDs())
   })
 
 
@@ -190,6 +195,8 @@ describe('create customer controller tests', () => {
     expect(res.json).to.be.calledWith({ id: 'hello', error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allCustomerIDs())
+    expect(dbStub).to.be.calledWith(createCustomer('hello', request.body.f_name, request.body.l_name, request.body.phone, request.body.address, true, request.body.email))
 
     genUniqTokenStub.restore()
   })
@@ -226,6 +233,8 @@ describe('create customer controller tests', () => {
     expect(res.json).to.be.calledWith({ id: 'hello', error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allCustomerIDs())
+    expect(dbStub).to.be.calledWith(createCustomer('hello', request.body.f_name, request.body.l_name, request.body.phone, '', true, ''))
 
     genUniqTokenStub.restore()
   })

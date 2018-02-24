@@ -31,11 +31,12 @@
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
 
+
 [ ] Make fixes to all tests
 	[ ] Customer Management
-		[ ] createCustomer.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
+		[X] createCustomer.spec.js
+			[X] Labels
+			[X] Appropriate database calls
 		[ ] editCustomer.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
@@ -98,14 +99,6 @@
 		[ ] permit.spec.js
 			[ ] Labels
 
-
-[X] Change allMovies
-	[X] Remove filter function and replace with query by UPC or Title
-	[X] Make query for movie by UPC
-	[X] Make query for movie by title
-	[X] Update tests
-		[X] Check for appropriate database calls
-	[X] Update documentation
 
 [ ] Append health controller
 	[X] Checks for and creates movie copy table
