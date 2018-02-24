@@ -33,13 +33,6 @@
 
 
 [ ] Make fixes to all tests
-	[ ] Movie Management
-		[X] editMovie.spec.js
-			[X] Labels
-			[X] Appropriate database calls
-		[ ] imdbMovieSearch.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 	[ ] User Management
 		[ ] createUser.spec.js
 			[ ] Labels
@@ -71,11 +64,6 @@
 	[ ] logout.spec.js
 		[ ] Labels
 		[ ] Appropriate database calls
-	[ ] Helpers
-		[ ] generateUniqueKey.spec.js
-			[ ] Labels
-		[ ] imdbResponseParser.spec.js
-			[ ] Labels
 	[ ] Middleware
 		[ ] getUser.spec.js
 			[ ] Labels

@@ -42,7 +42,7 @@ export const createMoviesTable = () => ({
   text: `CREATE TABLE movies (
     upc          text NOT NULL,
     title        text,
-    poster_loc   text,
+    poster       text,
     PRIMARY KEY(upc)
   )`,
 })

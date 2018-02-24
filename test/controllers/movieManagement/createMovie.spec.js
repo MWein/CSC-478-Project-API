@@ -202,7 +202,7 @@ describe('create movie controller tests', () => {
       body: {
         upc: '5464656464564465',
         title: 'Star Wars Episode 53',
-        poster_loc: 'somewhere.com',
+        poster: 'somewhere.com',
       },
     }
 
@@ -216,6 +216,6 @@ describe('create movie controller tests', () => {
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
     expect(dbStub).to.be.calledWith(allUPCs())
-    expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, request.body.poster_loc))
+    expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, request.body.poster))
   })
 })

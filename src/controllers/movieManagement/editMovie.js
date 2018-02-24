@@ -31,9 +31,9 @@ const editMovieController = async(req, res, next) => {
   const movie = getMovieResult.rows[0]
 
   const title = !req.body.title ? movie.title : req.body.title
-  const poster_loc = !req.body.poster_loc ? movie.poster_loc : req.body.poster_loc
+  const poster = !req.body.poster ? movie.poster : req.body.poster
 
-  const editMovieResponse = await sqlQuery(editMovie(upc, title, poster_loc))
+  const editMovieResponse = await sqlQuery(editMovie(upc, title, poster))
 
   if (editMovieResponse.error) {
     return databaseErrorMessage(res)
@@ -42,7 +42,7 @@ const editMovieController = async(req, res, next) => {
   const response = {
     upc,
     title,
-    poster_loc,
+    poster,
     ...noError(),
   }
 

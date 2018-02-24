@@ -7,7 +7,7 @@
 {
   upc: 'Unique product code',
   title: 'Movie title',
-  poster_loc: 'URL to a poster image on IMDB',
+  poster: 'URL to a poster image on IMDB',
 }
 ```
 
@@ -67,7 +67,7 @@
 {
   token: 'asdfasdf',
   upc: '123456',
-  poster_loc: 'http://www.imdb.com/somePoster', // Optional, default = ''
+  poster: 'http://www.imdb.com/somePoster', // Optional, default = ''
 }
 ```
 
@@ -106,7 +106,7 @@
     {
       upc: '123456',
       title: 'Fast and Furious 45',
-      poster_loc: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
+      poster: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
     }
   ]
   error: false,

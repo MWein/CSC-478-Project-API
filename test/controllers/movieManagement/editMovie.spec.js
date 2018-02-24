@@ -101,7 +101,7 @@ describe('Edit movie controller test', () => {
       {
         upc: '654987',
         title: 'Black Panther',
-        poster_loc: 'nowhereToBeFound',
+        poster: 'nowhereToBeFound',
       },
     ],
     error: false,
@@ -116,7 +116,7 @@ describe('Edit movie controller test', () => {
       body: {
         upc: '654987',
         //title: 'Iron Man',
-        poster_loc: 'www.ironman.com/poster',
+        poster: 'www.ironman.com/poster',
       },
     }
 
@@ -138,7 +138,7 @@ describe('Edit movie controller test', () => {
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
-    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, dbReturn.rows[0].title, request.body.poster_loc))
+    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, dbReturn.rows[0].title, request.body.poster))
   })
 
 
@@ -149,13 +149,13 @@ describe('Edit movie controller test', () => {
       body: {
         upc: '654987',
         title: 'Iron Man',
-        //poster_loc: 'www.ironman.com/poster',
+        //poster: 'www.ironman.com/poster',
       },
     }
 
     const expected = {
       ...request.body,
-      poster_loc: dbReturn.rows[0].poster_loc,
+      poster: dbReturn.rows[0].poster,
       error: false,
       errorMsg: '',
     }
@@ -171,6 +171,6 @@ describe('Edit movie controller test', () => {
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
-    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, request.body.title, dbReturn.rows[0].poster_loc))
+    expect(dbStub).to.be.calledWith(editMovie(request.body.upc, request.body.title, dbReturn.rows[0].poster))
   })
 })

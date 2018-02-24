@@ -33,9 +33,9 @@ const createMovieController = async(req, res, next) => {
     return upcAlreadyExistsErrorMessage(res)
   }
 
-  const poster_loc = !req.body.poster_loc ? '' : req.body.poster_loc
+  const poster = !req.body.poster ? '' : req.body.poster
 
-  const qResult = await sqlQuery(createMovie(upc, title, poster_loc))
+  const qResult = await sqlQuery(createMovie(upc, title, poster))
 
   if (qResult.error) {
     return databaseErrorMessage(res)
