@@ -1,3 +1,7 @@
+import {
+  allUsers,
+  updateTimestampForUser,
+} from '../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
@@ -67,8 +71,8 @@ describe('getUser middleware tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -107,6 +111,8 @@ describe('getUser middleware tests', () => {
     expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
   it('returns error if token exists but the timestamp is empty string', async() => {
@@ -127,6 +133,8 @@ describe('getUser middleware tests', () => {
     expect(res.status).to.be.calledWith(408)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
   it('returns error if token exists but the timestamp is expired', async() => {
@@ -146,13 +154,16 @@ describe('getUser middleware tests', () => {
 
     expect(res.status).to.be.calledWith(408)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Session timeout' })
-    expect(dbStub.callCount).to.equal(2)
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    updateTimestampForUser(request.body.id, '')
   })
 
 
   it('returns role if token exists and the timestamp is not expired', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     const request = {
       body: {
@@ -170,9 +181,10 @@ describe('getUser middleware tests', () => {
 
     expect(user).to.equal(dbReturn.rows[0])
     expect(next).to.be.called
-
-    // One for allUsers call
-    // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    updateTimestampForUser(request.body.id, new Date())
+
+    clock.restore()
   })
 })
