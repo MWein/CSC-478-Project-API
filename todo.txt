@@ -55,12 +55,9 @@
 		[ ] superuserResetPassword.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
-	[X] health.spec.js
+	[X] login.spec.js
 		[X] Labels
 		[X] Appropriate database calls
-	[ ] login.spec.js
-		[ ] Labels
-		[ ] Appropriate database calls
 	[ ] logout.spec.js
 		[ ] Labels
 		[ ] Appropriate database calls

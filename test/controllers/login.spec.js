@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  allUsers,
+  updateTokenAndTimestampForUser,
+} from '../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
@@ -45,8 +49,8 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -163,6 +167,8 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -185,11 +191,14 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(401)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Invalid credentials' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
   it('Returns JSON of user (without password) including key, security question needed', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -222,15 +231,17 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
-    // One for allUsers call
-    // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
   })
 
 
   it('Returns needsSecurityQuestion true if security question is filled but answer is blank', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -263,15 +274,17 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
-    // One for allUsers call
-    // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
   })
 
 
   it('Returns needsSecurityQuestion true if security question is blank and answer is blank', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -304,15 +317,17 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
-    // One for allUsers call
-    // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
   })
 
 
   it('Returns needsSecurityQuestion true if security question and answer is filled', async() => {
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -345,10 +360,11 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
-    // One for allUsers call
-    // One for setting key and timestamp
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
   })
 
 
@@ -387,6 +403,8 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Security question not set' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -423,6 +441,8 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Security question not set' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -459,6 +479,8 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Incorrect answer' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
   it('Returns user information if the answer was correct', async() => {
@@ -480,6 +502,7 @@ describe('Login controller tests', () => {
     }
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const clock = sinon.useFakeTimers()
 
     genUniqTokenStub = sinon.stub(genUniqKey, 'generateUniqueKey').returns('hello')
 
@@ -511,7 +534,10 @@ describe('Login controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(request.body.id, 'hello', new Date()))
+
+    clock.restore()
   })
 })
