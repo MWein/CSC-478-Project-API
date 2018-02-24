@@ -1,7 +1,11 @@
-import { allUsers as allUsersQuery, updateTokenAndTimestampForUser } from '../db/userManagement'
+import {
+  allUsers as allUsersQuery,
+  updateTokenAndTimestampForUser,
+} from '../db/userManagement'
 import {
   databaseErrorMessage,
   noError,
+  noIdProvidedErrorMessage,
   userNotFoundErrorMessage,
 } from '../errorMessages'
 import { sqlQuery } from '../db'
@@ -11,7 +15,7 @@ const logoutController = async(req, res, next) => {
   const id = res.locals.user.id
 
   if (!id) {
-    return userNotFoundErrorMessage(res)
+    return noIdProvidedErrorMessage(res)
   }
 
   const queryData = await sqlQuery(allUsersQuery())

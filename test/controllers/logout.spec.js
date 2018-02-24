@@ -1,3 +1,7 @@
+import {
+  allUsers,
+  updateTokenAndTimestampForUser,
+} from '../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../src/db/index'
@@ -39,8 +43,8 @@ describe('logout controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -54,8 +58,8 @@ describe('logout controller tests', () => {
 
     await logoutController(req, res, next)
 
-    expect(res.status).to.be.calledWith(404)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
+    expect(res.status).to.be.calledWith(449)
+    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'No ID provided' })
     expect(next.called).to.equal(false)
   })
 
@@ -91,6 +95,8 @@ describe('logout controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next.called).to.equal(false)
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(allUsers())
   })
 
 
@@ -125,5 +131,8 @@ describe('logout controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next.called).to.equal(true)
+    expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(allUsers())
+    expect(dbStub).to.be.calledWith(updateTokenAndTimestampForUser(res.locals.user.id, '', ''))
   })
 })

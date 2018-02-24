@@ -55,12 +55,9 @@
 		[ ] superuserResetPassword.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
-	[X] login.spec.js
+	[X] logout.spec.js
 		[X] Labels
 		[X] Appropriate database calls
-	[ ] logout.spec.js
-		[ ] Labels
-		[ ] Appropriate database calls
 	[ ] Middleware
 		[ ] getUser.spec.js
 			[ ] Labels
