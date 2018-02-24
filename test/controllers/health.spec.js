@@ -1,3 +1,15 @@
+/* eslint-disable max-lines */
+
+import {
+  checkCustomersTable as checkCustomersTableQuery,
+  checkMovieCopiesTable as checkMovieCopiesTableQuery,
+  checkMoviesTable as checkMoviesTableQuery,
+  checkUsersTable as checkUsersTableQuery,
+  createCustomersTable as createCustomersTableQuery,
+  createMovieCopiesTable as createMovieCopiesTableQuery,
+  createMoviesTable as createMoviesTableQuery,
+  createUsersTable as createUsersTableQuery,
+} from '../../src/db/createTables'
 import healthController, {
   checkForCustomersTable,
   checkForMovieCopiesTable,
@@ -6,6 +18,7 @@ import healthController, {
 } from '../../src/controllers/health'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
+import { createUser } from '../../src/db/userManagement'
 import db from '../../src/db'
 import sinon from 'sinon'
 
@@ -35,7 +48,6 @@ describe('Health tests', () => {
 
     await healthController(req, res, next)
 
-    expect(dbStub.callCount).to.equal(5)
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({
       customersDatabase: noErrorsReturn,
@@ -45,6 +57,12 @@ describe('Health tests', () => {
       error: false,
     })
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(5)
+    expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
+    expect(dbStub).to.be.calledWith(checkUsersTableQuery())
+    expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
+    expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
+    expect(dbStub).to.be.calledWith(createUser('superuser', '', '', 'password', 'admin', true))
   })
 
 
@@ -57,7 +75,6 @@ describe('Health tests', () => {
 
     await healthController(req, res, next)
 
-    expect(dbStub.callCount).to.equal(5)
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({
       customersDatabase: { error: true, errorMsg: 'Could not reach customers table' },
@@ -67,6 +84,12 @@ describe('Health tests', () => {
       error: true,
     })
     expect(next).to.be.called
+    expect(dbStub.callCount).to.equal(5)
+    expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
+    expect(dbStub).to.be.calledWith(checkUsersTableQuery())
+    expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
+    expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
+    expect(dbStub).to.be.calledWith(createUser('superuser', '', '', 'password', 'admin', true))
   })
 
 
@@ -77,6 +100,7 @@ describe('Health tests', () => {
       const actual = await checkForUsersTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkUsersTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not reach users table' })
     })
 
@@ -88,6 +112,8 @@ describe('Health tests', () => {
       const actual = await checkForUsersTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkUsersTableQuery())
+      expect(dbStub).to.be.calledWith(createUsersTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not create users table' })
     })
 
@@ -99,6 +125,8 @@ describe('Health tests', () => {
       const actual = await checkForUsersTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkUsersTableQuery())
+      expect(dbStub).to.be.calledWith(createUsersTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
 
@@ -109,6 +137,7 @@ describe('Health tests', () => {
       const actual = await checkForUsersTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkUsersTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
   })
@@ -121,6 +150,7 @@ describe('Health tests', () => {
       const actual = await checkForCustomersTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not reach customers table' })
     })
 
@@ -132,6 +162,8 @@ describe('Health tests', () => {
       const actual = await checkForCustomersTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
+      expect(dbStub).to.be.calledWith(createCustomersTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not create customers table' })
     })
 
@@ -143,6 +175,8 @@ describe('Health tests', () => {
       const actual = await checkForCustomersTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
+      expect(dbStub).to.be.calledWith(createCustomersTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
 
@@ -153,6 +187,7 @@ describe('Health tests', () => {
       const actual = await checkForCustomersTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkCustomersTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
   })
@@ -165,6 +200,7 @@ describe('Health tests', () => {
       const actual = await checkForMoviesTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not reach movies table' })
     })
 
@@ -176,6 +212,8 @@ describe('Health tests', () => {
       const actual = await checkForMoviesTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
+      expect(dbStub).to.be.calledWith(createMoviesTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not create movies table' })
     })
 
@@ -187,6 +225,8 @@ describe('Health tests', () => {
       const actual = await checkForMoviesTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
+      expect(dbStub).to.be.calledWith(createMoviesTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
 
@@ -197,6 +237,7 @@ describe('Health tests', () => {
       const actual = await checkForMoviesTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkMoviesTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
   })
@@ -209,6 +250,7 @@ describe('Health tests', () => {
       const actual = await checkForMovieCopiesTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not reach movie copies table' })
     })
 
@@ -220,6 +262,8 @@ describe('Health tests', () => {
       const actual = await checkForMovieCopiesTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
+      expect(dbStub).to.be.calledWith(createMovieCopiesTableQuery())
       expect(actual).to.deep.equal({ error: true, errorMsg: 'Could not create movie copies table' })
     })
 
@@ -231,6 +275,8 @@ describe('Health tests', () => {
       const actual = await checkForMovieCopiesTable()
 
       expect(dbStub.callCount).to.equal(2)
+      expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
+      expect(dbStub).to.be.calledWith(createMovieCopiesTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
 
@@ -241,6 +287,7 @@ describe('Health tests', () => {
       const actual = await checkForMovieCopiesTable()
 
       expect(dbStub.callCount).to.equal(1)
+      expect(dbStub).to.be.calledWith(checkMovieCopiesTableQuery())
       expect(actual).to.deep.equal({ error: false, errorMsg: '' })
     })
   })
