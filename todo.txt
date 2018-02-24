@@ -1,9 +1,13 @@
-[ ] Create helper that creates initial tables
-	[ ] Checks for and creates movie copy table
-	[ ] Checks for connection to IMDB
+[ ] Change allMovies
+	[ ] Do not use All Movies query
+	[ ] Make query for movie by UPC
+	[ ] Make query for movie by title
+	[ ] Update tests
+	[ ] Update documentation
 
 [ ] Append health controller
-	[ ] Create movie_copies table
+	[ ] Checks for and creates movie copy table
+	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation
 

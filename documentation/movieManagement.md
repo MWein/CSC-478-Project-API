@@ -8,7 +8,14 @@
   upc: 'Unique product code',
   title: 'Movie title',
   poster_loc: 'URL to a poster image on IMDB',
-  copies: 'Array of movie copy IDs',
+}
+```
+
+## **Movie Copy Database Schema**:
+```javascript
+{
+  id: 'asdfasdfasdf',
+  upc: 'dfdfdfasdfs',
 }
 ```
 
@@ -61,10 +68,6 @@
   token: 'asdfasdf',
   upc: '123456',
   poster_loc: 'http://www.imdb.com/somePoster', // Optional, default = ''
-  copies: [
-    'dkfasdkf',
-    'safdlkjasdfd',
-  ], // Optional, default = [], must be an array of strings
 }
 ```
 
@@ -104,10 +107,6 @@
       upc: '123456',
       title: 'Fast and Furious 45',
       poster_loc: 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwNzI3OTA5MV5BMl5BanBnXkFtZTgwMzc0MDE4NDM@._V1_.jpg',
-      copies: [
-        'asdfasdf',
-        'dfhhjssa',
-      ]
     }
   ]
   error: false,
@@ -132,10 +131,6 @@
   token: 'asdfasdf',
   upc: '123456', // Optional
   title: 'Fast and Furious 45', // Optional
-  copies: [
-    'fdkjsdlkjsdf',
-    'adgadfgsdfg',
-  ], // Optional
 }
 ```
 
@@ -145,46 +140,6 @@
   token: 'asdfasdf',
   upc: '123456',
   title: 'Fast and Furious 45',
-  copies: [
-    'fdkjsdlkjsdf',
-    'adgadfgsdfg',
-  ],
-  error: false,
-  errorMsg: '',
-}
-```
-
----
-
-## **/lookupCopyId**
-
-**Protocol**: POST
-
-**Description**: Returns an array of movies with a matching copy ID.
-
-**Permissions**: Admin, Manager, Employee
-
-**Sample Input**:
-```javascript
-{
-  token: 'asdfasdf',
-  copy: 'fdkjsdlkjsdf',
-}
-```
-
-**Sample Output**:
-```javascript
-{
-  movies: [
-    {
-      upc: '123456',
-      title: 'Fast and Furious 45',
-      copies: [
-        'fdkjsdlkjsdf',
-        'adgadfgsdfg',
-      ],
-    },
-  ]
   error: false,
   errorMsg: '',
 }
