@@ -4,9 +4,7 @@ import {
   noError,
   noQuestionProvidedErrorMessage,
 } from '../../errorMessages'
-import {
-  setSecurityQuestionAndAnswerForUser,
-} from '../../db/userManagement'
+import { setSecurityQuestionAndAnswerForUser } from '../../db/userManagement'
 import { sqlQuery } from '../../db'
 
 

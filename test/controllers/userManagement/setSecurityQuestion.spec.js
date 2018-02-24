@@ -1,6 +1,7 @@
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
+import { setSecurityQuestionAndAnswerForUser } from '../../../src/db/userManagement'
 import setSecurityQuestionController from '../../../src/controllers/userManagement/setSecurityQuestion'
 import sinon from 'sinon'
 
@@ -46,8 +47,8 @@ describe('set user security question controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(setSecurityQuestionAndAnswerForUser(res.locals.user.id, request.body.question, request.body.answer))
   })
 
 
@@ -160,6 +161,7 @@ describe('set user security question controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-    expect(dbStub).to.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(setSecurityQuestionAndAnswerForUser(res.locals.user.id, request.body.question, request.body.answer))
   })
 })

@@ -34,12 +34,9 @@
 
 [ ] Make fixes to all tests
 	[ ] User Management
-		[X] getSecurityQuestion.spec.js
+		[X] setSecurityQuestion.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] setSecurityQuestion.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 		[ ] setPassword.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
