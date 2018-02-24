@@ -139,85 +139,6 @@ describe('create customer controller tests', () => {
     expect(next).to.not.be.called
   })
 
-
-  it('Returns error copies is passed but is not an array', async() => {
-    const dbReturn = {
-      rowNum: 2,
-      rows: [
-        {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
-        },
-      ],
-      error: false,
-      errorMsg: '',
-    }
-
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
-
-    const request = {
-      body: {
-        upc: '5464656464564465',
-        title: 'Star Wars Episode 53',
-        copies: 1234,
-      },
-    }
-
-    const req = mockReq(request)
-    const res = mockRes()
-    const next = sinon.spy()
-
-    await createMovieController(req, res, next)
-
-    expect(res.status).to.be.calledWith(449)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Copies must be of type "array"' })
-    expect(next).to.not.be.called
-  })
-
-
-  it('Returns error copies contains an object that isnt a string', async() => {
-    const dbReturn = {
-      rowNum: 2,
-      rows: [
-        {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
-        },
-      ],
-      error: false,
-      errorMsg: '',
-    }
-
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
-
-    const request = {
-      body: {
-        upc: '5464656464564465',
-        title: 'Star Wars Episode 53',
-        copies: [
-          'asdfasdf',
-          45568,
-          'asdfasdere',
-        ],
-      },
-    }
-
-    const req = mockReq(request)
-    const res = mockRes()
-    const next = sinon.spy()
-
-    await createMovieController(req, res, next)
-
-    expect(res.status).to.be.calledWith(449)
-    expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Copies must be an array of strings' })
-    expect(next).to.not.be.called
-  })
-
-
   it('Successfully creates movie', async() => {
     const dbReturn = {
       rowNum: 2,
@@ -239,7 +160,6 @@ describe('create customer controller tests', () => {
       body: {
         upc: '5464656464564465',
         title: 'Star Wars Episode 53',
-        copies: [ '234234', '2342342' ],
       },
     }
 

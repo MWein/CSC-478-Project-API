@@ -98,10 +98,6 @@ describe('Edit movie controller test', () => {
         upc: '654987',
         title: 'Black Panther',
         poster: 'nowhereToBeFound',
-        copies: [
-          '123456789',
-          'sdflkjasdfkj',
-        ],
       },
     ],
     error: false,
@@ -117,10 +113,6 @@ describe('Edit movie controller test', () => {
         upc: '654987',
         //title: 'Iron Man',
         poster: 'www.ironman.com/poster',
-        copies: [
-          'aasdfasdfasdf',
-          'fgjgjfdkskslfddfkjdf',
-        ],
       },
     }
 
@@ -153,88 +145,11 @@ describe('Edit movie controller test', () => {
         upc: '654987',
         title: 'Iron Man',
         //poster: 'www.ironman.com/poster',
-        copies: [
-          'aasdfasdfasdf',
-          'fgjgjfdkskslfddfkjdf',
-        ],
       },
     }
 
     const expected = {
       ...request.body,
-      poster: dbReturn.rows[0].poster,
-      error: false,
-      errorMsg: '',
-    }
-
-    const req = mockReq(request)
-    const res = mockRes()
-    const next = sinon.spy()
-
-    await editMovieController(req, res, next)
-
-    expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
-    expect(next).to.be.called
-
-    expect(dbStub.callCount).to.equal(2)
-  })
-
-
-  it('Successfully edits movie, without changing copies', async() => {
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
-
-    const request = {
-      body: {
-        upc: '654987',
-        title: 'Iron Man',
-        poster: 'www.ironman.com/poster',
-        // copies: [
-        //   'aasdfasdfasdf',
-        //   'fgjgjfdkskslfddfkjdf',
-        // ],
-      },
-    }
-
-    const expected = {
-      ...request.body,
-      copies: dbReturn.rows[0].copies,
-      error: false,
-      errorMsg: '',
-    }
-
-    const req = mockReq(request)
-    const res = mockRes()
-    const next = sinon.spy()
-
-    await editMovieController(req, res, next)
-
-    expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
-    expect(next).to.be.called
-
-    expect(dbStub.callCount).to.equal(2)
-  })
-
-
-  it('Successfully edits movie, random mix of things', async() => {
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
-
-    const request = {
-      body: {
-        upc: '654987',
-        //title: 'Iron Man',
-        //poster: 'www.ironman.com/poster',
-        copies: [
-          'aasdfasdfasdf',
-          'fgjgjfdkskslfddfkjdf',
-        ],
-      },
-    }
-
-    const expected = {
-      ...request.body,
-      title: dbReturn.rows[0].title,
       poster: dbReturn.rows[0].poster,
       error: false,
       errorMsg: '',

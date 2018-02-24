@@ -1,6 +1,4 @@
 import {
-  copiesIsNotAnArrayErrorMessage,
-  copiesIsNotArrayOfStringsErrorMessage,
   databaseErrorMessage,
   movieNotFoundErrorMessage,
   noError,
@@ -34,19 +32,8 @@ const editMovieController = async(req, res, next) => {
 
   const title = !req.body.title ? movie.title : req.body.title
   const poster = !req.body.poster ? movie.poster : req.body.poster
-  const copies = !req.body.copies ? movie.copies : req.body.copies
 
-  if (!Array.isArray(copies)) {
-    return copiesIsNotAnArrayErrorMessage(res)
-  }
-
-  const typeCheck = copies.reduce((acc, copy) => typeof copy !== 'string' ? acc + 1 : acc, 0)
-
-  if (typeCheck > 0) {
-    return copiesIsNotArrayOfStringsErrorMessage(res)
-  }
-
-  const editMovieResponse = await sqlQuery(editMovie(upc, title, poster, copies))
+  const editMovieResponse = await sqlQuery(editMovie(upc, title, poster))
 
   if (editMovieResponse.error) {
     return databaseErrorMessage(res)
@@ -56,7 +43,6 @@ const editMovieController = async(req, res, next) => {
     upc,
     title,
     poster,
-    copies,
     ...noError(),
   }
 

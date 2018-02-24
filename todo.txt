@@ -1,22 +1,25 @@
 [ ] Create helper that creates initial tables
-	[X] Checks for and creates users
-		[X] Inserts superuser
-	[X] Checks for and creates customers
-	[X] Checks for and creates movies
+	[ ] Checks for and creates movie copy table
 	[ ] Checks for connection to IMDB
-	[X] Remove superuser creation from login
-	[X] Update login test
-	[X] Create test for healthv2
-	[X] Remove old health controller and test
 
-[X] Return movie info by copy ID
-	[X] Controller
-	[X] Route
-	[X] Test
-	[X] Documentation
+[ ] Append health controller
+	[ ] Create movie_copies table
+	[ ] Update test
+	[ ] Update documentation
 
-[ ] Delete movie controller
-	[ ] Needed?
+[ ] Create movie copy by UPC
+	[ ] Controller
+	[ ] Test
+	[ ] Route
+	[ ] Documentation
+
+[ ] Activate/Deactivate movie copy
+	[ ] Controller
+	[ ] Test
+	[ ] Route
+	[ ] Documentation
+
+[ ] Get movie info by copy ID || get all copy IDs for movie
 	[ ] Controller
 	[ ] Route
 	[ ] Test

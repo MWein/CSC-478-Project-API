@@ -3,8 +3,6 @@ import {
   createMovie,
 } from '../../db/movieManagement'
 import {
-  copiesIsNotAnArrayErrorMessage,
-  copiesIsNotArrayOfStringsErrorMessage,
   databaseErrorMessage,
   noError,
   noTitleProvidedErrorMessage,
@@ -36,20 +34,8 @@ const createMovieController = async(req, res, next) => {
   }
 
   const poster_loc = !req.body.poster_loc ? '' : req.body.poster_loc
-  const copies = !req.body.copies ? [] : req.body.copies
 
-  if (!Array.isArray(copies)) {
-    return copiesIsNotAnArrayErrorMessage(res)
-  }
-
-  const typeCheck = copies.reduce((acc, copy) => typeof copy !== 'string' ? acc + 1 : acc, 0)
-
-  if (typeCheck > 0) {
-    return copiesIsNotArrayOfStringsErrorMessage(res)
-  }
-
-
-  const qResult = await sqlQuery(createMovie(upc, title, poster_loc, copies))
+  const qResult = await sqlQuery(createMovie(upc, title, poster_loc))
 
   if (qResult.error) {
     return databaseErrorMessage(res)
