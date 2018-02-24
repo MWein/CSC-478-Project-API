@@ -34,12 +34,9 @@
 
 [ ] Make fixes to all tests
 	[ ] Customer Management
-		[X] createCustomer.spec.js
+		[X] editCustomer.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] editCustomer.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 		[ ] getAllCustomers.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls

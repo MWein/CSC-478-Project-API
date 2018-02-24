@@ -51,7 +51,6 @@ describe('create customer controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
     expect(dbStub).to.be.calledWith(allCustomerIDs())
   })
@@ -196,7 +195,14 @@ describe('create customer controller tests', () => {
     expect(next).to.be.called
     expect(dbStub.callCount).to.equal(2)
     expect(dbStub).to.be.calledWith(allCustomerIDs())
-    expect(dbStub).to.be.calledWith(createCustomer('hello', request.body.f_name, request.body.l_name, request.body.phone, request.body.address, true, request.body.email))
+    expect(dbStub).to.be.calledWith(createCustomer(
+      'hello', request.body.f_name,
+      request.body.l_name,
+      request.body.phone,
+      request.body.address,
+      true,
+      request.body.email
+    ))
 
     genUniqTokenStub.restore()
   })

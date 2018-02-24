@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  customerById,
+  editCustomer,
+} from '../../../src/db/customerManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
@@ -44,6 +48,7 @@ describe('Edit customer controller test', () => {
     expect(next).to.not.be.called
 
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
   })
 
 
@@ -140,8 +145,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      dbReturn.rows[0].f_name,
+      request.body.l_name,
+      request.body.phone,
+      request.body.address,
+      request.body.active,
+      request.body.email
+    ))
   })
 
 
@@ -176,8 +190,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      dbReturn.rows[0].l_name,
+      request.body.phone,
+      request.body.address,
+      request.body.active,
+      request.body.email
+    ))
   })
 
 
@@ -212,8 +235,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      dbReturn.rows[0].phone,
+      request.body.address,
+      request.body.active,
+      request.body.email
+    ))
   })
 
 
@@ -248,8 +280,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.phone,
+      dbReturn.rows[0].address,
+      request.body.active,
+      request.body.email
+    ))
   })
 
 
@@ -284,8 +325,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.phone,
+      request.body.address,
+      dbReturn.rows[0].active,
+      request.body.email
+    ))
   })
 
   it('Successfully edits customer, without changing email', async() => {
@@ -319,8 +369,17 @@ describe('Edit customer controller test', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.phone,
+      request.body.address,
+      request.body.active,
+      dbReturn.rows[0].email
+    ))
   })
 
 
@@ -359,5 +418,15 @@ describe('Edit customer controller test', () => {
     expect(next).to.be.called
 
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(customerById(request.body.id))
+    expect(dbStub).to.be.calledWith(editCustomer(
+      request.body.id,
+      request.body.f_name,
+      dbReturn.rows[0].l_name,
+      request.body.phone,
+      request.body.address,
+      dbReturn.rows[0].active,
+      dbReturn.rows[0].email
+    ))
   })
 })
