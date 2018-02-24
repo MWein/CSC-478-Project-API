@@ -1,3 +1,7 @@
+import {
+  getUserRow,
+  setUserPin,
+} from '../../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
@@ -41,8 +45,8 @@ describe('Superuser reset password controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -126,7 +130,8 @@ describe('Superuser reset password controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(setUserPin(request.body.id, request.body.pin))
   })
 })

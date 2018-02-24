@@ -32,14 +32,11 @@
 		[ ] NOT YET CREATED
 
 
-[ ] Make fixes to all tests
-	[ ] User Management
-		[X] setPassword.spec.js
+[X] Make fixes to all tests
+	[X] User Management
+		[X] superuserResetPassword.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] superuserResetPassword.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 
 
 [ ] Append health controller
