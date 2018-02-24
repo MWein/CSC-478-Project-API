@@ -1,5 +1,9 @@
 /* eslint-disable max-lines */
 
+import {
+  editUser,
+  getUserRow,
+} from '../../../src/db/userManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
@@ -42,8 +46,8 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -88,6 +92,8 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(404)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'User not found' })
     expect(next).to.not.be.called
+    expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
   })
 
 
@@ -177,8 +183,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      dbReturn.rows[0].f_name,
+      request.body.l_name,
+      request.body.role,
+      request.body.active,
+      request.body.phone,
+      request.body.address
+    ))
   })
 
 
@@ -213,8 +228,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      request.body.f_name,
+      dbReturn.rows[0].l_name,
+      request.body.role,
+      request.body.active,
+      request.body.phone,
+      request.body.address
+    ))
   })
 
 
@@ -249,8 +273,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      dbReturn.rows[0].role,
+      request.body.active,
+      request.body.phone,
+      request.body.address
+    ))
   })
 
 
@@ -285,8 +318,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.role,
+      dbReturn.rows[0].active,
+      request.body.phone,
+      request.body.address
+    ))
   })
 
 
@@ -321,8 +363,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.role,
+      request.body.active,
+      dbReturn.rows[0].phone,
+      request.body.address
+    ))
   })
 
   it('Successfully edits user, without changing address', async() => {
@@ -356,8 +407,17 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      request.body.f_name,
+      request.body.l_name,
+      request.body.role,
+      request.body.active,
+      request.body.phone,
+      dbReturn.rows[0].address
+    ))
   })
 
 
@@ -391,7 +451,16 @@ describe('Edit user controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith(expected)
     expect(next).to.be.called
-
     expect(dbStub.callCount).to.equal(2)
+    expect(dbStub).to.be.calledWith(getUserRow(request.body.id))
+    expect(dbStub).to.be.calledWith(editUser(
+      request.body.id,
+      dbReturn.rows[0].f_name,
+      request.body.l_name,
+      dbReturn.rows[0].role,
+      request.body.active,
+      request.body.phone,
+      dbReturn.rows[0].address
+    ))
   })
 })

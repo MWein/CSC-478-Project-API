@@ -34,12 +34,9 @@
 
 [ ] Make fixes to all tests
 	[ ] User Management
-		[X] createUser.spec.js
+		[X] editUser.spec.js
 			[X] Labels
 			[X] Appropriate database calls
-		[ ] editUser.spec.js
-			[ ] Labels
-			[ ] Appropriate database calls
 		[ ] getAllUsers.spec.js
 			[ ] Labels
 			[ ] Appropriate database calls
