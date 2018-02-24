@@ -1,3 +1,8 @@
+import {
+  allMovies,
+  getMovieRowTitle,
+  getMovieRowUPC,
+} from '../../../src/db/movieManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
 import db from '../../../src/db/index'
@@ -8,7 +13,7 @@ chai.use(require('sinon-chai'))
 const expect = chai.expect
 
 
-describe('create customer controller tests', () => {
+describe('get all movies controller tests', () => {
   let dbStub
 
   afterEach(() => {
@@ -41,8 +46,8 @@ describe('create customer controller tests', () => {
     expect(res.status).to.be.calledWith(500)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
-
     expect(dbStub.callCount).to.equal(1)
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
   })
 
   it('Successfully returns all movies without UPC or title filters', async() => {
@@ -62,10 +67,6 @@ describe('create customer controller tests', () => {
       errorMsg: '',
     }
 
-    const expected = {
-      ...dbReturn,
-    }
-
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
@@ -80,29 +81,13 @@ describe('create customer controller tests', () => {
     await getAllMoviesController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
+    expect(res.json).to.be.calledWith(dbReturn)
     expect(next).to.be.called
+    expect(dbStub).to.be.calledWith(allMovies())
   })
 
   it('Successfully returns all movies with a UPC filter', async() => {
     const dbReturn = {
-      rowNum: 2,
-      rows: [
-        {
-          upc: '245345345534',
-          title: 'Fast and Furious 42',
-        },
-        {
-          upc: '889443493345',
-          title: 'Pulp Fiction',
-        },
-      ],
-      error: false,
-      errorMsg: '',
-    }
-
-    const expected = {
-      ...dbReturn,
       rowNum: 1,
       rows: [
         {
@@ -110,6 +95,8 @@ describe('create customer controller tests', () => {
           title: 'Pulp Fiction',
         },
       ],
+      error: false,
+      errorMsg: '',
     }
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
@@ -127,29 +114,13 @@ describe('create customer controller tests', () => {
     await getAllMoviesController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
+    expect(res.json).to.be.calledWith(dbReturn)
     expect(next).to.be.called
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
   })
 
   it('Successfully returns all movies with a title filter', async() => {
     const dbReturn = {
-      rowNum: 2,
-      rows: [
-        {
-          upc: '245345345534',
-          title: 'Fast and Furious 42',
-        },
-        {
-          upc: '889443493345',
-          title: 'Pulp Fiction',
-        },
-      ],
-      error: false,
-      errorMsg: '',
-    }
-
-    const expected = {
-      ...dbReturn,
       rowNum: 1,
       rows: [
         {
@@ -157,6 +128,8 @@ describe('create customer controller tests', () => {
           title: 'Fast and Furious 42',
         },
       ],
+      error: false,
+      errorMsg: '',
     }
 
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
@@ -174,38 +147,29 @@ describe('create customer controller tests', () => {
     await getAllMoviesController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
+    expect(res.json).to.be.calledWith(dbReturn)
     expect(next).to.be.called
+    expect(dbStub).to.be.calledWith(getMovieRowTitle(request.body.title))
   })
 
   it('Successfully returns all movies with a upc and title filter', async() => {
     const dbReturn = {
-      rowNum: 2,
+      rowNum: 1,
       rows: [
         {
           upc: '245345345534',
           title: 'Fast and Furious 42',
-        },
-        {
-          upc: '889443493345',
-          title: 'Pulp Fiction',
         },
       ],
       error: false,
       errorMsg: '',
     }
 
-    const expected = {
-      ...dbReturn,
-      rowNum: 0,
-      rows: [],
-    }
-
     dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
 
     const request = {
       body: {
-        upc: '889443493345',
+        upc: '245345345534',
         title: 'Fast and Furious 42',
       },
     }
@@ -217,7 +181,8 @@ describe('create customer controller tests', () => {
     await getAllMoviesController(req, res, next)
 
     expect(res.status).to.be.calledWith(200)
-    expect(res.json).to.be.calledWith(expected)
+    expect(res.json).to.be.calledWith(dbReturn)
     expect(next).to.be.called
+    expect(dbStub).to.be.calledWith(getMovieRowUPC(request.body.upc))
   })
 })

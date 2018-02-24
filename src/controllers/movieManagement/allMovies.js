@@ -1,13 +1,29 @@
-import { allMovies } from '../../db/movieManagement'
+import {
+  allMovies,
+  getMovieRowTitle,
+  getMovieRowUPC,
+} from '../../db/movieManagement'
 import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 
 
 const getAllMoviesController = async(req, res, next) => {
-  const upc = !req.body.upc ? '' : req.body.upc
-  const title = !req.body.title ? '' : req.body.title
+  // const upc = !req.body.upc ? '' : req.body.upc
+  // const title = !req.body.title ? '' : req.body.title
 
-  const moviesQuery = await sqlQuery(allMovies())
+  const upc = req.body.upc
+  const title = req.body.title
+
+  const decideMoviesQuery = () => {
+    if (!upc && !title) {
+      return allMovies()
+    } else if (upc) {
+      return getMovieRowUPC(upc)
+    }
+
+    return getMovieRowTitle(title)
+  }
+  const moviesQuery = await sqlQuery(decideMoviesQuery())
 
   if (moviesQuery.error) {
     return databaseErrorMessage(res)
@@ -15,22 +31,9 @@ const getAllMoviesController = async(req, res, next) => {
 
   const moviesList = moviesQuery.rows
 
-  const applyFilters = () => {
-    const upcFilteredMovies = !upc ?
-      moviesList :
-      moviesList.filter(movie => movie.upc === upc)
-
-    const titleFilteredMovies = !title ?
-      upcFilteredMovies :
-      upcFilteredMovies.filter(movie => movie.title === title)
-
-    return titleFilteredMovies
-  }
-  const filteredMovies = applyFilters()
-
   const returnVal = {
-    rowNum: filteredMovies.length,
-    rows: filteredMovies,
+    rowNum: moviesList.length,
+    rows: moviesList,
     error: false,
     errorMsg: '',
   }

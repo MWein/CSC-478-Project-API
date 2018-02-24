@@ -6,7 +6,7 @@ import {
 } from '../../errorMessages'
 import {
   editMovie,
-  getMovieRow,
+  getMovieRowUPC,
 } from '../../db/movieManagement'
 import { sqlQuery } from '../../db'
 
@@ -18,7 +18,7 @@ const editMovieController = async(req, res, next) => {
     return noUPCProvidedErrorMessage(res)
   }
 
-  const getMovieResult = await sqlQuery(getMovieRow(upc))
+  const getMovieResult = await sqlQuery(getMovieRowUPC(upc))
 
   if (getMovieResult.error) {
     return databaseErrorMessage(res)

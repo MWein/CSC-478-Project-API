@@ -85,7 +85,7 @@
 
 **Protocol**: POST
 
-**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. It is recommended that upc or title are sent, but not both.
+**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. If UPC and Title are sent, UPC will be used.
 
 **Permissions**: Admin, Manager, Employee
 
@@ -93,8 +93,8 @@
 ```javascript
 {
   token: 'asdfasdf',
-  upc: '123456',
-  title: 'Fast and Furious 45',
+  upc: '123456', // Optional
+  title: 'Fast and Furious 45', // Optional
 }
 ```
 

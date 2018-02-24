@@ -1,3 +1,6 @@
+[ ] Find and fix all controllers where rowNum may be incorrect
+
+
 [ ] Manual testing
 	[ ] /status
 		[ ] Creates user table
@@ -28,13 +31,81 @@
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
 
+[ ] Make fixes to all tests
+	[ ] Customer Management
+		[ ] createCustomer.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] editCustomer.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] getAllCustomers.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+	[ ] Movie Management
+		[ ] allMovies.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] createMovie.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] editMovie.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] imdbMovieSearch.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+	[ ] User Management
+		[ ] createUser.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] editUser.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] getAllUsers.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] getSecurityQuestion.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] setSecurityQuestion.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] setPassword.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] superuserResetPassword.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+	[ ] health.spec.js
+		[ ] Labels
+		[ ] Appropriate database calls
+	[ ] login.spec.js
+		[ ] Labels
+		[ ] Appropriate database calls
+	[ ] logout.spec.js
+		[ ] Labels
+		[ ] Appropriate database calls
+	[ ] Helpers
+		[ ] generateUniqueKey.spec.js
+			[ ] Labels
+		[ ] imdbResponseParser.spec.js
+			[ ] Labels
+	[ ] Middleware
+		[ ] getUser.spec.js
+			[ ] Labels
+			[ ] Appropriate database calls
+		[ ] permit.spec.js
+			[ ] Labels
 
-[ ] Change allMovies
-	[ ] Do not use All Movies query
-	[ ] Make query for movie by UPC
-	[ ] Make query for movie by title
-	[ ] Update tests
-	[ ] Update documentation
+
+[X] Change allMovies
+	[X] Remove filter function and replace with query by UPC or Title
+	[X] Make query for movie by UPC
+	[X] Make query for movie by title
+	[X] Update tests
+		[X] Check for appropriate database calls
+	[X] Update documentation
 
 [ ] Append health controller
 	[X] Checks for and creates movie copy table
