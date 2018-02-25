@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "csv": "^2.0.0",
     "dotenv": "^5.0.0",
     "eslint-plugin-jest": "^21.12.1",
     "express": "4.16.2",
