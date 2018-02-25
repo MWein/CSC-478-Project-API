@@ -86,11 +86,11 @@
 
 ---
 
-## **/allMovies**
+## **/getMovie**
 
 **Protocol**: POST
 
-**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, all movies in the database are returned. If UPC and Title are sent, UPC will be used. If ecludeInactive is true, inactive copies will not be returned.
+**Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, an error is returned. If UPC and Title are sent, UPC will be used. If ecludeInactive is true, inactive copies will not be returned.
 
 **Permissions**: Admin, Manager, Employee
 

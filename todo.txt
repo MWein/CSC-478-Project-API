@@ -14,9 +14,10 @@
 		[ ] NOT YET CREATED
 
 
-[X] Movie by copy ID helper
-	[X] Implementation
-	[X] Test
+[X] Remove any occurence of allMovies query
+[ ] Remove any occurence of allUPCs query
+[ ] Remove any occurence of allUPCAndCopyIds
+
 
 [ ] Activate/Deactivate movie copy
 	[ ] Controller
@@ -30,7 +31,7 @@
 	[ ] Route
 	[ ] Documentation
 
-	[ ] Append health controller
+[ ] Append health controller
 	[ ] Checks for connection to IMDB
 	[ ] Update test
 	[ ] Update documentation

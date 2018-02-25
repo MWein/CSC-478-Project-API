@@ -1,7 +1,3 @@
-export const allMovies = () => ({
-  text: 'SELECT * FROM "movies"',
-})
-
 export const allUPCs = () => ({
   text: 'SELECT upc FROM "movies"',
 })

@@ -1,27 +1,25 @@
 import {
-  allMovies,
+  databaseErrorMessage,
+  noUPCProvidedErrorMessage,
+} from '../../errorMessages'
+import {
   getMovieCopiesUPC,
   getMovieRowTitle,
   getMovieRowUPC,
 } from '../../db/movieManagement'
 import _ from 'lodash'
-import { databaseErrorMessage } from '../../errorMessages'
 import { sqlQuery } from '../../db'
 
-const getAllMoviesController = async(req, res, next) => {
+const getMovieController = async(req, res, next) => {
   const upc = req.body.upc
   const title = req.body.title
   const excludeInactive = req.body.excludeInactive === undefined ? true : req.body.excludeInactive
 
-  const decideMoviesQuery = () => {
-    if (!upc && !title) {
-      return allMovies()
-    } else if (upc) {
-      return getMovieRowUPC(upc)
-    }
-
-    return getMovieRowTitle(title)
+  if (!upc && !title) {
+    return noUPCProvidedErrorMessage(res)
   }
+
+  const decideMoviesQuery = () => !upc ? getMovieRowTitle(title) : getMovieRowUPC(upc)
   const moviesQuery = await sqlQuery(decideMoviesQuery())
 
   if (moviesQuery.error) {
@@ -63,4 +61,4 @@ const getAllMoviesController = async(req, res, next) => {
   next()
 }
 
-export default getAllMoviesController
+export default getMovieController
