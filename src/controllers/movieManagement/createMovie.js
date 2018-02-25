@@ -1,9 +1,4 @@
 import {
-  allUPCAndCopyIds as allUPCAndCopyIdsQuery,
-  createMovie,
-  createMovieCopy,
-} from '../../db/movieManagement'
-import {
   copiesIsNotAnArrayErrorMessage,
   copiesIsNotArrayOfStringsErrorMessage,
   copyIDAlreadyExistsErrorMessage,
@@ -13,6 +8,12 @@ import {
   noUPCProvidedErrorMessage,
   upcAlreadyExistsErrorMessage,
 } from '../../errorMessages'
+import {
+  countUPC,
+  createMovie,
+  createMovieCopy,
+  getCopyRow,
+} from '../../db/movieManagement'
 import _ from 'lodash'
 import { sqlQuery } from '../../db'
 
@@ -38,23 +39,36 @@ const createMovieController = async(req, res, next) => {
     return copiesIsNotArrayOfStringsErrorMessage(res)
   }
 
-  const allUPCAndCopyIDsQ = await sqlQuery(allUPCAndCopyIdsQuery())
+  const checkUPCQ = await sqlQuery(countUPC(upc))
 
-  if (allUPCAndCopyIDsQ.error) {
+  if (checkUPCQ.error) {
     return databaseErrorMessage(res)
-  }
-  const allUPCs = allUPCAndCopyIDsQ.rows.map(copy => copy.upc)
-  const allCopyIDs = allUPCAndCopyIDsQ.rows.map(copy => copy.id)
-
-  if (allUPCs.includes(upc)) {
+  } else if (checkUPCQ.rows[0].count > 0) {
     return upcAlreadyExistsErrorMessage(res)
   }
 
   const uniqCopies = _.uniq(copies)
 
-  if (uniqCopies.reduce((acc, id) => allCopyIDs.includes(id) ? acc + 1 : acc, 0) > 0) {
+  const copyCheckPromises = uniqCopies.map(async copy => {
+    const check = await sqlQuery(getCopyRow(copy))
+
+    return check
+  })
+  const copyCheck = await Promise.all(copyCheckPromises)
+
+  const copiesErrorCheck = copyCheck.reduce((acc, copyReturn) => {
+    const newErrors = copyReturn.error ? acc.errors + 1 : acc.errors
+    const newDuplicates = copyReturn.rows.length === 0 ? acc.duplicates : acc.duplicates + 1
+
+    return { errors: newErrors, duplicates: newDuplicates }
+  }, { errors: 0, duplicates: 0 })
+
+  if (copiesErrorCheck.errors > 0) {
+    return databaseErrorMessage(res)
+  } else if (copiesErrorCheck.duplicates > 0) {
     return copyIDAlreadyExistsErrorMessage(res)
   }
+
 
   const qResult = await sqlQuery(createMovie(upc, title, poster))
 

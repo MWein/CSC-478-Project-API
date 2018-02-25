@@ -1,9 +1,10 @@
 /* eslint-disable max-lines */
 
 import {
-  allUPCAndCopyIds as allUPCAndCopyIdsQuery,
+  countUPC,
   createMovie,
   createMovieCopy,
+  getCopyRow,
 } from '../../../src/db/movieManagement'
 import { mockReq, mockRes } from 'sinon-express-mock'
 import chai from 'chai'
@@ -49,7 +50,7 @@ describe('create movie controller tests', () => {
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Database error' })
     expect(next).to.not.be.called
     expect(dbStub.callCount).to.equal(1)
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
   })
 
 
@@ -111,13 +112,10 @@ describe('create movie controller tests', () => {
 
   it('Returns error UPC already exists in the database', async() => {
     const dbReturn = {
-      numRows: 2,
+      numRows: 1,
       rows: [
         {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
+          count: 1,
         },
       ],
       error: false,
@@ -142,7 +140,7 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(400)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'UPC already exists' })
     expect(next).to.not.be.called
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
   })
 
   it('Successfully creates movie without poster location', async() => {
@@ -178,19 +176,16 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
     expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, ''))
   })
 
   it('Successfully creates movie with poster location', async() => {
     const dbReturn = {
-      numRows: 2,
+      numRows: 1,
       rows: [
         {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
+          count: 0,
         },
       ],
       error: false,
@@ -216,7 +211,7 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
     expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, request.body.poster))
   })
 
@@ -270,20 +265,25 @@ describe('create movie controller tests', () => {
 
   it('Successfully creates movie with copies', async() => {
     const dbReturn = {
-      numRows: 2,
+      numRows: 1,
       rows: [
         {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
+          count: 0,
         },
       ],
       error: false,
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const dbCopiesReturn = {
+      numRows: 0,
+      rows: [],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbCopiesReturn)
+      .onCall(0).returns(dbReturn)
 
     const request = {
       body: {
@@ -307,8 +307,11 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-    expect(dbStub.callCount).to.equal(5)
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub.callCount).to.equal(8)
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[0]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[1]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[2]))
     expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, request.body.poster))
     expect(dbStub).to.be.calledWith(createMovieCopy(request.body.copies[0], request.body.upc, true))
     expect(dbStub).to.be.calledWith(createMovieCopy(request.body.copies[1], request.body.upc, true))
@@ -318,20 +321,25 @@ describe('create movie controller tests', () => {
 
   it('Successfully creates movie with copies, filters out duplicate copies', async() => {
     const dbReturn = {
-      numRows: 2,
+      numRows: 1,
       rows: [
         {
-          upc: '245345345534',
-        },
-        {
-          upc: '889443493345',
+          count: 0,
         },
       ],
       error: false,
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const dbCopiesReturn = {
+      numRows: 0,
+      rows: [],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbCopiesReturn)
+      .onCall(0).returns(dbReturn)
 
     const request = {
       body: {
@@ -356,8 +364,11 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(200)
     expect(res.json).to.be.calledWith({ error: false, errorMsg: '' })
     expect(next).to.be.called
-    expect(dbStub.callCount).to.equal(5)
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub.callCount).to.equal(8)
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[0]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[1]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[2]))
     expect(dbStub).to.be.calledWith(createMovie(request.body.upc, request.body.title, request.body.poster))
     expect(dbStub).to.be.calledWith(createMovieCopy(request.body.copies[0], request.body.upc, true))
     expect(dbStub).to.be.calledWith(createMovieCopy(request.body.copies[1], request.body.upc, true))
@@ -378,7 +389,19 @@ describe('create movie controller tests', () => {
       errorMsg: '',
     }
 
-    dbStub = sinon.stub(db, 'sqlQuery').returns(dbReturn)
+    const dbCopiesReturn = {
+      numRows: 0,
+      rows: [
+        {
+          hello: 'something',
+        },
+      ],
+      error: false,
+      errorMsg: '',
+    }
+
+    dbStub = sinon.stub(db, 'sqlQuery').returns(dbCopiesReturn)
+      .onCall(0).returns(dbReturn)
 
     const request = {
       body: {
@@ -403,7 +426,10 @@ describe('create movie controller tests', () => {
     expect(res.status).to.be.calledWith(449)
     expect(res.json).to.be.calledWith({ error: true, errorMsg: 'Copy ID already exists' })
     expect(next).to.not.be.called
-    expect(dbStub.callCount).to.equal(1)
-    expect(dbStub).to.be.calledWith(allUPCAndCopyIdsQuery())
+    expect(dbStub.callCount).to.equal(4)
+    expect(dbStub).to.be.calledWith(countUPC(request.body.upc))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[0]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[1]))
+    expect(dbStub).to.be.calledWith(getCopyRow(request.body.copies[2]))
   })
 })

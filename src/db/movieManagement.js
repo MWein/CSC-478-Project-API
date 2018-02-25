@@ -1,9 +1,6 @@
-export const allUPCs = () => ({
-  text: 'SELECT upc FROM "movies"',
-})
-
-export const allUPCAndCopyIds = () => ({
-  text: 'SELECT id, upc FROM "movie_copies"',
+export const countUPC = upc => ({
+  text: 'SELECT count(*) FROM movies WHERE upc = ($1)',
+  values: [ upc ],
 })
 
 export const getMovieRowUPC = upc => ({
