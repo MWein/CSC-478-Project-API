@@ -9,29 +9,28 @@
 	[X] Movie Management
 		[X] CreateMovie
 		[X] AllMovies
+		[ ] MovieByCopyID Helper
 	[ ] Movie Copy Management
 		[ ] NOT YET CREATED
 
 
-[ ] Append health controller
-	[ ] Checks for connection to IMDB
-	[ ] Update test
-	[ ] Update documentation
+[X] Movie by copy ID helper
+	[X] Implementation
+	[X] Test
 
-[ ] Create movie copies by UPC
-	[ ] Controller
-	[ ] Test
-	[ ] Route
-	[ ] Documentation
- 
 [ ] Activate/Deactivate movie copy
 	[ ] Controller
 	[ ] Test
 	[ ] Route
 	[ ] Documentation
 
-[X] Change allMovies to include copy IDs
-	[X] Controller
-	[X] Route
-	[X] Test
-	[X] Documentation
+[ ] Create movie copies by UPC
+	[ ] Controller
+	[ ] Test
+	[ ] Route
+	[ ] Documentation
+
+	[ ] Append health controller
+	[ ] Checks for connection to IMDB
+	[ ] Update test
+	[ ] Update documentation

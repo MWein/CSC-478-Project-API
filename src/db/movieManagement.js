@@ -39,3 +39,8 @@ export const getMovieCopiesUPC = upc => ({
   text: 'SELECT * FROM movie_copies WHERE upc = ($1)',
   values: [ upc ],
 })
+
+export const getCopyRow = id => ({
+  text: 'SELECT * FROM movie_copies WHERE id = ($1)',
+  values: [ id ],
+})
