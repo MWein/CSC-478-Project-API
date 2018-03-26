@@ -17,11 +17,14 @@ const pool = new Pool({
 })
 
 const sqlQuery = async({ text, values }) => {
+  const client = await pool.connect()
+
   try {
-    const client = await pool.connect()
     const result = await client.query(text, values)
 
     await client.release()
+
+    console.log('Hello')
 
     return {
       numRows: result.rowCount,
@@ -30,6 +33,9 @@ const sqlQuery = async({ text, values }) => {
       errorMsg: null,
     }
   } catch (e) {
+
+    await client.release()
+
     return {
       numRows: 0,
       rows: [],
