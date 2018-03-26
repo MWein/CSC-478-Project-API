@@ -24,8 +24,6 @@ const sqlQuery = async({ text, values }) => {
 
     await client.release()
 
-    console.log('Hello')
-
     return {
       numRows: result.rowCount,
       rows: result.rows,
@@ -33,7 +31,6 @@ const sqlQuery = async({ text, values }) => {
       errorMsg: null,
     }
   } catch (e) {
-
     await client.release()
 
     return {
