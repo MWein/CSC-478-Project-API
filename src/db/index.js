@@ -21,7 +21,7 @@ const sqlQuery = async({ text, values }) => {
     const client = await pool.connect()
     const result = await client.query(text, values)
 
-    client.release()
+    client.end()
 
     return {
       numRows: result.rowCount,
