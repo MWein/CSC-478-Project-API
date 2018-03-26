@@ -1,8 +1,4 @@
-import { corsOptionsRequests, corsSimpleRequests } from './middleware/cors'
 import app from './app'
-
-app.options('*', corsOptionsRequests)
-app.use(corsSimpleRequests)
 
 const port = 8080
 
