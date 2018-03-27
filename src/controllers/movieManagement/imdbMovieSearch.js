@@ -11,7 +11,7 @@ const imdbMovieSearchController = async(req, res, next) => {
   }
 
   const searchableText = searchStr.split(' ').join('_')
-  const imdbJsonPath = `https://v2.sg.media-imdb.com/suggests/${searchableText[0]}/${searchableText}.json`
+  const imdbJsonPath = `https://v2.sg.media-imdb.com/suggests/${searchableText[0].toLowerCase()}/${searchableText}.json`
 
   const getJsonFromIMDB = url => {
     const xmlHttp = new XMLHttpRequest()

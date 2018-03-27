@@ -12,7 +12,7 @@ const imdbResponseParser = text => {
     .map(movie => ({
       title: movie.l,
       year: movie.y,
-      poster: movie.i[0],
+      poster: movie.i === undefined ? '' : movie.i[0],
     }))
 
   return {
