@@ -6,7 +6,6 @@ import {
   noError,
   noTitleProvidedErrorMessage,
   noUPCProvidedErrorMessage,
-  upcAlreadyExistsErrorMessage,
 } from '../../errorMessages'
 import {
   countUPC,
@@ -24,8 +23,6 @@ const createMovieController = async(req, res, next) => {
 
   if (!upc) {
     return noUPCProvidedErrorMessage(res)
-  } else if (!title) {
-    return noTitleProvidedErrorMessage(res)
   }
 
   const poster = !req.body.poster ? '' : req.body.poster
@@ -69,6 +66,10 @@ const createMovieController = async(req, res, next) => {
 
 
   if (checkUPCQ.rows[0].count === 0) {
+    if (!title) {
+      return noTitleProvidedErrorMessage(res)
+    }
+
     const qResult = await sqlQuery(createMovie(upc, title, poster))
 
     if (qResult.error) {
