@@ -43,8 +43,6 @@ const createMovieController = async(req, res, next) => {
 
   if (checkUPCQ.error) {
     return databaseErrorMessage(res)
-  } else if (checkUPCQ.rows[0].count > 0) {
-    return upcAlreadyExistsErrorMessage(res)
   }
 
   const uniqCopies = _.uniq(copies)
@@ -70,10 +68,12 @@ const createMovieController = async(req, res, next) => {
   }
 
 
-  const qResult = await sqlQuery(createMovie(upc, title, poster))
+  if (checkUPCQ.rows[0].count === 0) {
+    const qResult = await sqlQuery(createMovie(upc, title, poster))
 
-  if (qResult.error) {
-    return databaseErrorMessage(res)
+    if (qResult.error) {
+      return databaseErrorMessage(res)
+    }
   }
 
   const movieCopyQPromises = await uniqCopies.map(async copy => {
