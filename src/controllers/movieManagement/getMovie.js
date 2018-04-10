@@ -3,6 +3,7 @@ import {
   noUPCProvidedErrorMessage,
 } from '../../errorMessages'
 import {
+  getCopyRow,
   getMovieCopiesUPC,
   getMovieRowTitle,
   getMovieRowUPC,
@@ -11,9 +12,22 @@ import _ from 'lodash'
 import { sqlQuery } from '../../db'
 
 const getMovieController = async(req, res, next) => {
-  const upc = req.body.upc
   const title = req.body.title
+  const copyID = req.body.copyID
   const excludeInactive = req.body.excludeInactive === undefined ? true : req.body.excludeInactive
+
+
+  const getUPC = async() => {
+    if (copyID !== undefined) {
+      const copies = await sqlQuery(getCopyRow(copyID))
+
+      return copies.rows.length === 0 ? '' : copies.rows[0].upc
+    }
+
+    return req.body.upc
+  }
+  const upc = await getUPC()
+
 
   if (!upc && !title) {
     return noUPCProvidedErrorMessage(res)
