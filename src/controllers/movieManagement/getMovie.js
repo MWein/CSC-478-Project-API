@@ -18,7 +18,7 @@ const getMovieController = async(req, res, next) => {
 
 
   const getUPC = async() => {
-    if (copyID !== undefined) {
+    if (copyID !== undefined && copyID !== '') {
       const copies = await sqlQuery(getCopyRow(copyID))
 
       return copies.rows.length === 0 ? '' : copies.rows[0].upc
