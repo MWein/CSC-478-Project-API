@@ -1,7 +1,7 @@
 import createTransactionController from '../controllers/transactionManagement/createTransaction'
 import express from 'express'
 import getUser from '../middleware/getUser'
-import openTransactionsController from '../controllers/transactionManagement/openTransactionsController'
+import openTransactionsController from '../controllers/transactionManagement/openTransactions'
 import permit from '../middleware/permit'
 
 const router = express.Router() // eslint-disable-line new-cap
