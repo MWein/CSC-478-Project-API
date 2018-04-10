@@ -15,8 +15,6 @@ const createTransactionController = async(req, res, next) => {
   const dueDate = new Date()
 
   dueDate.setDate(dueDate.getDate() + 1)
-  dueDate.setHours(23)
-  dueDate.setMinutes(58)
 
   const qResult = await sqlQuery(createTransaction(customerID, copyID, dueDate, false))
 
