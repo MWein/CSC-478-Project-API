@@ -5,7 +5,7 @@ import { sqlQuery } from '../../db'
 
 
 const mostPopularMoviesController = async(req, res, next) => {
-  const limit = req.body.limit
+  const limit = !req.body.limit ? 10 : req.body.limit
   const results = await sqlQuery(bestMovies(limit))
 
   res.status(200).json(results.rows)
