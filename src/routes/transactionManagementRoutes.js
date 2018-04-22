@@ -1,4 +1,4 @@
-import bestCustomersController from '../controllers/transactionMangement/mostValuedCustomers'
+import bestCustomersController from '../controllers/transactionManagement/mostValuedCustomers'
 import createTransactionController from '../controllers/transactionManagement/createTransaction'
 import express from 'express'
 import getUser from '../middleware/getUser'
