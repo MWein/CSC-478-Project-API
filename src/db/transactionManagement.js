@@ -7,10 +7,12 @@ export const openTransactions = () => ({
   text: 'SELECT "customerID", "copyID", "dueDate", returned, f_name, l_name, phone, address, email, title FROM transactions JOIN customers ON transactions."customerID"=customers.id JOIN movie_copies ON transactions."copyID"=movie_copies.id JOIN movies ON movie_copies.upc=movies.upc WHERE returned=false',
 })
 
-export const bestCustomers = () => ({
-  text: 'SELECT "customerID", f_name, l_name, COUNT("customerID") AS order_count FROM transactions JOIN customers ON transactions."customerID"=customers.id GROUP BY "customerID", f_name, l_name ORDER BY order_count DESC LIMIT 10',
+export const bestCustomers = limit => ({
+  text: 'SELECT "customerID", f_name, l_name, COUNT("customerID") AS order_count FROM transactions JOIN customers ON transactions."customerID"=customers.id GROUP BY "customerID", f_name, l_name ORDER BY order_count DESC LIMIT ($1)',
+  values: [ limit ],
 })
 
-export const bestMovies = () => ({
-  text: 'SELECT title, movie_copies.upc, COUNT(movie_copies.upc) AS order_count FROM transactions JOIN movie_copies ON transactions."copyID"=movie_copies.id JOIN movies ON movie_copies.upc=movies.upc GROUP BY title, movie_copies.upc ORDER BY order_count DESC LIMIT 10',
+export const bestMovies = limit => ({
+  text: 'SELECT title, movie_copies.upc, COUNT(movie_copies.upc) AS order_count FROM transactions JOIN movie_copies ON transactions."copyID"=movie_copies.id JOIN movies ON movie_copies.upc=movies.upc GROUP BY title, movie_copies.upc ORDER BY order_count DESC LIMIT ($1)',
+  values: [ limit ],
 })
