@@ -65,7 +65,7 @@ const createMovieController = async(req, res, next) => {
   }
 
 
-  if (checkUPCQ.rows[0].count === 0) {
+  if (checkUPCQ.rows[0].count === 0 || checkUPCQ.rows[0].count === '0') {
     if (!title) {
       return noTitleProvidedErrorMessage(res)
     }
