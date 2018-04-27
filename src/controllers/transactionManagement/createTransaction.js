@@ -13,6 +13,7 @@ const createTransactionController = async(req, res, next) => {
   const dueDate = new Date()
 
   dueDate.setDate(dueDate.getDate() + 1)
+  dueDate.setHours(23, 59, 59)
 
   copyIDs.map(copyID => {
     sqlQuery(createTransaction(customerID, copyID, dueDate, false))
