@@ -37,3 +37,8 @@ export const getCopyRow = id => ({
   text: 'SELECT * FROM movie_copies WHERE id = ($1)',
   values: [ id ],
 })
+
+export const returnMovieCopy = id => ({
+  text: 'UPDATE transactions SET returned = true WHERE "copyID"=($1)',
+  values: [ id ],
+})
