@@ -2,20 +2,6 @@
 
 ## **Description of overall system**: These endpoints are used for management of Lackluster Video customers.
 
-## **Customer Database Schema**:
-```javascript
-{
-  id: 'System generated unique ID',
-  f_name: 'First name',
-  l_name: 'Last name',
-  phone: 'Phone number',
-  address: 'Address',
-  active: 'Whether or not the customer still frequents the business',
-  email: 'Email',
-}
-```
-
-
 ---
 
 ## **/createCustomer**

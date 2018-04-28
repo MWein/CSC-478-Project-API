@@ -2,24 +2,6 @@
 
 ## **Description of overall system**: These endpoints are used for management of Lackluster Video movies.
 
-## **Movie Database Schema**:
-```javascript
-{
-  upc: 'Unique product code',
-  title: 'Movie title',
-  poster: 'URL to a poster image on IMDB',
-}
-```
-
-## **Movie Copy Database Schema**:
-```javascript
-{
-  id: 'asdfasdfasdf',
-  upc: 'dfdfdfasdfs',
-  active: true,
-}
-```
-
 ---
 
 ## **/imdbSearch**
