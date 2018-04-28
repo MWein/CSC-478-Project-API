@@ -10,7 +10,7 @@
 
 **Description**: Integration with IMDB. Returns an array of movies with movie title, year, and a link to the poster.
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript
@@ -43,7 +43,7 @@
 
 **Description**: Creates a movie and its copies in the database
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript
@@ -74,7 +74,7 @@
 
 **Description**: Returns an array of movies filtered by upc and title. If upc and title are not passed, an error is returned. If UPC and Title are sent, UPC will be used. If ecludeInactive is true, inactive copies will not be returned.
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript
@@ -115,7 +115,7 @@
 **Description**: Edits information about the movie in the database.
 <br />*Note*: Values not included in the request body will not be changed.
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript

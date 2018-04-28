@@ -10,7 +10,7 @@
 
 **Description**: Creates a new customer in the database.
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript
@@ -44,7 +44,7 @@
 excludeInactive: If set to true, only active customers will be returned.
 phone: Returns customers with matching phone number.
 
-**Permissions**: Admin, Manager, Employee
+**Permissions**: Manager, Employee
 
 **Sample Input**:
 ```javascript
@@ -86,7 +86,7 @@ phone: Returns customers with matching phone number.
 **Description**: Edits information about the customer in the database.
 <br />*Note*: Values not included in the request body will not be changed.
 
-**Permissions**: Admin
+**Permissions**: Manager
 
 **Sample Input**:
 ```javascript
